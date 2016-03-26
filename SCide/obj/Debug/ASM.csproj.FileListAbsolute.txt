@@ -1,0 +1,17 @@
+C:\Users\admin\Documents\Visual Studio 2015\Projects\ASM\SCide\obj\Debug\ASM.DocumentForm.resources
+C:\Users\admin\Documents\Visual Studio 2015\Projects\ASM\SCide\obj\Debug\ASM.MainForm.resources
+C:\Users\admin\Documents\Visual Studio 2015\Projects\ASM\SCide\obj\Debug\ASM.csproj.GenerateResource.Cache
+C:\Users\admin\Documents\Visual Studio 2015\Projects\ASM\SCide\obj\Debug\ASM.Properties.Resources.resources
+C:\Users\admin\Documents\Visual Studio 2015\Projects\ASM\bin\Debug\ASM.exe
+C:\Users\admin\Documents\Visual Studio 2015\Projects\ASM\bin\Debug\ASM.pdb
+C:\Users\admin\Documents\Visual Studio 2015\Projects\ASM\SCide\obj\Debug\ASM.exe
+C:\Users\admin\Documents\Visual Studio 2015\Projects\ASM\SCide\obj\Debug\ASM.pdb
+C:\Users\admin\Documents\Visual Studio 2015\Projects\ASM\bin\Debug\ASM.exe.config
+C:\Users\admin\Documents\Visual Studio 2015\Projects\ASM\SCide\obj\Debug\ASM.ErrorWindow.resources
+C:\Users\admin\Documents\Visual Studio 2015\Projects\ASM\SCide\obj\Debug\ASM.Console.resources
+C:\Users\admin\Documents\Visual Studio 2015\Projects\ASM\SCide\obj\Debug\ASM.RegistersWindow.resources
+C:\Users\admin\Documents\Visual Studio 2015\Projects\ASM\SCide\obj\Debug\ASM.OperatorsWindow.resources
+C:\Users\admin\Documents\Visual Studio 2015\Projects\ASM\SCide\obj\Debug\ASM.csprojResolveAssemblyReference.cache
+C:\Users\admin\Documents\Visual Studio 2015\Projects\ASM\SCide\obj\Debug\ASM.NavigationWindow.resources
+C:\Users\admin\Documents\Visual Studio 2015\Projects\ASM\SCide\obj\Debug\ASM.CodeEditBox.resources
+C:\Users\admin\Documents\Visual Studio 2015\Projects\ASM\SCide\obj\Debug\ASM.ExceptionForm.resources
