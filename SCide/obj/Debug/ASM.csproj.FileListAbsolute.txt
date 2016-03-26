@@ -15,3 +15,6 @@ C:\Users\admin\Documents\Visual Studio 2015\Projects\ASM\SCide\obj\Debug\ASM.csp
 C:\Users\admin\Documents\Visual Studio 2015\Projects\ASM\SCide\obj\Debug\ASM.NavigationWindow.resources
 C:\Users\admin\Documents\Visual Studio 2015\Projects\ASM\SCide\obj\Debug\ASM.CodeEditBox.resources
 C:\Users\admin\Documents\Visual Studio 2015\Projects\ASM\SCide\obj\Debug\ASM.ExceptionForm.resources
+C:\Users\admin\Documents\Visual Studio 2015\Projects\MAIDE\bin\Debug\ASM.exe.config
+C:\Users\admin\Documents\Visual Studio 2015\Projects\MAIDE\SCide\obj\Debug\ASM.exe
+C:\Users\admin\Documents\Visual Studio 2015\Projects\MAIDE\SCide\obj\Debug\ASM.pdb
