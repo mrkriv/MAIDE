@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ASM</RootNamespace>
-    <AssemblyName>ASM</AssemblyName>
+    <AssemblyName>MAIDE</AssemblyName>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
