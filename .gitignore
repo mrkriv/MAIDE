@@ -1,11 +1,9 @@
-
-/.vs
-
+.vs
 *.vspx
 *.psess
 
 MAIDE/bin/**/*
-!MAIDE/bin/*.exe
-!MAIDE/bin/*.dll
+!MAIDE/bin/**/*.exe
+!MAIDE/bin/**/*.dll
 
-SCide/obj/*
+SCide/obj
