@@ -190,9 +190,5 @@ namespace ASM
                 base.Undo(owner);
             }
         }
-
-        public class HistoryRemove : HistoryElement
-        {
-        }
     }
 }

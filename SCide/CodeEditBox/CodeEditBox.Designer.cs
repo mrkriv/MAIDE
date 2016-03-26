@@ -80,31 +80,28 @@
             this.redoToolStripMenuItem});
             this.ContextMenu.Name = "ContextMenu";
             this.ContextMenu.ShowImageMargin = false;
-            this.ContextMenu.Size = new System.Drawing.Size(108, 142);
+            this.ContextMenu.Size = new System.Drawing.Size(157, 164);
             this.ContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenu_Opening);
             // 
             // cmCut
             // 
             this.cmCut.Name = "cmCut";
             this.cmCut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.cmCut.ShowShortcutKeys = false;
-            this.cmCut.Size = new System.Drawing.Size(107, 22);
+            this.cmCut.Size = new System.Drawing.Size(156, 22);
             this.cmCut.Text = "Вырезать";
             // 
             // cmCopy
             // 
             this.cmCopy.Name = "cmCopy";
             this.cmCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.cmCopy.ShowShortcutKeys = false;
-            this.cmCopy.Size = new System.Drawing.Size(107, 22);
+            this.cmCopy.Size = new System.Drawing.Size(156, 22);
             this.cmCopy.Text = "Копировать";
             // 
             // cmPaste
             // 
             this.cmPaste.Name = "cmPaste";
             this.cmPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.cmPaste.ShowShortcutKeys = false;
-            this.cmPaste.Size = new System.Drawing.Size(107, 22);
+            this.cmPaste.Size = new System.Drawing.Size(156, 22);
             this.cmPaste.Text = "Вставить";
             this.cmPaste.Click += new System.EventHandler(this.cmPaste_Click);
             // 
@@ -112,21 +109,19 @@
             // 
             this.cmDelete.Name = "cmDelete";
             this.cmDelete.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.cmDelete.ShowShortcutKeys = false;
-            this.cmDelete.Size = new System.Drawing.Size(107, 22);
+            this.cmDelete.Size = new System.Drawing.Size(156, 22);
             this.cmDelete.Text = "Удалить";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(104, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(153, 6);
             // 
             // undoToolStripMenuItem
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.ShowShortcutKeys = false;
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.undoToolStripMenuItem.Text = "Undo";
             this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
@@ -134,8 +129,7 @@
             // 
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
             this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.redoToolStripMenuItem.ShowShortcutKeys = false;
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.redoToolStripMenuItem.Text = "Redo";
             this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
             // 

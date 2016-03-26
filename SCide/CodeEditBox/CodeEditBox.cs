@@ -20,10 +20,12 @@ namespace ASM
         private readonly float defaultFontSize = 10.0f;
         private readonly float[] charSizes = new float[char.MaxValue - char.MinValue];
 
+        private readonly Stack<List<HistoryElement>> undoStack = new Stack<List<HistoryElement>>();
+        private readonly Stack<List<HistoryElement>> redoStack = new Stack<List<HistoryElement>>();
+        private readonly List<Keys> keyboardState = new List<Keys>();
         private List<HistoryElement> recordStack;
-        private Stack<List<HistoryElement>> undoStack = new Stack<List<HistoryElement>>();
-        private Stack<List<HistoryElement>> redoStack = new Stack<List<HistoryElement>>();
-        private List<Row> rows = new List<Row>();
+        private readonly List<Row> rows = new List<Row>();
+        private int recordMissCount = 0;
 
         private SolidBrush selectBrush;
         private SolidBrush linesNumBrush;
@@ -119,7 +121,7 @@ namespace ASM
                 InsertRows(0, buff);
             }
         }
-        
+
         [Category("Appearance")]
         [DefaultValue(typeof(Color), "51, 51, 51")]
         public Color LinesNumBrush
@@ -152,8 +154,8 @@ namespace ASM
         [DefaultValue(typeof(Color), "220, 220, 220")]
         public Color TextBaseBrush
         {
-            get { return textBaseBrush.Color;  }
-            set { textBaseBrush = new SolidBrush(value);  }
+            get { return textBaseBrush.Color; }
+            set { textBaseBrush = new SolidBrush(value); }
         }
 
         public new event EventHandler<TextChangedEventArgs> TextChanged
@@ -202,15 +204,16 @@ namespace ASM
             ContextMenu.Renderer = new MenuStripRenderer();
             foreach (ToolStripItem item in ContextMenu.Items)
                 MenuStripRenderer.SetStyle(item);
-            
+
             foreach (var inf in typeof(CodeEditBox).GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
-                var atrs = inf.GetCustomAttributes(typeof(DefaultValueAttribute), true); //.Where(e => e is DefaultValueAttribute);
+                var atrs = inf.GetCustomAttributes(typeof(DefaultValueAttribute), true);
                 if (atrs.Count() != 0)
                     inf.SetValue(this, ((DefaultValueAttribute)atrs.First()).Value, BindingFlags.SetProperty, null, null, null);
             }
 
             AddRow(new Row(this));
+            undoStack.Clear();
         }
 
         protected override void OnFontChanged(EventArgs e)
@@ -318,26 +321,34 @@ namespace ASM
 
         public void RemoveRow(int index)
         {
+            startRecordHystory();
             AddToHistory(new HistoryRemoveRow(rows[index], index));
             rows.RemoveAt(index);
+            commitHystory();
         }
 
         public void InsertRow(int index, Row newRow)
         {
+            startRecordHystory();
             AddToHistory(new HistoryAddRow(newRow, index));
             rows.Insert(index, newRow);
+            commitHystory();
         }
 
         public void InsertRows(int index, IEnumerable<Row> newRows)
         {
+            startRecordHystory();
             AddToHistory(new HistoryAddRows(newRows, index));
             rows.InsertRange(index, newRows);
+            commitHystory();
         }
 
         public void RemoveRows(int index, int count)
         {
+            startRecordHystory();
             AddToHistory(new HistoryRemoveRows(rows.GetRange(index, count), index));
             rows.RemoveRange(index, count);
+            commitHystory();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -355,7 +366,7 @@ namespace ASM
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            switch(e.Button)
+            switch (e.Button)
             {
                 case MouseButtons.Left:
                     SelectStart = GetPointByLocation(e.Location);
@@ -402,11 +413,10 @@ namespace ASM
                 return new Point(0, y);
 
             int x = 0;
-            while (x < rows[y].Length && 
+            while (x < rows[y].Length &&
                 pos.X > rows[y][x].Render_old_X + rows[y][x].Render_old_Width / 2)
                 x++;
 
-            //return new Point(Math.Min(rows[y].Length - 1, x), y);
             return new Point(x, y);
         }
 
@@ -416,9 +426,77 @@ namespace ASM
             SelectEnd = SelectStart;
         }
 
+        protected override void OnKeyPress(KeyPressEventArgs e)
+        {
+            foreach (ToolStripItem m in ContextMenu.Items)
+            {
+                if (m is ToolStripMenuItem)
+                {
+                    Keys k = ((ToolStripMenuItem)m).ShortcutKeys;
+                    Keys k2 = k & ~(Keys.Control | Keys.Shift | Keys.Alt);
+                    Keys k3 = k & ~k2;
+
+                    if (keyboardState.Contains(k2) && (ModifierKeys & k3) != 0)
+                    {
+                        m.PerformClick();
+                        break;
+                    }
+                }
+            }
+
+            if (ModifierKeys != 0)
+                return;
+
+            switch (e.KeyChar)
+            {
+                case (char)8:
+                    if (GetSelectLen() != 0)
+                        RemoveSelected();
+                    else
+                    {
+                        if (SelectStart.X > 0)
+                            rows[SelectStart.Y].Remove(--selectStart.X);
+                        else if (SelectStart.Y != 0)
+                        {
+                            selectStart.X = rows[SelectStart.Y - 1].Length;
+                            rows[SelectStart.Y - 1].Merger(rows[SelectStart.Y]);
+                            RemoveRow(selectStart.Y--);
+                        }
+                    }
+                    break;
+                case (char)13:
+                    RemoveSelected();
+                    if (rows[SelectStart.Y].Length != SelectStart.X)
+                        InsertRow(SelectStart.Y + 1, new Row(this, rows[SelectStart.Y].Cut(SelectStart.X, rows[SelectStart.Y].Length - SelectStart.X)));
+                    else
+                        InsertRow(SelectStart.Y + 1, new Row(this));
+                    selectStart.Y++;
+                    selectStart.X = 0;
+                    break;
+                case (char)11:
+                    break;
+                default:
+                    RemoveSelected();
+                    rows[SelectStart.Y].Write(e.KeyChar, SelectStart.X);
+                    selectStart.X++;
+                    break;
+            }
+
+            ResetSelect();
+            Invalidate(false);
+        }
+
+        protected override void OnKeyUp(KeyEventArgs e)
+        {
+            keyboardState.Remove(e.KeyCode);
+            base.OnKeyUp(e);
+        }
+
         protected override void OnKeyDown(KeyEventArgs e)
         {
             bool needUpdate = true;
+            keyboardState.Add(e.KeyCode);
+
             switch (e.KeyCode)
             {
                 case Keys.Up:
@@ -515,20 +593,31 @@ namespace ASM
                 redoStack.Clear();
         }
 
-        public void commitHystory()
+        public void startRecordHystory()
         {
-            pushHystory();
-            recordStack = new List<HistoryElement>();
-            recordHystory = true;
+            if (recordHystory)
+                recordMissCount++;
+            else
+            {
+                recordMissCount = 0;
+                recordStack = new List<HistoryElement>();
+                recordHystory = true;
+            }
         }
 
-        public void pushHystory()
+        public void commitHystory()
         {
             if (!recordHystory)
                 return;
 
-            recordHystory = false;
-            undoStack.Push(recordStack);
+            if (recordMissCount != 0)
+                recordMissCount--;
+            else
+            {
+                recordHystory = false;
+                if (recordStack.Count != 0)
+                    undoStack.Push(recordStack);
+            }
         }
 
         public void Undo()
@@ -538,10 +627,15 @@ namespace ASM
 
             ResetSelect();
 
-            redoStack.Push(undoStack.Pop());
-            redoStack.Last().Reverse();
-            foreach (var i in redoStack.Last())
+            var elem = undoStack.Pop().ToList();
+
+            startRecordHystory();
+            foreach (var i in elem)
                 i.Undo(this);
+
+            redoStack.Push(elem);
+            commitHystory();
+            undoStack.Pop();
 
             Invalidate(true);
         }
@@ -553,10 +647,16 @@ namespace ASM
 
             ResetSelect();
 
-            undoStack.Push(redoStack.Pop());
-            undoStack.Last().Reverse();
-            foreach (var i in undoStack.Last())
+            var elem = redoStack.Pop().ToList();
+
+            startRecordHystory();
+            foreach (var i in elem)
                 i.Redo(this);
+
+            undoStack.Push(elem);
+            commitHystory();
+            undoStack.Pop();
+
             Invalidate(true);
         }
 
@@ -566,49 +666,6 @@ namespace ASM
             selectEnd.Y = rows.Count - 1;
             selectEnd.X = rows[SelectEnd.Y].Length - 1;
             Invalidate(true);
-        }
-
-        protected override void OnKeyPress(KeyPressEventArgs e)
-        {
-            switch (e.KeyChar)
-            {
-                case (char)8:
-                    if (GetSelectLen() != 0)
-                        RemoveSelected();
-                    else
-                    {
-                        if (SelectStart.X > 0)
-                            rows[SelectStart.Y].Remove(--selectStart.X);
-                        else if (SelectStart.Y != 0)
-                        {
-                            selectStart.X = rows[SelectStart.Y - 1].Length;
-                            rows[SelectStart.Y - 1].Merger(rows[SelectStart.Y]);
-                            RemoveRow(selectStart.Y--);
-                        }
-                    }
-                    break;
-                case (char)13:
-                    RemoveSelected();
-                    if (rows[SelectStart.Y].Length != SelectStart.X)
-                        InsertRow(SelectStart.Y + 1, new Row(this, rows[SelectStart.Y].Cut(SelectStart.X, rows[SelectStart.Y].Length - SelectStart.X)));
-                    else
-                        InsertRow(SelectStart.Y + 1, new Row(this));
-                    selectStart.Y++;
-                    selectStart.X = 0;
-                    break;
-                case (char)11:
-                    break;
-                default:
-                    RemoveSelected();
-                    rows[SelectStart.Y].Write(e.KeyChar, SelectStart.X);
-                    selectStart.X++;
-                    break;
-            }
-
-            ResetSelect();
-            Invalidate(false);
-
-            base.OnKeyPress(e);
         }
 
         float getCharWidth(char c)
@@ -631,6 +688,7 @@ namespace ASM
                 case Keys.Up:
                 case Keys.Down:
                 case Keys.Tab:
+                case Keys.Control:
                     return true;
             }
             return base.IsInputKey(keyData);
@@ -716,29 +774,38 @@ namespace ASM
 
         private void cmPaste_Click(object sender, EventArgs e)
         {
-            if (!Clipboard.ContainsText(TextDataFormat.Text))
+            if (!((ToolStripMenuItem)sender).Enabled || !Clipboard.ContainsText(TextDataFormat.Text))
                 return;
 
+            Paste(Clipboard.GetText(TextDataFormat.Text));
+        }
+
+        public void Paste(string text)
+        {
+            startRecordHystory();
+
+            var lines = text.Split('\n');
             RemoveSelected();
-            
-            var tLines = Clipboard.GetText(TextDataFormat.Text).Split('\n');
 
-            rows[SelectStart.Y].Write(tLines[0], SelectStart.X);
+            rows[SelectStart.Y].Write(lines[0], SelectStart.X);
 
-            if (tLines.Count() > 1)
+            if (lines.Count() > 1)
             {
-                int len = SelectStart.X + tLines[0].Length;
+                int len = SelectStart.X + lines[0].Length;
                 var temp = rows[SelectStart.Y].Cut(len, rows[SelectStart.Y].Length - len);
                 var buff = new List<Row>();
 
-                for (int i = 1; i < tLines.Length; i++)
-                    buff.Add(new Row(this, tLines[i]));
+                for (int i = 1; i < lines.Length; i++)
+                    buff.Add(new Row(this, lines[i]));
 
                 InsertRows(SelectStart.Y + 1, buff);
                 rows[SelectStart.Y + buff.Count].Write(temp, buff.Last().Length);
             }
-            
-            SelectStart = new Point(selectStart.X + tLines.Last().Length, selectStart.Y + tLines.Length - 1);
+
+            int nx = (lines.Length == 1 ? selectStart.X : 0) + lines.Last().Length;
+            SelectStart = new Point(nx, selectStart.Y + lines.Length - 1);
+            Invalidate(false);
+            commitHystory();
         }
 
         public void RemoveSelected()
@@ -746,6 +813,7 @@ namespace ASM
             if (SelectStart == SelectEnd)
                 return;
 
+            startRecordHystory();
             if (SelectStart.Y == SelectEnd.Y)
                 rows[SelectStart.Y].Remove(SelectStart.X, SelectEnd.X - SelectStart.X);
             else
@@ -763,16 +831,19 @@ namespace ASM
                 RemoveRow(SelectStart.Y + 1);
             }
             ResetSelect();
+            commitHystory();
         }
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Undo();
+            if (((ToolStripMenuItem)sender).Enabled)
+                Undo();
         }
 
         private void redoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Redo();
+            if (((ToolStripMenuItem)sender).Enabled)
+                Redo();
         }
     }
 }

@@ -38,8 +38,10 @@ namespace ASM
 
             public void Remove(int offest)
             {
+                Owner.startRecordHystory();
                 Owner.AddToHistory(new HistoryRemoveChar(this, offest, data[offest]));
                 data.RemoveAt(offest);
+                Owner.commitHystory();
                 IsChange = true;
             }
 
@@ -47,30 +49,38 @@ namespace ASM
             {
                 if (count <= 0)
                     return;
+                Owner.startRecordHystory();
                 Owner.AddToHistory(new HistoryRemoveChars(this, offest, data.GetRange(offest, count).Select(s => (char)s)));
                 data.RemoveRange(offest, count);
+                Owner.commitHystory();
                 IsChange = true;
             }
 
             public IEnumerable<char> Cut(int offest, int count)
             {
+                Owner.startRecordHystory();
                 IEnumerable<char> txt = data.GetRange(offest, count).Select(s => (char)s);
                 Remove(offest, count);
+                Owner.commitHystory();
                 return txt;
             }
 
             public void Write(char symbol, int offest = 0)
             {
+                Owner.startRecordHystory();
                 Owner.AddToHistory(new HistoryAddChar(this, offest, symbol));
                 data.Insert(offest, symbol);
                 IsChange = true;
+                Owner.commitHystory();
             }
 
             public void Write(IEnumerable<char> text, int offest = 0)
             {
+                Owner.startRecordHystory();
                 Owner.AddToHistory(new HistoryAddChars(this, offest, text));
                 data.InsertRange(offest, text.Select(c => (Symbol)c));
                 IsChange = true;
+                Owner.commitHystory();
             }
 
             public void Merger(Row line)
