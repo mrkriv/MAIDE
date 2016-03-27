@@ -452,7 +452,7 @@ namespace ASM
             caretVisible = true;
             SelectEnd = SelectStart;
         }
-
+        
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
             foreach (ToolStripItem m in ContextMenu.Items)
@@ -807,6 +807,28 @@ namespace ASM
             Paste(Clipboard.GetText(TextDataFormat.Text));
         }
 
+        private void cmCut_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(GetSelect());
+            RemoveSelected();
+        }
+
+        public string GetSelect()
+        {
+            StringBuilder sb = new StringBuilder();
+            if (SelectStart.Y == SelectEnd.Y)
+                sb.Append(rows[SelectStart.Y].GetRange(SelectStart.X, SelectEnd.X - SelectStart.X));
+            else
+            {
+                sb.AppendLine(rows[SelectStart.Y].GetRange(SelectStart.X, rows[SelectStart.Y].Length - SelectStart.X));
+
+                for (int i = SelectStart.Y + 1; i < SelectEnd.Y; i++)
+                    sb.AppendLine(rows[i].ToString());
+                sb.AppendLine(rows[SelectEnd.Y].GetRange(0, SelectEnd.X));
+            }
+            return sb.ToString();
+        }
+
         public void Paste(string text)
         {
             startRecordHystory();
@@ -894,6 +916,16 @@ namespace ASM
         {
             if (((ToolStripMenuItem)sender).Enabled)
                 Redo();
+        }
+
+        private void cmDelete_Click(object sender, EventArgs e)
+        {
+            RemoveSelected();
+        }
+
+        private void cmCopy_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(GetSelect());
         }
     }
 }

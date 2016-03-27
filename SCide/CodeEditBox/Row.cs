@@ -53,6 +53,11 @@ namespace ASM
                 IsChange = true;
             }
 
+            public string GetRange(int offest, int count)
+            {
+                return string.Concat(data.GetRange(offest, count).Select(s => (char)s));
+            }
+
             public IEnumerable<char> Cut(int offest, int count)
             {
                 Owner.startRecordHystory();

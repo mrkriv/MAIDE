@@ -89,6 +89,7 @@
             this.cmCut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
             this.cmCut.Size = new System.Drawing.Size(156, 22);
             this.cmCut.Text = "Вырезать";
+            this.cmCut.Click += new System.EventHandler(this.cmCut_Click);
             // 
             // cmCopy
             // 
@@ -96,6 +97,7 @@
             this.cmCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
             this.cmCopy.Size = new System.Drawing.Size(156, 22);
             this.cmCopy.Text = "Копировать";
+            this.cmCopy.Click += new System.EventHandler(this.cmCopy_Click);
             // 
             // cmPaste
             // 
@@ -111,6 +113,7 @@
             this.cmDelete.ShortcutKeys = System.Windows.Forms.Keys.Delete;
             this.cmDelete.Size = new System.Drawing.Size(156, 22);
             this.cmDelete.Text = "Удалить";
+            this.cmDelete.Click += new System.EventHandler(this.cmDelete_Click);
             // 
             // toolStripSeparator1
             // 
