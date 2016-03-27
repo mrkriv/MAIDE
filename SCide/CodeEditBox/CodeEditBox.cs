@@ -471,7 +471,7 @@ namespace ASM
                 }
             }
 
-            if (ModifierKeys != 0)
+            if (ModifierKeys != 0 && (ModifierKeys& Keys.Shift) == 0)
                 return;
 
             switch (e.KeyChar)

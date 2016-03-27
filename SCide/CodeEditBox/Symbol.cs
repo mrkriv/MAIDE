@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace ASM
 {
@@ -33,6 +28,11 @@ namespace ASM
             public static implicit operator Symbol(char x)
             {
                 return new Symbol(x);
+            }
+
+            public override string ToString()
+            {
+                return Value.ToString();
             }
         }
     }
