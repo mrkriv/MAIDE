@@ -17,7 +17,7 @@ namespace ASM
 
         private static T reg<T>(string name) where T : Register
         {
-            return (T)ActiveCore.getRegister(name);
+            return (T)ActiveCore.GetRegister(name);
         }
 
         [Description("Выводит на консоль '{0}'-й байт из регистра 'a'")]
@@ -64,7 +64,7 @@ namespace ASM
             if (ActiveCore.Stack.Count != 0)
                 ActiveCore.ActiveIndex = ActiveCore.Stack.Pop();
             else
-                ActiveCore.isFinished = true;
+                ActiveCore.Stop();
         }
 
         [Description("Кладет на вершину стека все байты регистра '{0}'")]

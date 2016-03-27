@@ -11,19 +11,20 @@ namespace ASM
     {
         public static readonly BindingSource Errors;
 
-        private List<Operation> source;
+        private List<Operation> source = new List<Operation>();
         private ManualResetEvent waitEvent;
         private CodeEditBox code;
 
         public const int TotalTickLimit = 1500;
-        public Dictionary<string, int> Links;
+        public Dictionary<string, int> Links = new Dictionary<string, int>();
+        public Dictionary<int, List<byte>> DataByte = new Dictionary<int, List<byte>>();
         public List<Register> Registers;
-        public Dictionary<int, List<byte>> DataByte;
-        public Stack<int> Stack;
-        public bool isFinished = false;
-        public bool isPaused = false;
+        public Stack<int> Stack = new Stack<int>();
         public int ActiveIndex = 0;
-        public int TotalTick = 0;
+        public int TotalTick { get; private set; }
+        public bool IsFinished { get; private set; }
+        public bool IsPaused { get; private set; }
+        public bool IsReady { get; private set; }
 
         public class Operation
         {
@@ -45,10 +46,7 @@ namespace ASM
             Operators.ActiveCore = this;
 
             waitEvent = new ManualResetEvent(true);
-            Stack = new Stack<int>();
             Registers = new List<Register>();
-            DataByte = new Dictionary<int, List<byte>>();
-            Links = new Dictionary<string, int>();
 
             Registers.Add(new Register32("a"));
             Registers.Add(new Register32("b"));
@@ -63,7 +61,7 @@ namespace ASM
             Registers.Add(new RegisterFlag("flag"));
         }
 
-        public Register getRegister(string name)
+        public Register GetRegister(string name)
         {
             foreach (Register r in Registers)
             {
@@ -75,66 +73,73 @@ namespace ASM
 
         public void Invoke()
         {
+            if (!IsReady)
+                return;
+
+            Stack.Clear();
+            ActiveIndex = 0;
+            TotalTick = 0;
+            IsFinished = false;
+            Resume();
+
             while (Console.Instance == null)
                 Thread.Sleep(5);
 
-            ActiveIndex = 0;
-            TotalTick = 0;
+            while (ActiveIndex < source.Count && !IsFinished)
+            {
+                Operation op = source[ActiveIndex];
 
-            while (ActiveIndex < source.Count && !isFinished)
-                Loop();
+                if (TotalTick > TotalTickLimit)
+                {
+                    if (MessageBox.Show("Возможно, Ваша программа зациклилась.\nОстановть ее?", "Слишком много операций", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        IsFinished = true;
+                        return;
+                    }
+                    TotalTick = -TotalTick;
+                }
 
-            isFinished = true;
+                if (code[op.line.Number].Flag)
+                    Pause();
+
+                waitEvent.WaitOne();
+
+                try
+                {
+                    op.method.Invoke(null, op.arg);
+                }
+                catch
+                {
+                    MessageBox.Show(string.Format("Не обрабатываемая ошибка на строке {0}.\nОтладка не возможна.", ActiveIndex));
+                    IsFinished = true;
+                }
+
+                ActiveIndex++;
+                TotalTick++;
+            }
+
+            IsFinished = true;
 
             Console.MoveCaretToEnd();
             Console.Write("\nPress any key to continue.");
             Console.ReadKey();
         }
 
-        void Loop()
-        {
-            Operation op = source[ActiveIndex];
-
-            if (TotalTick > TotalTickLimit)
-            {
-                if (MessageBox.Show("Возможно, ваша программа зациклилась.\nОстановть ее?", "Слишком много операций", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    isFinished = true;
-                    return;
-                }
-                TotalTick = -TotalTick;
-            }
-
-            //if (markers.Find(m => m.Number == 0) != null)
-            //    Pause();
-
-            waitEvent.WaitOne();
-
-            ///*try
-            //{*/
-            op.method.Invoke(null, op.arg);
-            //}
-            //    catch
-            //    {
-            //        MessageBox.Show(string.Format("Не обрабатываемая ошибка на строке {0}.\nОтладка не возможна.", ActiveIndex));
-            //        isFinished = true;
-            //    }
-
-            ActiveIndex++;
-            TotalTick++;
-        }
-
         public bool Build(CodeEditBox codeBox)
         {
+            Stop();
+            source.Clear();
+            Links.Clear();
+            DataByte.Clear();
             Errors.Clear();
+            IsReady = false;
+
             code = codeBox;
 
             var lines = Preprocessor();
 
             if (Errors.Count != 0)
                 return false;
-
-            source = new List<Operation>(lines.Count);
 
             foreach (var line in lines)
             {
@@ -143,7 +148,8 @@ namespace ASM
                     source.Add(op);
             }
 
-            return Errors.Count == 0;
+            IsReady = Errors.Count == 0;
+            return IsReady;
         }
 
         public Dictionary<Line, string[]> Preprocessor()
@@ -227,7 +233,7 @@ namespace ASM
 
                 if (needType.BaseType == typeof(Register))
                 {
-                    Register reg = getRegister(input[i].ToLower());
+                    Register reg = GetRegister(input[i].ToLower());
                     if (reg == null)
                         error = new ErrorLine(string.Format("Регистр '{0}' не сущесвует.", input[i]), operation.line.Number);
 
@@ -269,7 +275,7 @@ namespace ASM
                             else
                                 Errors.Add(new ErrorLine(string.Format("Ничего не понятно, наверное это эльфийский."), operation.line.Number));
                         }
-                        Register32 reg = getRegister(temp[1].ToLower()) as Register32;
+                        Register32 reg = GetRegister(temp[1].ToLower()) as Register32;
                         if (reg == null)
                             error = new ErrorLine(string.Format("Регистр '{0}' не сущесвует или не может использоватся здесь.", temp[1]), operation.line.Number);
                         else
@@ -303,13 +309,26 @@ namespace ASM
         public void Pause()
         {
             waitEvent.Reset();
-            isPaused = true;
+            IsPaused = true;
         }
 
         public void Resume()
         {
             waitEvent.Set();
-            isPaused = false;
+            IsPaused = false;
+        }
+
+        public void Stop()
+        {
+            Resume();
+            IsFinished = true;
+        }
+
+        public void Destroy()
+        {
+            Stop();
+            IsPaused = false;
+            IsReady = false;
         }
     }
 }

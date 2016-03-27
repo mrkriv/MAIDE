@@ -40,6 +40,7 @@
             this.MianMenuAll = new System.Windows.Forms.ToolStripMenuItem();
             this.MianMenuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewDropDown = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.BuildMenuBuild = new System.Windows.Forms.ToolStripButton();
@@ -47,7 +48,6 @@
             this.BuildMenuPause = new System.Windows.Forms.ToolStripButton();
             this.BuildMenuResume = new System.Windows.Forms.ToolStripButton();
             this.BuildMenuRestart = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.MainMenu.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -151,6 +151,16 @@
             this.ViewDropDown.Size = new System.Drawing.Size(39, 22);
             this.ViewDropDown.Text = "Окна";
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = global::ASM.Properties.Resources.settings;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
             // dockPanel
             // 
             this.dockPanel.ActiveAutoHideContent = null;
@@ -227,15 +237,6 @@
             this.BuildMenuRestart.Name = "BuildMenuRestart";
             this.BuildMenuRestart.Size = new System.Drawing.Size(23, 22);
             this.BuildMenuRestart.MouseDown += new System.Windows.Forms.MouseEventHandler(this.restartToolStripMenuItem_Click);
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::ASM.Properties.Resources.settings;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
             // 
             // MainForm
             // 

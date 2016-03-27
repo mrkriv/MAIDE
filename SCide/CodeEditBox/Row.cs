@@ -8,6 +8,7 @@ namespace ASM
         public class Row
         {
             private List<Symbol> data = new List<Symbol>();
+            public bool Flag = false;
 
             public readonly CodeEditBox Owner;
             public bool IsChange { get; internal set; }

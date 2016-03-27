@@ -29,6 +29,8 @@ namespace ASM
             
             MainMenu.Renderer = new MenuStripRenderer();
             Icon = Properties.Resources.IconApplication;
+
+            core = new Core();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -182,7 +184,7 @@ namespace ASM
 
         private void ConsoleClosed(object sender, FormClosedEventArgs e)
         {
-            core = null;
+            core.Destroy();
             runThread.Abort();
             RegistersWindow.Binding.DataSource = null;
             updateState();
@@ -191,9 +193,9 @@ namespace ASM
         void updateState()
         {
             bool isDoc = ActiveDocument != null;
-            bool isStart = isDoc && core != null;
-            bool isFinished = isStart && core.isFinished;
-            bool isPaused = isStart && core.isPaused;
+            bool isStart = isDoc && core.IsReady;
+            bool isFinished = isStart && core.IsFinished;
+            bool isPaused = isStart && core.IsPaused;
 
             BuildMenuBuild.Visible = isDoc && !isStart;
             BuildMenuStop.Visible = isStart;
@@ -229,15 +231,12 @@ namespace ASM
             updateState();
         }
 
-        void run()
+        private void run()
         {
             ActiveDocument.Code.ReadOnly = true;
-
-            core = new Core();
-
+            
             if (!core.Build(ActiveDocument.Code))
             {
-                core = null;
                 BeginInvoke((Action)updateState);
                 ModuleAtribute.Show(typeof(ErrorWindow));
                 return;
@@ -252,7 +251,6 @@ namespace ASM
             }));
 
             core.Invoke();
-            core = null;
             Console.Destroy();
         }
 
@@ -267,6 +265,11 @@ namespace ASM
                 runThread.Abort();
 
             base.OnClosing(e);
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            new Setting().Show();
         }
     }
 }

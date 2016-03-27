@@ -47,18 +47,18 @@
             // 
             this.vScrollBar.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.vScrollBar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.vScrollBar.Location = new System.Drawing.Point(325, 0);
+            this.vScrollBar.Location = new System.Drawing.Point(334, 0);
             this.vScrollBar.Name = "vScrollBar";
-            this.vScrollBar.Size = new System.Drawing.Size(16, 291);
+            this.vScrollBar.Size = new System.Drawing.Size(16, 279);
             this.vScrollBar.TabIndex = 1;
             this.vScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar_Scroll);
             // 
             // hScrollBar
             // 
             this.hScrollBar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.hScrollBar.Location = new System.Drawing.Point(0, 291);
+            this.hScrollBar.Location = new System.Drawing.Point(0, 279);
             this.hScrollBar.Name = "hScrollBar";
-            this.hScrollBar.Size = new System.Drawing.Size(341, 16);
+            this.hScrollBar.Size = new System.Drawing.Size(350, 16);
             this.hScrollBar.TabIndex = 2;
             this.hScrollBar.Visible = false;
             // 
@@ -80,7 +80,7 @@
             this.redoToolStripMenuItem});
             this.ContextMenu.Name = "ContextMenu";
             this.ContextMenu.ShowImageMargin = false;
-            this.ContextMenu.Size = new System.Drawing.Size(157, 164);
+            this.ContextMenu.Size = new System.Drawing.Size(157, 142);
             this.ContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenu_Opening);
             // 
             // cmCut
@@ -147,7 +147,7 @@
             this.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ForeColor = System.Drawing.Color.Gainsboro;
             this.Name = "CodeEditBox";
-            this.Size = new System.Drawing.Size(341, 307);
+            this.Size = new System.Drawing.Size(350, 295);
             this.ContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
