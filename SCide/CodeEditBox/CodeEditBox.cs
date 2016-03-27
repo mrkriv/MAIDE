@@ -2,13 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
-using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
 using System.Reflection;
 
@@ -66,6 +62,8 @@ namespace ASM
             {
                 selectStart = value;
                 selectEnd = selectStart;
+                normalizeSelect();
+                Invalidate(false);
             }
         }
 
@@ -76,7 +74,8 @@ namespace ASM
             set
             {
                 selectEnd = value;
-
+                normalizeSelect();
+                Invalidate(false);
             }
         }
 
@@ -111,6 +110,7 @@ namespace ASM
             }
             set
             {
+                startRecordHystory();
                 string[] split = value.Split('\n');
                 List<Row> buff = new List<Row>(split.Count());
 
@@ -119,6 +119,7 @@ namespace ASM
 
                 RemoveRows(0, rows.Count);
                 InsertRows(0, buff);
+                commitHystory();
             }
         }
 
@@ -258,12 +259,24 @@ namespace ASM
             int start = vScrollBar.Value == 0 ? 0 : (int)(vScrollBar.Value / lineHeight) + 1;
             int end = Math.Min(rows.Count, start + (int)(Width / lineHeight));
 
+            Point selectS, selectE;
+            if ((selectStart.Y == selectEnd.Y && selectStart.X > selectEnd.X) || selectStart.Y > selectEnd.Y)
+            {
+                selectS = selectEnd;
+                selectE = selectStart;
+            }
+            else
+            {
+                selectS = selectStart;
+                selectE = selectEnd;
+            }
+
             float py = 0;
             for (int y = start; y < end; y++)
             {
                 float px = offestX;
 
-                if (SelectStart.Y == y && SelectEnd.Y == y)
+                if (selectS.Y == y && selectE.Y == y)
                 {
                     e.Graphics.FillRectangle(selectLineBrush, 0, py, offestX, lineHeight);
                     e.Graphics.DrawRectangle(selectLinePen, offestX + 1, py, Width - offestX - 1, lineHeight);
@@ -280,26 +293,39 @@ namespace ASM
                     sb.Render_old_X = (int)px;
                     sb.Render_old_Width = (int)charSizes[sb.Value];
 
-                    if (caretVisible && SelectStart.Y == y && SelectStart.X == x)
+                    if (caretVisible && selectS.Y == y && selectS.X == x)
                         e.Graphics.DrawLine(new Pen(ForeColor), px + 3, py, px + 3, py + lineHeight);
 
                     px += charSizes[sb.Value];
                 }
 
-                if (caretVisible && SelectStart.Y == y && SelectStart.X == rows[y].Length)
+                if (caretVisible && selectS.Y == y && selectS.X == rows[y].Length)
                     e.Graphics.DrawLine(new Pen(ForeColor), px + 2, py, px + 2, py + lineHeight);
 
-                if (SelectStart != SelectEnd && rows[y].Length != 0)
+                if (selectS != selectE)
                 {
-                    if (SelectStart.Y <= y && SelectEnd.Y >= y)
+                    if (selectS.Y <= y && selectE.Y >= y)
                     {
-                        Symbol sStart = GetSymbolByPoint(SelectStart.X, SelectStart.Y);
-                        Symbol sEnd = GetSymbolByPoint(SelectEnd.X, SelectEnd.Y);
+                        if (rows[y].Length != 0)
+                        {
+                            if (selectS.Y == y && rows[y].Length == selectS.X)
+                            {
+                                int x1 = rows[y][selectS.X - 1].Render_old_X + rows[y][selectS.X - 1].Render_old_Width;
+                                e.Graphics.FillRectangle(selectBrush, x1, py, 10, lineHeight);
+                            }
+                            else
+                            {
+                                Symbol sStart = GetSymbolByPoint(selectS.X, selectS.Y);
+                                Symbol sEnd = GetSymbolByPoint(selectE.X, selectE.Y);
 
-                        int x1 = SelectStart.Y == y && sStart != null ? sStart.Render_old_X : (int)offestX;
-                        int x2 = SelectEnd.Y == y && sEnd != null ? sEnd.Render_old_X + 5 : rows[y][rows[y].Length - 1].Render_old_X + 10;
+                                int x1 = selectS.Y == y && sStart != null ? sStart.Render_old_X : (int)offestX;
+                                int x2 = selectE.Y == y && sEnd != null ? sEnd.Render_old_X + 5 : rows[y][rows[y].Length - 1].Render_old_X + 10;
 
-                        e.Graphics.FillRectangle(selectBrush, x1, py, x2 - x1, lineHeight);
+                                e.Graphics.FillRectangle(selectBrush, x1, py, x2 - x1, lineHeight);
+                            }
+                        }
+                        else
+                            e.Graphics.FillRectangle(selectBrush, offestX, py, 10, lineHeight);
                     }
                 }
 
@@ -390,9 +416,9 @@ namespace ASM
             if (leftMouseDown)
             {
                 Point newPos = GetPointByLocation(e.Location);
-                if (newPos != SelectEnd)
+                if (newPos != selectEnd)
                 {
-                    SelectEnd = newPos;
+                    selectEnd = newPos;
                     Invalidate(false);
                 }
             }
@@ -402,6 +428,7 @@ namespace ASM
         {
             if (e.Button == MouseButtons.Left)
                 leftMouseDown = false;
+            normalizeSelect();
             base.OnMouseUp(e);
         }
 
@@ -832,6 +859,29 @@ namespace ASM
             }
             ResetSelect();
             commitHystory();
+        }
+
+        void normalizeSelect()
+        {
+            if ((selectStart.Y == selectEnd.Y && selectStart.X > selectEnd.X) || selectStart.Y > selectEnd.Y)
+            {
+                Point p = selectStart;
+                selectStart = selectEnd;
+                selectEnd = p;
+            }
+
+            if (rows.Count <= selectStart.Y)
+            {
+                selectStart.Y = rows.Count - 1;
+                selectEnd = selectStart;
+            }
+
+            Row r = rows[selectStart.Y];
+            if (r.Length < selectStart.X)
+            {
+                selectStart.X = r.Length;
+                selectEnd = selectStart;
+            }
         }
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)

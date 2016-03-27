@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace ASM
@@ -56,5 +57,18 @@ namespace ASM
             Offest = 0;
             reg32 = offest;
         }
+    }
+
+    public static class Exep
+    {
+        //public static void Swap<T>(this T a, ref T b)
+        //{
+        //    var size = Marshal.SizeOf(typeof(T));
+        //    var ptr = Marshal.AllocHGlobal(size);
+        //    Marshal.StructureToPtr(b, ptr, false);
+        //    b = a;
+        //    Marshal.PtrToStructure(ptr, a);
+        //    Marshal.FreeHGlobal(ptr);
+        //}
     }
 }
