@@ -15,8 +15,7 @@ namespace ASM
         private List<Operation> source = new List<Operation>();
         private ManualResetEvent waitEvent;
         private CodeEditBox code;
-
-        public const int TotalTickLimit = 1500;
+        
         public Dictionary<string, int> Links = new Dictionary<string, int>();
         public Dictionary<int, List<byte>> DataByte = new Dictionary<int, List<byte>>();
         public List<Register> Registers;
@@ -90,7 +89,7 @@ namespace ASM
             {
                 Operation op = source[ActiveIndex];
 
-                if (TotalTick > TotalTickLimit)
+                if (TotalTick > Properties.Settings.Default.TotalTickLimit)
                 {
                     if (MessageBox.Show("Возможно, Ваша программа зациклилась.\nОстановть ее?", "Слишком много операций", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
