@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -11,11 +12,19 @@ namespace ASM.UI
     public class MGroupBox : GroupBox
     {
         private Color borderColor;
-
+        
+        [Category("Appearance")]
         public Color BorderColor
         {
             get { return borderColor; }
-            set { borderColor = value; }
+            set
+            {
+                if (borderColor == value)
+                    return;
+
+                borderColor = value;
+                Invalidate(false);
+            }
         }
 
         public MGroupBox()
@@ -23,9 +32,11 @@ namespace ASM.UI
             borderColor = Color.Black;
         }
 
-        protected override void OnPaint(PaintEventArgs e)
+        protected override void OnPaintBackground(PaintEventArgs e)
         {
-            Size tSize = TextRenderer.MeasureText(Text, Font);
+            e.Graphics.Clear(BackColor);
+
+            Size tSize = TextRenderer.MeasureText(Text + " ", Font);
 
             Rectangle borderRect = e.ClipRectangle;
             borderRect.Y += tSize.Height / 2;
@@ -38,6 +49,10 @@ namespace ASM.UI
             textRect.Height = tSize.Height;
             e.Graphics.FillRectangle(new SolidBrush(BackColor), textRect);
             e.Graphics.DrawString(Text, Font, new SolidBrush(ForeColor), textRect);
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
         }
     }
 }
