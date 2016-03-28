@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.Runtime.CompilerServices;
 using System.Reflection;
 
-namespace ASM
+namespace ASM.UI
 {
     public partial class CodeEditBox : UserControl
     {

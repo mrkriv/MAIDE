@@ -79,24 +79,24 @@
             this.log.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.log.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.log.ForeColor = System.Drawing.Color.Gainsboro;
-            this.log.Location = new System.Drawing.Point(12, 54);
+            this.log.Location = new System.Drawing.Point(12, 47);
             this.log.Multiline = true;
             this.log.Name = "log";
             this.log.ReadOnly = true;
             this.log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.log.Size = new System.Drawing.Size(794, 199);
+            this.log.Size = new System.Drawing.Size(794, 206);
             this.log.TabIndex = 3;
             // 
             // hendel
             // 
             this.hendel.AutoSize = true;
-            this.hendel.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.hendel.Font = new System.Drawing.Font("Segoe Print", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.hendel.ForeColor = System.Drawing.Color.Gainsboro;
-            this.hendel.Location = new System.Drawing.Point(12, 9);
+            this.hendel.Location = new System.Drawing.Point(12, 3);
             this.hendel.Name = "hendel";
-            this.hendel.Size = new System.Drawing.Size(570, 32);
+            this.hendel.Size = new System.Drawing.Size(302, 47);
             this.hendel.TabIndex = 4;
-            this.hendel.Text = "Алдуин испортил код этой програмы Х_Х";
+            this.hendel.Text = "Nas beru uhn`adarr?";
             // 
             // label1
             // 
@@ -114,11 +114,11 @@
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.Color.Silver;
-            this.label2.Location = new System.Drawing.Point(742, 38);
+            this.label2.Location = new System.Drawing.Point(751, 26);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(68, 13);
+            this.label2.Size = new System.Drawing.Size(60, 13);
             this.label2.TabIndex = 6;
-            this.label2.Text = "Заклинание";
+            this.label2.Text = "Endi beraki";
             // 
             // ExceptionForm
             // 
@@ -129,11 +129,11 @@
             this.ControlBox = false;
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.hendel);
             this.Controls.Add(this.ignore);
             this.Controls.Add(this.restart);
             this.Controls.Add(this.close);
             this.Controls.Add(this.log);
+            this.Controls.Add(this.hendel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;

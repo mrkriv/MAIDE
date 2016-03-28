@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.Code = new ASM.CodeEditBox();
+            this.Code = new ASM.UI.CodeEditBox();
             this.SuspendLayout();
             // 
             // saveFileDialog
@@ -66,6 +66,6 @@
         #endregion
         
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
-        public CodeEditBox Code;
+        public ASM.UI.CodeEditBox Code;
     }
 }

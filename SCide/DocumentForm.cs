@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using System.Collections.Generic;
 using System.Drawing;
+using ASM.UI;
 
 namespace ASM
 {

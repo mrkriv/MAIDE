@@ -1,4 +1,4 @@
-﻿namespace ASM
+﻿namespace ASM.UI
 {
     partial class CodeEditBox
     {

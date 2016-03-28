@@ -79,19 +79,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeEditBox\CodeEditBox.cs">
+    <Compile Include="UI\CodeEditBox\CodeEditBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CodeEditBox\CodeEditBox.Designer.cs">
+    <Compile Include="UI\CodeEditBox\CodeEditBox.Designer.cs">
       <DependentUpon>CodeEditBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="CodeEditBox\HistoryElement.cs">
+    <Compile Include="UI\CodeEditBox\HistoryElement.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CodeEditBox\Row.cs">
+    <Compile Include="UI\CodeEditBox\Row.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CodeEditBox\Symbol.cs">
+    <Compile Include="UI\CodeEditBox\Symbol.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Console.cs">
@@ -105,6 +105,9 @@
     </Compile>
     <Compile Include="Setting.Designer.cs">
       <DependentUpon>Setting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MGroupBox.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="VM\Core.cs" />
     <Compile Include="DocumentForm.cs">
@@ -156,7 +159,7 @@
     <Compile Include="Modules\RegistersWindow.Designer.cs">
       <DependentUpon>RegistersWindow.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="CodeEditBox\CodeEditBox.resx">
+    <EmbeddedResource Include="UI\CodeEditBox\CodeEditBox.resx">
       <DependentUpon>CodeEditBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Console.resx">

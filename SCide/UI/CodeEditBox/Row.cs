@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace ASM
+namespace ASM.UI
 {
     partial class CodeEditBox
     {

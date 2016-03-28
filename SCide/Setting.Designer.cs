@@ -32,6 +32,10 @@
             this.done = new System.Windows.Forms.Button();
             this.exit = new System.Windows.Forms.Button();
             this.reset = new System.Windows.Forms.Button();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.mGroupBox1 = new ASM.UI.MGroupBox();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // done
@@ -70,12 +74,41 @@
             this.reset.UseVisualStyleBackColor = true;
             this.reset.Click += new System.EventHandler(this.reset_Click);
             // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(193, 60);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown1.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(27, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "label1";
+            // 
+            // mGroupBox1
+            // 
+            this.mGroupBox1.BorderColor = System.Drawing.Color.Black;
+            this.mGroupBox1.Location = new System.Drawing.Point(143, 124);
+            this.mGroupBox1.Name = "mGroupBox1";
+            this.mGroupBox1.Size = new System.Drawing.Size(200, 100);
+            this.mGroupBox1.TabIndex = 5;
+            this.mGroupBox1.TabStop = false;
+            this.mGroupBox1.Text = "mGroupBox1";
+            // 
             // Setting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.ClientSize = new System.Drawing.Size(686, 436);
+            this.Controls.Add(this.mGroupBox1);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.reset);
             this.Controls.Add(this.exit);
             this.Controls.Add(this.done);
@@ -84,7 +117,9 @@
             this.Name = "Setting";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Настройки";
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -93,5 +128,8 @@
         private System.Windows.Forms.Button done;
         private System.Windows.Forms.Button exit;
         private System.Windows.Forms.Button reset;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label label1;
+        private UI.MGroupBox mGroupBox1;
     }
 }

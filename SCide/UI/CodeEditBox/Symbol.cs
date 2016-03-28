@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace ASM
+namespace ASM.UI
 {
     partial class CodeEditBox
     {
