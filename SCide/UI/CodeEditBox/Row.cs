@@ -86,6 +86,11 @@ namespace ASM.UI
                 Owner.commitHystory();
             }
 
+            public void ToggleFlag()
+            {
+                Flag = !Flag;
+            }
+
             public void Merger(Row line)
             {
                 data.AddRange(line.data);

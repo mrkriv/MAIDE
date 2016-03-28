@@ -12,7 +12,7 @@ namespace ASM.UI
 {
     public partial class CodeEditBox : UserControl
     {
-        private readonly string linesNumFormat = "{0,3:D1}";
+        private readonly string linesNumFormat = "{0,4:D1}";
         private readonly float defaultFontSize = 10.0f;
         private readonly float[] charSizes = new float[char.MaxValue - char.MinValue];
 
@@ -275,6 +275,7 @@ namespace ASM.UI
             for (int y = start; y < end; y++)
             {
                 float px = offestX;
+                Row row = rows[y];
 
                 if (selectS.Y == y && selectE.Y == y)
                 {
@@ -285,9 +286,9 @@ namespace ASM.UI
 
                 e.Graphics.DrawString(string.Format(linesNumFormat, y + 1), Font, textBaseBrush, LeftOffest, py, StringFormat.GenericDefault);
 
-                for (int x = 0; x < rows[y].Length; x++)
+                for (int x = 0; x < row.Length; x++)
                 {
-                    Symbol sb = rows[y][x];
+                    Symbol sb = row[x];
 
                     e.Graphics.DrawString(sb.Value.ToString(), Font, new SolidBrush(sb.Color), px, py, StringFormat.GenericDefault);
                     sb.Render_old_X = (int)px;
@@ -299,18 +300,18 @@ namespace ASM.UI
                     px += charSizes[sb.Value];
                 }
 
-                if (caretVisible && selectS.Y == y && selectS.X == rows[y].Length)
+                if (caretVisible && selectS.Y == y && selectS.X == row.Length)
                     e.Graphics.DrawLine(new Pen(ForeColor), px + 2, py, px + 2, py + lineHeight);
 
                 if (selectS != selectE)
                 {
                     if (selectS.Y <= y && selectE.Y >= y)
                     {
-                        if (rows[y].Length != 0)
+                        if (row.Length != 0)
                         {
-                            if (selectS.Y == y && rows[y].Length == selectS.X)
+                            if (selectS.Y == y && row.Length == selectS.X)
                             {
-                                int x1 = rows[y][selectS.X - 1].Render_old_X + rows[y][selectS.X - 1].Render_old_Width;
+                                int x1 = row[selectS.X - 1].Render_old_X + row[selectS.X - 1].Render_old_Width;
                                 e.Graphics.FillRectangle(selectBrush, x1, py, 10, lineHeight);
                             }
                             else
@@ -319,7 +320,7 @@ namespace ASM.UI
                                 Symbol sEnd = GetSymbolByPoint(selectE.X, selectE.Y);
 
                                 int x1 = selectS.Y == y && sStart != null ? sStart.Render_old_X : (int)offestX;
-                                int x2 = selectE.Y == y && sEnd != null ? sEnd.Render_old_X + 5 : rows[y][rows[y].Length - 1].Render_old_X + 10;
+                                int x2 = selectE.Y == y && sEnd != null ? sEnd.Render_old_X + 5 : row[row.Length - 1].Render_old_X + 10;
 
                                 e.Graphics.FillRectangle(selectBrush, x1, py, x2 - x1, lineHeight);
                             }
@@ -328,6 +329,9 @@ namespace ASM.UI
                             e.Graphics.FillRectangle(selectBrush, offestX, py, 10, lineHeight);
                     }
                 }
+
+                if (row.Flag)
+                    e.Graphics.FillEllipse(Brushes.MediumVioletRed, 2, py, lineHeight, lineHeight);
 
                 py += lineHeight;
             }
@@ -395,8 +399,13 @@ namespace ASM.UI
             switch (e.Button)
             {
                 case MouseButtons.Left:
-                    SelectStart = GetPointByLocation(e.Location);
-                    SelectEnd = SelectStart;
+                    if (e.Location.X < offestX)
+                        rows[GetPointByLocation(e.Location).Y].ToggleFlag();
+                    else
+                    {
+                        SelectStart = GetPointByLocation(e.Location);
+                        SelectEnd = SelectStart;
+                    }
                     Invalidate(false);
                     leftMouseDown = true;
                     break;
