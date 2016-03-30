@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Forms;
-using ASM.UI;
+using System.Linq;
 using System.Reflection;
+using System.Collections.Specialized;
 
 namespace ASM
 {
@@ -11,10 +11,10 @@ namespace ASM
         public Setting()
         {
             InitializeComponent();
-            Initialize(this);
+            InitializeInclude(this);
         }
 
-        static void Initialize(Control root)
+        static void InitializeInclude(Control root)
         {
             foreach (Control c in root.Controls)
             {
@@ -36,15 +36,43 @@ namespace ASM
                     }
                     else if (c is TextBox)
                     {
-                        ((TextBox)c).Text = (string)value;
-                        ((TextBox)c).TextChanged += (s, e) =>
+                        TextBox tb = c as TextBox;
+                        if (tb.Multiline)
                         {
-                            prop.SetValue(Properties.Settings.Default, ((TextBox)s).Text);
+                            tb.Text = "";
+                            if (value != null)
+                            {
+                                foreach (var i in ((StringCollection)value))
+                                    tb.Text += i + "\r\n";
+                            }
+
+                            tb.TextChanged += (s, e) =>
+                            {
+                                StringCollection coll = new StringCollection();
+                                coll.AddRange(((TextBox)s).Text.Replace("\r", "").Split('\n'));
+                                prop.SetValue(Properties.Settings.Default, coll);
+                            };
+                        }
+                        else
+                        {
+                            tb.Text = (string)value;
+                            tb.TextChanged += (s, e) =>
+                            {
+                                prop.SetValue(Properties.Settings.Default, ((TextBox)s).Text);
+                            };
+                        }
+                    }
+                    else if (c is CheckBox)
+                    {
+                        ((CheckBox)c).Checked = (bool)value;
+                        ((CheckBox)c).CheckedChanged += (s, e) =>
+                        {
+                            prop.SetValue(Properties.Settings.Default, ((CheckBox)s).Checked);
                         };
                     }
                 }
                 else
-                    Initialize(c);
+                    InitializeInclude(c);
             }
         }
 
