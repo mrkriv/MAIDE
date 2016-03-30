@@ -46,17 +46,45 @@ namespace ASM
             Operators.ActiveCore = this;
 
             waitEvent = new ManualResetEvent(true);
+            RecreateRegisters();
+            Properties.Settings.Default.SettingsSaving += SettingsSaving;
+
+        }
+
+        private void SettingsSaving(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            RecreateRegisters();
+        }
+
+        public void RecreateRegisters()
+        {
             Registers = new List<Register>();
 
-            Registers.Add(new Register32("a"));
-            Registers.Add(new Register32("b"));
-            Registers.Add(new Register32("c"));
-            Registers.Add(new Register32("d"));
-            Registers.Add(new Register32("x"));
-            Registers.Add(new Register32("n"));
-
-            for (int r = 0; r <= 11; r++)
-                Registers.Add(new Register32("r" + r));
+            var stetting = Properties.Settings.Default;
+            if (stetting.Register32 != null)
+            {
+                foreach (string name in stetting.Register32)
+                {
+                    if (name != "")
+                        Registers.Add(new Register32(name.Replace("\n", "")));
+                }
+            }
+            if (stetting.Register16 != null)
+            {
+                foreach (string name in stetting.Register16)
+                {
+                    if (name != "")
+                        Registers.Add(new Register16(name.Replace("\n", ""), new Register32("__crutch_" + name)));
+                }
+            }
+            if (stetting.Register8 != null)
+            {
+                foreach (string name in stetting.Register8)
+                {
+                    if (name != "")
+                        Registers.Add(new Register8(name.Replace("\n", ""), new Register32("__crutch_" + name)));
+                }
+            }
 
             Registers.Add(new RegisterFlag("flag"));
         }

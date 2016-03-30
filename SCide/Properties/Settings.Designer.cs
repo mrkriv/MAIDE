@@ -34,5 +34,58 @@ namespace ASM.Properties {
                 this["TotalTickLimit"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>a</string>
+  <string>b</string>
+  <string>c</string>
+  <string>d</string>
+  <string>x</string>
+  <string>n</string>
+  <string>r0</string>
+  <string>r1</string>
+  <string>r2</string>
+  <string>r3</string>
+  <string>r4</string>
+  <string>r5</string>
+  <string>r6</string>
+  <string>r7</string>
+  <string>r8</string>
+  <string>r9</string>
+  <string>r10</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection Register32 {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["Register32"]));
+            }
+            set {
+                this["Register32"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection Register16 {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["Register16"]));
+            }
+            set {
+                this["Register16"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection Register8 {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["Register8"]));
+            }
+            set {
+                this["Register8"] = value;
+            }
+        }
     }
 }

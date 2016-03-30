@@ -5,5 +5,33 @@
     <Setting Name="TotalTickLimit" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1500</Value>
     </Setting>
+    <Setting Name="Register32" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;a&lt;/string&gt;
+  &lt;string&gt;b&lt;/string&gt;
+  &lt;string&gt;c&lt;/string&gt;
+  &lt;string&gt;d&lt;/string&gt;
+  &lt;string&gt;x&lt;/string&gt;
+  &lt;string&gt;n&lt;/string&gt;
+  &lt;string&gt;r0&lt;/string&gt;
+  &lt;string&gt;r1&lt;/string&gt;
+  &lt;string&gt;r2&lt;/string&gt;
+  &lt;string&gt;r3&lt;/string&gt;
+  &lt;string&gt;r4&lt;/string&gt;
+  &lt;string&gt;r5&lt;/string&gt;
+  &lt;string&gt;r6&lt;/string&gt;
+  &lt;string&gt;r7&lt;/string&gt;
+  &lt;string&gt;r8&lt;/string&gt;
+  &lt;string&gt;r9&lt;/string&gt;
+  &lt;string&gt;r10&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="Register16" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Register8" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
