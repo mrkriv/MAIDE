@@ -1,17 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ASM.UI
 {
     partial class CodeEditBox
     {
-        public class Row
+        public class Row : IEnumerable<Symbol>
         {
             private List<Symbol> data = new List<Symbol>();
-            public bool Flag = false;
-
+            
             public readonly CodeEditBox Owner;
             public bool IsChange { get; internal set; }
+            public bool Flag { get; set; } = false;
 
             public int Length
             {
@@ -36,22 +37,53 @@ namespace ASM.UI
 
             public void Remove(int offest)
             {
-                Owner.startRecordHystory();
+                Owner.StartRecordHystory();
                 Owner.AddToHistory(new HistoryRemoveChar(this, offest, data[offest]));
                 data.RemoveAt(offest);
-                Owner.commitHystory();
+                Owner.CommitHystory();
                 IsChange = true;
             }
 
             public void Remove(int offest, int count)
             {
-                if (count <= 0)
-                    return;
-                Owner.startRecordHystory();
-                Owner.AddToHistory(new HistoryRemoveChars(this, offest, data.GetRange(offest, count).Select(s => (char)s)));
-                data.RemoveRange(offest, count);
-                Owner.commitHystory();
+                if (count > 0)
+                {
+                    Owner.StartRecordHystory();
+                    Owner.AddToHistory(new HistoryRemoveChars(this, offest, data.GetRange(offest, count).Select(s => (char)s)));
+                    data.RemoveRange(offest, count);
+                    Owner.CommitHystory();
+                    IsChange = true;
+                }
+            }
+
+            public IEnumerable<char> Cut(int offest, int count)
+            {
+                IEnumerable<char> txt = data.GetRange(offest, count).Select(s => (char)s);
+                Remove(offest, count);
+                return txt;
+            }
+
+            public void Write(char symbol, int offest = 0)
+            {
+                Owner.StartRecordHystory();
+                Owner.AddToHistory(new HistoryAddChar(this, offest, symbol));
+                data.Insert(offest, symbol);
                 IsChange = true;
+                Owner.CommitHystory();
+            }
+
+            public void Write(IEnumerable<char> text, int offest = 0)
+            {
+                Owner.StartRecordHystory();
+                Owner.AddToHistory(new HistoryAddChars(this, offest, text));
+                data.InsertRange(offest, text.Select(c => (Symbol)c));
+                IsChange = true;
+                Owner.CommitHystory();
+            }
+            
+            public void Merger(Row line)
+            {
+                Write((IEnumerable<char>)line.data, Length - 1);
             }
 
             public string GetRange(int offest, int count)
@@ -59,47 +91,48 @@ namespace ASM.UI
                 return string.Concat(data.GetRange(offest, count).Select(s => (char)s));
             }
 
-            public IEnumerable<char> Cut(int offest, int count)
+            public List<Word> GetWords(int offest, int end)
             {
-                Owner.startRecordHystory();
-                IEnumerable<char> txt = data.GetRange(offest, count).Select(s => (char)s);
-                Remove(offest, count);
-                Owner.commitHystory();
-                return txt;
+                var result = new List<Word>();
+                result.Add(GetWord(offest));
+                for (offest++; offest < end; offest++)
+                {
+                    if (wordSplitSymbols.Contains(data[offest - 1]))
+                        result.Add(GetWord(offest));
+                }
+                return result;
             }
 
-            public void Write(char symbol, int offest = 0)
+            public Word GetWord(int offest)
             {
-                Owner.startRecordHystory();
-                Owner.AddToHistory(new HistoryAddChar(this, offest, symbol));
-                data.Insert(offest, symbol);
-                IsChange = true;
-                Owner.commitHystory();
-            }
+                int s = offest;
+                int e = offest;
 
-            public void Write(IEnumerable<char> text, int offest = 0)
-            {
-                Owner.startRecordHystory();
-                Owner.AddToHistory(new HistoryAddChars(this, offest, text));
-                data.InsertRange(offest, text.Select(c => (Symbol)c));
-                IsChange = true;
-                Owner.commitHystory();
-            }
+                while (s > 0 && !wordSplitSymbols.Contains(data[s - 1].Value))
+                    s--;
 
-            public void ToggleFlag()
-            {
-                Flag = !Flag;
-            }
+                while (e + 1 < data.Count && !wordSplitSymbols.Contains(data[e + 1].Value))
+                    e++;
 
-            public void Merger(Row line)
-            {
-                data.AddRange(line.data);
-                IsChange = true;
+                if (wordSplitSymbols.Contains(data[e].Value))
+                    e--;
+
+                return new Word(this, s, e - s + 1);
             }
 
             public override string ToString()
             {
                 return new string(data.Select(s => (char)s).ToArray());
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return data.GetEnumerator();
+            }
+
+            public IEnumerator<Symbol> GetEnumerator()
+            {
+                return data.GetEnumerator();
             }
         }
     }

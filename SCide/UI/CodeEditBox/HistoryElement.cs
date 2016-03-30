@@ -6,40 +6,45 @@ namespace ASM.UI
 {
     partial class CodeEditBox
     {
-        public class HistoryElement
+        public abstract class HistoryElement
         {
-            public virtual void Undo(CodeEditBox owner)
+            public int Offest { get; protected set; }
+            public Row Row { get; protected set; }
+
+            public HistoryElement(Row row, int index)
             {
-                owner.textChanged(owner, new TextChangedEventArgs(this));
+                Row = row;
+                Offest = index;
             }
 
-            public virtual void Redo(CodeEditBox owner)
-            {
-                owner.textChanged(owner, new TextChangedEventArgs(this));
-            }
+            public abstract void Undo(CodeEditBox owner);
+            public abstract void Redo(CodeEditBox owner);
+            public abstract void InvokeEvent(CodeEditBox owner);
         }
 
         public class HistoryAddChars : HistoryElement
         {
-            protected IEnumerable<char> value;
-            protected int offest;
-            protected Row line;
+            public IEnumerable<char> Value { get; protected set; }
 
-            public HistoryAddChars(Row line, int offest, IEnumerable<char> value)
+            public HistoryAddChars(Row line, int offest, IEnumerable<char> value) :
+                base(line, offest)
             {
-                this.offest = offest;
-                this.value = value;
-                this.line = line;
+                Value = value;
             }
 
             public override void Redo(CodeEditBox owner)
             {
-                line.Write(value, offest);
+                Row.Write(Value, Offest);
             }
 
             public override void Undo(CodeEditBox owner)
             {
-                line.Remove(offest, value.Count());
+                Row.Remove(Offest, Value.Count());
+            }
+
+            public override void InvokeEvent(CodeEditBox owner)
+            {
+                owner.textChanged(owner, new TextChangedEventArgs(Row, Offest, Value.Count()));
             }
         }
 
@@ -47,8 +52,7 @@ namespace ASM.UI
         {
             public HistoryRemoveChars(Row line, int offest, IEnumerable<char> value)
                 : base(line, offest, value)
-            {
-            }
+            { }
 
             public override void Undo(CodeEditBox owner)
             {
@@ -59,29 +63,37 @@ namespace ASM.UI
             {
                 base.Undo(owner);
             }
+
+            public override void InvokeEvent(CodeEditBox owner)
+            {
+                if (Offest != 0)
+                    owner.textChanged(owner, new TextChangedEventArgs(Row, Offest - 1, 1));
+            }
         }
 
         public class HistoryAddChar : HistoryElement
         {
-            protected char value;
-            protected int offest;
-            protected Row line;
+            public char Value { get; protected set; }
 
-            public HistoryAddChar(Row line, int offest, char value)
+            public HistoryAddChar(Row line, int offest, char value) :
+                base(line, offest)
             {
-                this.offest = offest;
-                this.value = value;
-                this.line = line;
+                Value = value;
             }
 
             public override void Redo(CodeEditBox owner)
             {
-                line.Write(value, offest);
+                Row.Write(Value, Offest);
             }
 
             public override void Undo(CodeEditBox owner)
             {
-                line.Remove(offest);
+                Row.Remove(Offest);
+            }
+
+            public override void InvokeEvent(CodeEditBox owner)
+            {
+                owner.textChanged(owner, new TextChangedEventArgs(Row, Offest, 1));
             }
         }
 
@@ -89,8 +101,7 @@ namespace ASM.UI
         {
             public HistoryRemoveChar(Row line, int offest, char value)
                 : base(line, offest, value)
-            {
-            }
+            { }
 
             public override void Undo(CodeEditBox owner)
             {
@@ -101,39 +112,42 @@ namespace ASM.UI
             {
                 base.Undo(owner);
             }
-        }
 
-        public class HistoryRemoveRow : HistoryElement
-        {
-            protected Row row;
-            protected int index;
-
-            public HistoryRemoveRow(Row line, int index)
+            public override void InvokeEvent(CodeEditBox owner)
             {
-                this.row = line;
-                this.index = index;
-            }
-
-            public override void Undo(CodeEditBox owner)
-            {
-                owner.InsertRow(index, row);
-            }
-
-            public override void Redo(CodeEditBox owner)
-            {
-                if (owner[index] == row)
-                    owner.RemoveRow(index);
-                else
-                    throw new Exception("Undo/Redo system error, class HistoryRemoveRow");
+                if (Offest != 0)
+                    owner.textChanged(owner, new TextChangedEventArgs(Row, Offest - 1, 1));
             }
         }
 
-        public class HistoryAddRow : HistoryRemoveRow
+        public class HistoryAddRow : HistoryElement
         {
             public HistoryAddRow(Row row, int index)
                 : base(row, index)
+            { }
+
+            public override void Undo(CodeEditBox owner)
             {
+                owner.RemoveRow(Offest);
             }
+
+            public override void Redo(CodeEditBox owner)
+            {
+                owner.InsertRow(Offest, Row);
+            }
+
+            public override void InvokeEvent(CodeEditBox owner)
+            {
+                if (Row.Length != 0)
+                    owner.textChanged(owner, new TextChangedEventArgs(Row, Offest));
+            }
+        }
+
+        public class HistoryRemoveRow : HistoryAddRow
+        {
+            public HistoryRemoveRow(Row line, int index) :
+                base(line, index)
+            { }
 
             public override void Undo(CodeEditBox owner)
             {
@@ -144,39 +158,45 @@ namespace ASM.UI
             {
                 base.Undo(owner);
             }
+
+            public override void InvokeEvent(CodeEditBox owner) { }
         }
 
-        public class HistoryRemoveRows : HistoryElement
+        public class HistoryAddRows : HistoryElement
         {
-            protected IEnumerable<Row> rows;
-            protected int index;
+            public IEnumerable<Row> Rows { get; protected set; }
 
-            public HistoryRemoveRows(IEnumerable<Row> rows, int index)
-            {
-                this.rows = rows;
-                this.index = index;
-            }
-
-            public override void Undo(CodeEditBox owner)
-            {
-                owner.InsertRows(index, rows);
-            }
-
-            public override void Redo(CodeEditBox owner)
-            {
-                if (owner[index] == rows)
-                    owner.RemoveRows(index, rows.Count());
-                else
-                    throw new Exception("Undo/Redo system error, class HistoryRemoveRow");
-            }
-        }
-
-        public class HistoryAddRows : HistoryRemoveRows
-        {
             public HistoryAddRows(IEnumerable<Row> rows, int index)
-                : base(rows, index)
+                : base(rows.First(), index)
             {
+                Rows = rows;
             }
+
+            public override void Undo(CodeEditBox owner)
+            {
+                owner.RemoveRows(Offest, Rows.Count());
+            }
+
+            public override void Redo(CodeEditBox owner)
+            {
+                owner.InsertRows(Offest, Rows);
+            }
+
+            public override void InvokeEvent(CodeEditBox owner)
+            {
+                foreach (var r in Rows)
+                {
+                    if (r.Length != 0)
+                        owner.textChanged(owner, new TextChangedEventArgs(r, Offest));
+                }
+            }
+        }
+
+        public class HistoryRemoveRows : HistoryAddRows
+        {
+            public HistoryRemoveRows(IEnumerable<Row> rows, int index) :
+                base(rows, index)
+            { }
 
             public override void Undo(CodeEditBox owner)
             {
@@ -187,6 +207,8 @@ namespace ASM.UI
             {
                 base.Undo(owner);
             }
+
+            public override void InvokeEvent(CodeEditBox owner) { }
         }
     }
 }

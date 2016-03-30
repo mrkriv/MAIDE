@@ -43,7 +43,12 @@ namespace ASM
                             if (value != null)
                             {
                                 foreach (var i in ((StringCollection)value))
-                                    tb.Text += i + "\r\n";
+                                {
+                                    if (i.Length != 0)
+                                        tb.Text += i + "\r\n";
+                                }
+                                if (tb.Text.Length != 0)
+                                    tb.Text = tb.Text.Substring(0, tb.Text.Length - 1);
                             }
 
                             tb.TextChanged += (s, e) =>

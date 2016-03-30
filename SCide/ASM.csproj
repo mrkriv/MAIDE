@@ -107,6 +107,9 @@
     <Compile Include="Setting.Designer.cs">
       <DependentUpon>Setting.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\CodeEditBox\Word.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="UI\MGroupBox.cs">
       <SubType>Component</SubType>
     </Compile>

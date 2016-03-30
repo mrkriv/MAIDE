@@ -12,15 +12,16 @@ namespace ASM.UI
 {
     public partial class CodeEditBox : UserControl
     {
-        private readonly string linesNumFormat = "{0,4:D1}";
-        private readonly float defaultFontSize = 10.0f;
+        private readonly static char[] wordSplitSymbols = { ' ', '\t', '.', ';', ',', '%' };
+        private readonly static string linesNumFormat = "{0,4:D1}";
+        private readonly static float defaultFontSize = 10.0f;
         private readonly float[] charSizes = new float[char.MaxValue - char.MinValue];
 
         private readonly Stack<List<HistoryElement>> undoStack = new Stack<List<HistoryElement>>();
         private readonly Stack<List<HistoryElement>> redoStack = new Stack<List<HistoryElement>>();
         private readonly List<Keys> keyboardState = new List<Keys>();
-        private List<HistoryElement> recordStack;
         private readonly List<Row> rows = new List<Row>();
+        private List<HistoryElement> recordStack;
         private int recordMissCount = 0;
 
         private SolidBrush selectBrush;
@@ -32,6 +33,7 @@ namespace ASM.UI
         private float offestX;
         private float zoom;
         private bool caretVisible;
+        private bool syntaxHighlighter;
         private bool leftMouseDown;
         private bool recordHystory;
         private Point selectStart = new Point();
@@ -53,6 +55,28 @@ namespace ASM.UI
         [DefaultValue(5)]
         [Category("Appearance")]
         public int RightOffest { get; set; }
+
+        [DefaultValue(true)]
+        [Category("Appearance")]
+        public bool SyntaxHighlighter
+        {
+            get
+            {
+                return syntaxHighlighter;
+            }
+            set
+            {
+                if (value != syntaxHighlighter)
+                {
+                    syntaxHighlighter = value;
+                    if (syntaxHighlighter)
+                    {
+                        foreach (Row r in rows)
+                            textChanged(this, new TextChangedEventArgs(r));
+                    }
+                }
+            }
+        }
 
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public Point SelectStart
@@ -110,7 +134,7 @@ namespace ASM.UI
             }
             set
             {
-                startRecordHystory();
+                StartRecordHystory();
                 string[] split = value.Split('\n');
                 List<Row> buff = new List<Row>(split.Count());
 
@@ -119,7 +143,7 @@ namespace ASM.UI
 
                 RemoveRows(0, rows.Count);
                 InsertRows(0, buff);
-                commitHystory();
+                CommitHystory();
             }
         }
 
@@ -173,10 +197,18 @@ namespace ASM.UI
 
         public class TextChangedEventArgs : EventArgs
         {
-            public HistoryElement Action { get; set; }
-            public TextChangedEventArgs(HistoryElement action)
+            public Row Row { get; set; }
+            public int Start { get; set; }
+            public int Count { get; set; }
+
+            public TextChangedEventArgs(Row row, int start = 0) : this(row, start, row.Length)
+            { }
+
+            public TextChangedEventArgs(Row row, int start, int count)
             {
-                Action = action;
+                Row = row;
+                Start = start;
+                Count = count;
             }
         }
 
@@ -189,13 +221,7 @@ namespace ASM.UI
         {
             InitializeComponent();
 
-            textChanged = (s, e) =>
-            {
-                CodeEditBox sender = s as CodeEditBox;
-                sender.Invalidate(false);
-                sender.Modified = true;
-                sender.updateSizes();
-            };
+            textChanged = new EventHandler<TextChangedEventArgs>(OnTextChanged);
 
             SetStyle(ControlStyles.Selectable, true);
             SetStyle(ControlStyles.UserPaint, true);
@@ -217,6 +243,52 @@ namespace ASM.UI
             undoStack.Clear();
         }
 
+        public void InvokeTextChanged(TextChangedEventArgs e)
+        {
+            if (e.Count == 0 || e.Start < 0)
+                return;
+
+            textChanged(this, e);
+        }
+
+        protected virtual void OnTextChanged(object s, TextChangedEventArgs e)
+        {
+            CodeEditBox sender = s as CodeEditBox;
+            sender.Invalidate(false);
+            sender.Modified = true;
+            sender.updateSizes();
+
+            if (syntaxHighlighter)
+            {
+                int commentIndex = int.MaxValue;
+                for (int i = 0; i < e.Row.Length; i++)
+                {
+                    if (e.Row[i] == '%')
+                    {
+                        e.Row[i].Color = Color.FromArgb(87, 166, 74);
+                        commentIndex = i;
+                        break;
+                    }
+                }
+                
+                foreach (Word word in e.Row.GetWords(e.Start, e.Start + e.Count))
+                {
+                    Color color = ForeColor;
+
+                    if (commentIndex <= word.Offest)
+                        color = Color.FromArgb(87, 166, 74);
+                    else if (word[0] == '#')
+                        color = Color.FromArgb(214, 157, 133);
+                    else if (Operators.OperationsList.Any(op => word == op.Name))
+                        color = Color.FromArgb(86, 156, 214);
+                    else if (Properties.Settings.Default.Register32.Contains(word.ToString()))
+                        color = Color.FromArgb(78, 201, 176);
+
+                    word.SetColor(color);
+                }
+            }
+        }
+        
         protected override void OnFontChanged(EventArgs e)
         {
             base.OnFontChanged(e);
@@ -351,34 +423,34 @@ namespace ASM.UI
 
         public void RemoveRow(int index)
         {
-            startRecordHystory();
+            StartRecordHystory();
             AddToHistory(new HistoryRemoveRow(rows[index], index));
             rows.RemoveAt(index);
-            commitHystory();
+            CommitHystory();
         }
 
         public void InsertRow(int index, Row newRow)
         {
-            startRecordHystory();
+            StartRecordHystory();
             AddToHistory(new HistoryAddRow(newRow, index));
             rows.Insert(index, newRow);
-            commitHystory();
+            CommitHystory();
         }
 
         public void InsertRows(int index, IEnumerable<Row> newRows)
         {
-            startRecordHystory();
+            StartRecordHystory();
             AddToHistory(new HistoryAddRows(newRows, index));
             rows.InsertRange(index, newRows);
-            commitHystory();
+            CommitHystory();
         }
 
         public void RemoveRows(int index, int count)
         {
-            startRecordHystory();
+            StartRecordHystory();
             AddToHistory(new HistoryRemoveRows(rows.GetRange(index, count), index));
             rows.RemoveRange(index, count);
-            commitHystory();
+            CommitHystory();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -400,7 +472,7 @@ namespace ASM.UI
             {
                 case MouseButtons.Left:
                     if (e.Location.X < offestX)
-                        rows[GetPointByLocation(e.Location).Y].ToggleFlag();
+                        rows[GetPointByLocation(e.Location).Y].Flag = !rows[GetPointByLocation(e.Location).Y].Flag;
                     else
                     {
                         SelectStart = GetPointByLocation(e.Location);
@@ -629,7 +701,7 @@ namespace ASM.UI
                 redoStack.Clear();
         }
 
-        public void startRecordHystory()
+        public void StartRecordHystory()
         {
             if (recordHystory)
                 recordMissCount++;
@@ -641,7 +713,7 @@ namespace ASM.UI
             }
         }
 
-        public void commitHystory()
+        public void CommitHystory()
         {
             if (!recordHystory)
                 return;
@@ -653,6 +725,9 @@ namespace ASM.UI
                 recordHystory = false;
                 if (recordStack.Count != 0)
                     undoStack.Push(recordStack);
+
+                foreach (HistoryElement e in recordStack)
+                    e.InvokeEvent(this);
             }
         }
 
@@ -665,12 +740,12 @@ namespace ASM.UI
 
             var elem = undoStack.Pop().ToList();
 
-            startRecordHystory();
+            StartRecordHystory();
             foreach (var i in elem)
                 i.Undo(this);
 
             redoStack.Push(elem);
-            commitHystory();
+            CommitHystory();
             undoStack.Pop();
 
             Invalidate(true);
@@ -685,12 +760,12 @@ namespace ASM.UI
 
             var elem = redoStack.Pop().ToList();
 
-            startRecordHystory();
+            StartRecordHystory();
             foreach (var i in elem)
                 i.Redo(this);
 
             undoStack.Push(elem);
-            commitHystory();
+            CommitHystory();
             undoStack.Pop();
 
             Invalidate(true);
@@ -840,7 +915,7 @@ namespace ASM.UI
 
         public void Paste(string text)
         {
-            startRecordHystory();
+            StartRecordHystory();
 
             var lines = text.Split('\n');
             RemoveSelected();
@@ -863,7 +938,7 @@ namespace ASM.UI
             int nx = (lines.Length == 1 ? selectStart.X : 0) + lines.Last().Length;
             SelectStart = new Point(nx, selectStart.Y + lines.Length - 1);
             Invalidate(false);
-            commitHystory();
+            CommitHystory();
         }
 
         public void RemoveSelected()
@@ -871,7 +946,7 @@ namespace ASM.UI
             if (SelectStart == SelectEnd)
                 return;
 
-            startRecordHystory();
+            StartRecordHystory();
             if (SelectStart.Y == SelectEnd.Y)
                 rows[SelectStart.Y].Remove(SelectStart.X, SelectEnd.X - SelectStart.X);
             else
@@ -889,7 +964,7 @@ namespace ASM.UI
                 RemoveRow(SelectStart.Y + 1);
             }
             ResetSelect();
-            commitHystory();
+            CommitHystory();
         }
 
         void normalizeSelect()
