@@ -14,6 +14,11 @@ namespace ASM.UI
             public bool IsChange { get; internal set; }
             public bool Flag { get; set; } = false;
 
+            public int Index
+            {
+                get { return Owner.rows.IndexOf(this); }
+            }
+
             public int Length
             {
                 get { return data.Count; }
@@ -83,7 +88,8 @@ namespace ASM.UI
             
             public void Merger(Row line)
             {
-                Write((IEnumerable<char>)line.data, Length - 1);
+                if (line.Length != 0)
+                    Write((IEnumerable<char>)line.data, Length - 1);
             }
 
             public string GetRange(int offest, int count)

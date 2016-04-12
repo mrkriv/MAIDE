@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ASM
+namespace ASM.VM
 {
     internal abstract class Register
     {

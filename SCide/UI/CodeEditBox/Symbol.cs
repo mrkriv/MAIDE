@@ -9,6 +9,7 @@ namespace ASM.UI
             public char Value;
             public Color Color;
             public int Render_old_X;
+            public int Render_old_Y;
             public int Render_old_Width;
 
             public Symbol(char value) : this(value, Color.White)

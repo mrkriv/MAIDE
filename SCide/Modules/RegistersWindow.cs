@@ -15,7 +15,7 @@ namespace ASM
 
             Binding = new BindingSource();
             Binding.AllowNew = true;
-            Binding.DataSource = new List<Register>();
+            Binding.DataSource = new List<VM.Register>();
 
             CheckForIllegalCrossThreadCalls = false;
 

@@ -39,6 +39,7 @@ namespace ASM.UI
         private Point selectStart = new Point();
         private Point selectEnd = new Point();
         private EventHandler<TextChangedEventArgs> textChanged;
+        private EventHandler rowsChanged;
 
         [DefaultValue(false)]
         [Category("Behavior")]
@@ -110,7 +111,7 @@ namespace ASM.UI
             get { return zoom; }
             set
             {
-                zoom = Math.Max(0.01f, Math.Min(value, 10f));
+                zoom = Math.Max(0.2f, Math.Min(value, 5f));
                 Font = new Font(Font.FontFamily, defaultFontSize * zoom, Font.Style);
                 Invalidate(false);
             }
@@ -183,6 +184,8 @@ namespace ASM.UI
             set { textBaseBrush = new SolidBrush(value); }
         }
 
+        public RowReadonlyCollection Rows { get; private set; }
+
         public new event EventHandler<TextChangedEventArgs> TextChanged
         {
             add
@@ -192,6 +195,18 @@ namespace ASM.UI
             remove
             {
                 lock (this) { textChanged -= value; }
+            }
+        }
+
+        public event EventHandler RowsChanged
+        {
+            add
+            {
+                lock (this) { rowsChanged += value; }
+            }
+            remove
+            {
+                lock (this) { rowsChanged -= value; }
             }
         }
 
@@ -222,15 +237,14 @@ namespace ASM.UI
             InitializeComponent();
 
             textChanged = new EventHandler<TextChangedEventArgs>(OnTextChanged);
+            rowsChanged = new EventHandler(OnRowsChanged);
+            autoCompiler.GotFocus += (s, e) => { Focus(); };
+            autoCompiler.MouseDown += AutoCompiler_MouseDown;
 
             SetStyle(ControlStyles.Selectable, true);
             SetStyle(ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-
-            ContextMenu.Renderer = new MenuStripRenderer();
-            foreach (ToolStripItem item in ContextMenu.Items)
-                MenuStripRenderer.SetStyle(item);
 
             foreach (var inf in typeof(CodeEditBox).GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
@@ -239,8 +253,30 @@ namespace ASM.UI
                     inf.SetValue(this, ((DefaultValueAttribute)atrs.First()).Value, BindingFlags.SetProperty, null, null, null);
             }
 
+            ContextMenu.Renderer = new MenuStripRenderer();
+            foreach (ToolStripItem item in ContextMenu.Items)
+                MenuStripRenderer.SetStyle(item);
+
+            autoCompiler.Visible = false;
+            foreach (var op in VM.Operators.OperationsList)
+                autoCompiler.AddItem(op.Name, 0);
+
+            foreach(var c in Properties.Settings.Default.Register32)
+                autoCompiler.AddItem(c, 2);
+
             AddRow(new Row(this));
             undoStack.Clear();
+        }
+
+        private void AutoCompiler_MouseDown(object sender, MouseEventArgs e)
+        {
+            autoCompiler.Visible = false;
+            rows[selectStart.Y].GetWord(selectStart.X - 1).Set(autoCompiler.SelectItem);
+        }
+
+        protected virtual void OnRowsChanged(object s, EventArgs e)
+        {
+            Rows = new RowReadonlyCollection(this);
         }
 
         public void InvokeTextChanged(TextChangedEventArgs e)
@@ -279,7 +315,7 @@ namespace ASM.UI
                         color = Color.FromArgb(87, 166, 74);
                     else if (word[0] == '#')
                         color = Color.FromArgb(214, 157, 133);
-                    else if (Operators.OperationsList.Any(op => word == op.Name))
+                    else if (VM.Operators.OperationsList.Any(op => word == op.Name))
                         color = Color.FromArgb(86, 156, 214);
                     else if (Properties.Settings.Default.Register32.Contains(word.ToString()))
                         color = Color.FromArgb(78, 201, 176);
@@ -364,6 +400,7 @@ namespace ASM.UI
 
                     e.Graphics.DrawString(sb.Value.ToString(), Font, new SolidBrush(sb.Color), px, py, StringFormat.GenericDefault);
                     sb.Render_old_X = (int)px;
+                    sb.Render_old_Y = (int)py;
                     sb.Render_old_Width = (int)charSizes[sb.Value];
 
                     if (caretVisible && selectS.Y == y && selectS.X == x)
@@ -419,7 +456,7 @@ namespace ASM.UI
         public void AddRows(IEnumerable<Row> newRows)
         {
             InsertRows(rows.Count, newRows);
-        }
+        } 
 
         public void RemoveRow(int index)
         {
@@ -427,6 +464,7 @@ namespace ASM.UI
             AddToHistory(new HistoryRemoveRow(rows[index], index));
             rows.RemoveAt(index);
             CommitHystory();
+            rowsChanged(this, null);
         }
 
         public void InsertRow(int index, Row newRow)
@@ -435,6 +473,7 @@ namespace ASM.UI
             AddToHistory(new HistoryAddRow(newRow, index));
             rows.Insert(index, newRow);
             CommitHystory();
+            rowsChanged(this, null);
         }
 
         public void InsertRows(int index, IEnumerable<Row> newRows)
@@ -443,6 +482,7 @@ namespace ASM.UI
             AddToHistory(new HistoryAddRows(newRows, index));
             rows.InsertRange(index, newRows);
             CommitHystory();
+            rowsChanged(this, null);
         }
 
         public void RemoveRows(int index, int count)
@@ -451,6 +491,7 @@ namespace ASM.UI
             AddToHistory(new HistoryRemoveRows(rows.GetRange(index, count), index));
             rows.RemoveRange(index, count);
             CommitHystory();
+            rowsChanged(this, null);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -466,8 +507,37 @@ namespace ASM.UI
             return null;
         }
 
+        public Point GetPointByLocation(Point pos)
+        {
+            int y = Math.Max(Math.Min(rows.Count - 1, (int)((vScrollBar.Value + pos.Y) / lineHeight)), 0);
+
+            if (rows[y].Length == 0)
+                return new Point(0, y);
+
+            int x = 0;
+            while (x < rows[y].Length &&
+                pos.X > rows[y][x].Render_old_X + rows[y][x].Render_old_Width / 2)
+                x++;
+
+            return new Point(x, y);
+        }
+
+        public Point GetLocationByPoint(Point p)
+        {
+            int y = (int)(p.Y * lineHeight);
+            if (p.X != 0 && rows[p.Y].Length != 0)
+                return new Point(rows[p.Y][p.X - 1].Render_old_X, y);
+            return new Point(LeftOffest, y);
+        }
+
+        public Point GetLocationBySymbol(Symbol s)
+        {
+            return new Point(s.Render_old_X, s.Render_old_Y);
+        }
+
         protected override void OnMouseDown(MouseEventArgs e)
         {
+            autoCompiler.Visible = false;
             switch (e.Button)
             {
                 case MouseButtons.Left:
@@ -511,21 +581,6 @@ namespace ASM.UI
                 leftMouseDown = false;
             normalizeSelect();
             base.OnMouseUp(e);
-        }
-
-        public Point GetPointByLocation(Point pos)
-        {
-            int y = Math.Max(Math.Min(rows.Count - 1, (int)((vScrollBar.Value + pos.Y) / lineHeight)), 0);
-
-            if (rows[y].Length == 0)
-                return new Point(0, y);
-
-            int x = 0;
-            while (x < rows[y].Length &&
-                pos.X > rows[y][x].Render_old_X + rows[y][x].Render_old_Width / 2)
-                x++;
-
-            return new Point(x, y);
         }
 
         public void ResetSelect()
@@ -589,6 +644,15 @@ namespace ASM.UI
                     selectStart.X++;
                     break;
             }
+
+            if (rows[selectStart.Y].Length != 0 && selectStart.X != 0)
+            {
+                autoCompiler.Location = GetLocationByPoint(selectStart.Substract(1, 0)).Add(0, (int)lineHeight);
+                autoCompiler.Visible = true;
+                autoCompiler.Filter = rows[selectStart.Y].GetWord(selectStart.X - 1).ToString();
+            }
+            else
+                autoCompiler.Visible = false;
 
             ResetSelect();
             Invalidate(false);

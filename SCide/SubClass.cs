@@ -1,37 +1,18 @@
 ﻿using System;
+using System.Drawing;
+using ASM.VM;
 
 namespace ASM
 {
-    public struct Line
+    public class ErrorMessageRow
     {
-        public int Number;
-        public string Text;
+        public string Message { get; set; }
+        public int Index { get; set; }
 
-        public Line(string text, int line)
-        {
-            Number = line;
-            Text = text;
-        }
-    }
-
-    public class ErrorLine
-    {
-        public string Message { get; }
-        public int Line { get; private set; }
-
-        public ErrorLine(string message, int line)
+        public ErrorMessageRow(string message, int index)
         {
             Message = message;
-            Line = line;
-        }
-    }
-
-    public class InvokeError : Exception
-    {
-        public Line editorLine;
-        public InvokeError(string message, Line line) : base(message)
-        {
-            editorLine = line;
+            Index = index;
         }
     }
 
@@ -58,14 +39,24 @@ namespace ASM
 
     public static class Exep
     {
-        //public static void Swap<T>(this T a, ref T b)
-        //{
-        //    var size = Marshal.SizeOf(typeof(T));
-        //    var ptr = Marshal.AllocHGlobal(size);
-        //    Marshal.StructureToPtr(b, ptr, false);
-        //    b = a;
-        //    Marshal.PtrToStructure(ptr, a);
-        //    Marshal.FreeHGlobal(ptr);
-        //}
+        public static Point Add(this Point a, Point b)
+        {
+            return new Point(a.X + b.X, a.Y + b.Y);
+        }
+
+        public static Point Add(this Point a, int x, int y)
+        {
+            return new Point(a.X + x, a.Y + y);
+        }
+
+        public static Point Substract(this Point a, int x, int y)
+        {
+            return new Point(a.X - x, a.Y - y);
+        }
+
+        public static Point Substract(this Point a, Point b)
+        {
+            return new Point(a.X - b.X, a.Y - b.Y);
+        }
     }
 }

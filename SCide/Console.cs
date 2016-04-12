@@ -135,6 +135,7 @@ namespace ASM
             if (Instance == null)
                 return;
 
+            waitEvent.Set();
             Instance.Close();
             Instance = null;
         }

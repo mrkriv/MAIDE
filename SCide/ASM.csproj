@@ -79,7 +79,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CombineRows.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="UI\CodeBlock.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="UI\CodeEditBox\CodeEditBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -90,6 +94,9 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\CodeEditBox\Row.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\CodeEditBox\RowContainers.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\CodeEditBox\Symbol.cs">
@@ -109,6 +116,24 @@
     </Compile>
     <Compile Include="UI\CodeEditBox\Word.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\DragDropPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\DragDropPanel.Designer.cs">
+      <DependentUpon>DragDropPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\EllipseControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\EllipseControl.Designer.cs">
+      <DependentUpon>EllipseControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\IconListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\IconListControl.Designer.cs">
+      <DependentUpon>IconListControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\MGroupBox.cs">
       <SubType>Component</SubType>
@@ -163,6 +188,9 @@
     <Compile Include="Modules\RegistersWindow.Designer.cs">
       <DependentUpon>RegistersWindow.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UI\CodeBlock.resx">
+      <DependentUpon>CodeBlock.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\CodeEditBox\CodeEditBox.resx">
       <DependentUpon>CodeEditBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -203,6 +231,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Setting.resx">
       <DependentUpon>Setting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\DragDropPanel.resx">
+      <DependentUpon>DragDropPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\EllipseControl.resx">
+      <DependentUpon>EllipseControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\IconListControl.resx">
+      <DependentUpon>IconListControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">

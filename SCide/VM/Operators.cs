@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Reflection;
 
-namespace ASM
+namespace ASM.VM
 {
     internal static class Operators
     {

@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.Threading;
 using ASM.UI;
 
-namespace ASM
+namespace ASM.VM
 {
     internal class Core
     {
@@ -14,8 +14,8 @@ namespace ASM
 
         private List<Operation> source = new List<Operation>();
         private ManualResetEvent waitEvent;
-        private CodeEditBox code;
-        
+        private CombineRows code;
+
         public Dictionary<string, int> Links = new Dictionary<string, int>();
         public Dictionary<int, List<byte>> DataByte = new Dictionary<int, List<byte>>();
         public List<Register> Registers;
@@ -28,16 +28,16 @@ namespace ASM
 
         public class Operation
         {
-            public Line line;
-            public string name;
-            public object[] arg;
+            public CodeEditBox.RowReadonly row;
+            public string operation;
+            public object[] args;
             public MethodInfo method;
         }
 
         static Core()
         {
             Errors = new BindingSource();
-            Errors.Add(new ErrorLine("", 0));
+            Errors.Add(new ErrorMessageRow("", 0));
             Errors.RemoveAt(0);
         }
 
@@ -110,8 +110,16 @@ namespace ASM
             IsFinished = false;
             Resume();
 
+            int i = 500;
             while (Console.Instance == null)
+            {
                 Thread.Sleep(5);
+                if (--i == 0)
+                {
+                    MessageBox.Show("Консоль не отвечает.");
+                    return;
+                }
+            }
 
             while (ActiveIndex < source.Count && !IsFinished)
             {
@@ -127,19 +135,24 @@ namespace ASM
                     TotalTick = -TotalTick;
                 }
 
-                if (code[op.line.Number].Flag)
+                if (op.row.Flag)
                     Pause();
 
                 waitEvent.WaitOne();
 
-                try
+                if (Program.Debug)
+                    op.method.Invoke(null, op.args);
+                else
                 {
-                    op.method.Invoke(null, op.arg);
-                }
-                catch
-                {
-                    MessageBox.Show(string.Format("Не обрабатываемая ошибка на строке {0}.\nОтладка не возможна.", ActiveIndex));
-                    IsFinished = true;
+                    try
+                    {
+                        op.method.Invoke(null, op.args);
+                    }
+                    catch
+                    {
+                        MessageBox.Show(string.Format("Не обрабатываемая ошибка на строке {0}.\nОтладка не возможна.", op.row.Index + 1));
+                        IsFinished = true;
+                    }
                 }
 
                 ActiveIndex++;
@@ -153,7 +166,7 @@ namespace ASM
             Console.ReadKey();
         }
 
-        public bool Build(CodeEditBox codeBox)
+        public bool Build(CombineRows rows)
         {
             Stop();
             source.Clear();
@@ -162,7 +175,7 @@ namespace ASM
             Errors.Clear();
             IsReady = false;
 
-            code = codeBox;
+            code = rows;
 
             var lines = Preprocessor();
 
@@ -180,9 +193,9 @@ namespace ASM
             return IsReady;
         }
 
-        public Dictionary<Line, string[]> Preprocessor()
+        public Dictionary<CodeEditBox.RowReadonly, string[]> Preprocessor()
         {
-            Dictionary<Line, string[]> result = new Dictionary<Line, string[]>();
+            var result = new Dictionary<CodeEditBox.RowReadonly, string[]>();
 
             for (int i = 0; i < code.Length; i++)
             {
@@ -199,7 +212,7 @@ namespace ASM
                     if (!Links.ContainsKey(text[0]))
                         Links.Add(text[0], result.Count);
                     else
-                        Errors.Add(new ErrorLine(string.Format("Метка '{0} уже определена.", text[0]), i));
+                        Errors.Add(new ErrorMessageRow(string.Format("Метка '{0} уже определена.", text[0]), i));
                 }
                 else
                     data = text[0];
@@ -207,24 +220,24 @@ namespace ASM
                 text = data.Split(new char[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries);
 
                 if (text.Length != 0)
-                    result.Add(new Line(code[i].ToString(), i), text);
+                    result.Add(code[i], text);
             }
 
             if (result.Count == 0)
-                Errors.Add(new ErrorLine("Нужен код!", 0));
+                Errors.Add(new ErrorMessageRow("Нужен код!", 0));
 
             return result;
         }
 
-        public Operation Link(Line line, string[] text)
+        public Operation Link(CodeEditBox.RowReadonly row, string[] text)
         {
             Operation op = new Operation();
-            op.name = text[0];
-            op.line = line;
+            op.operation = text[0];
+            op.row = row;
 
             foreach (MethodInfo method in Operators.OperationsList)
             {
-                if (method.Name == op.name)
+                if (method.Name == op.operation)
                 {
                     string[] args;
                     if (text.Length > 1)
@@ -240,8 +253,7 @@ namespace ASM
                     return ParseOperation(op, args) ? op : null;
                 }
             }
-
-            Errors.Add(new ErrorLine(string.Format("Операция '{0}' не определена.", op.name), line.Number));
+            Errors.Add(new ErrorMessageRow(string.Format("Операция '{0}' не определена.", op.operation), row.Index+1));
             return null;
         }
 
@@ -249,12 +261,12 @@ namespace ASM
         {
             ParameterInfo[] paramInfo = operation.method.GetParameters();
             List<object> output = new List<object>();
-            ErrorLine error = null;
+            ErrorMessageRow error = new ErrorMessageRow(null, operation.row.Index + 1);
 
             if (input.Length != paramInfo.Length)
-                error = new ErrorLine(string.Format("Операция '{0}' имеет {1} оргумент(а).", operation.name, paramInfo.Length), operation.line.Number);
+                error.Message = string.Format("Операция '{0}' имеет {1} оргумент(а).", operation.operation, paramInfo.Length);
 
-            for (int i = 0; i < input.Length && error == null; i++)
+            for (int i = 0; i < input.Length && error.Message == null; i++)
             {
                 Type needType = paramInfo[i].ParameterType;
                 int oldCount = output.Count;
@@ -263,10 +275,10 @@ namespace ASM
                 {
                     Register reg = GetRegister(input[i].ToLower());
                     if (reg == null)
-                        error = new ErrorLine(string.Format("Регистр '{0}' не сущесвует.", input[i]), operation.line.Number);
+                        error.Message = string.Format("Регистр '{0}' не сущесвует.", input[i]);
 
                     if (!needType.IsInstanceOfType(reg))
-                        error = (new ErrorLine(string.Format("Регистр '{0}' не может использоватся здесь.", input[i]), operation.line.Number));
+                        error.Message = string.Format("Регистр '{0}' не может использоватся здесь.", input[i]);
 
                     output.Add(reg);
                 }
@@ -278,7 +290,7 @@ namespace ASM
                         input[i] = input[i].Substring(1);
 
                         if (!int.TryParse(input[i], out result))
-                            error = new ErrorLine(string.Format("'{0}' не является числом.", input[i]), operation.line.Number);
+                            error.Message = string.Format("'{0}' не является числом.", input[i]);
                         else
                             output.Add(Convert.ChangeType(result, needType));
                     }
@@ -296,16 +308,16 @@ namespace ASM
                             {
                                 temp[0] = temp[0].Substring(1);
                                 if (!Links.ContainsKey(temp[0]))
-                                    error = new ErrorLine(string.Format("Метка '{0}' не определена.", temp[0]), operation.line.Number);
+                                    error.Message = string.Format("Метка '{0}' не определена.", temp[0]);
                                 else
                                     line = Links[temp[0]];
                             }
                             else
-                                Errors.Add(new ErrorLine(string.Format("Ничего не понятно, наверное это эльфийский."), operation.line.Number));
+                                error.Message = string.Format("Ничего не понятно, наверное это эльфийский.");
                         }
                         Register32 reg = GetRegister(temp[1].ToLower()) as Register32;
                         if (reg == null)
-                            error = new ErrorLine(string.Format("Регистр '{0}' не сущесвует или не может использоватся здесь.", temp[1]), operation.line.Number);
+                            error.Message = string.Format("Регистр '{0}' не сущесвует или не может использоватся здесь.", temp[1]);
                         else
                             output.Add(new DataIndex(line, reg));
                     }
@@ -315,19 +327,19 @@ namespace ASM
                             input[i] = input[i].Substring(1);
 
                         if (!Links.ContainsKey(input[i]))
-                            error = new ErrorLine(string.Format("Метка '{0}' не определена.", input[i]), operation.line.Number);
+                            error.Message = string.Format("Метка '{0}' не определена.", input[i]);
                         else
                             output.Add(new DataIndex(Links[input[i]]));
                     }
                 }
 
                 if (oldCount == output.Count)
-                    error = new ErrorLine(string.Format("Не допустимый пораметр {0}.", operation.name, input[i]), operation.line.Number);
+                    error.Message = string.Format("Не допустимый пораметр {0}.", operation.operation, input[i]);
             }
 
-            operation.arg = output.ToArray();
+            operation.args = output.ToArray();
 
-            if (error == null)
+            if (error.Message == null)
                 return true;
 
             Errors.Add(error);

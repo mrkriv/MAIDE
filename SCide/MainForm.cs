@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Text;
+using ASM.VM;
 using ASM.UI;
 
 namespace ASM
@@ -85,10 +86,7 @@ namespace ASM
         private DocumentForm OpenFile(string filePath)
         {
             DocumentForm doc = new DocumentForm();
-            doc.Code.Text = File.ReadAllText(filePath);
-            doc.Code.Modified = false;
-            doc.Text = Path.GetFileName(filePath);
-            doc.FilePath = filePath;
+            doc.LoadFile(filePath);
             doc.Show(dockPanel);
             updateState();
 
@@ -137,12 +135,6 @@ namespace ASM
             OpenFile();
         }
 
-        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (ActiveDocument != null)
-                ActiveDocument.Code.Redo();
-        }
-
         private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
         {
            // ActiveDocument.Code.FindReplace.ShowReplace();
@@ -167,12 +159,6 @@ namespace ASM
         {
             if (ActiveDocument != null)
                 ActiveDocument.Save();
-        }
-
-        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (ActiveDocument != null)
-                ActiveDocument.Code.Undo();
         }
 
         private void runToolStripMenuItem_Click(object sender, EventArgs _event)
@@ -203,9 +189,6 @@ namespace ASM
             BuildMenuRestart.Visible = isStart;
             BuildMenuPause.Visible = isStart && !isFinished && !isPaused;
             BuildMenuResume.Visible = isStart && !isFinished && isPaused;
-
-            if (isDoc)
-                ActiveDocument.Code.ReadOnly = isStart;
         }
 
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -234,9 +217,9 @@ namespace ASM
 
         private void run()
         {
-            ActiveDocument.Code.ReadOnly = true;
+            //ActiveDocument.Code.ReadOnly = true;
             
-            if (!core.Build(ActiveDocument.Code))
+            if (!core.Build(ActiveDocument.CombineCode()))
             {
                 BeginInvoke((Action)updateState);
                 ModuleAtribute.Show(typeof(ErrorWindow));
@@ -253,11 +236,6 @@ namespace ASM
 
             core.Invoke();
             Console.Destroy();
-        }
-
-        public static CodeEditBox GetActiveCodeBox()
-        {
-            return Instance?.ActiveDocument?.Code;
         }
 
         protected override void OnClosing(CancelEventArgs e)

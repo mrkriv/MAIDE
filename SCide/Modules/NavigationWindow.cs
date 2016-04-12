@@ -27,49 +27,49 @@ namespace ASM
             if (MainForm.Instance.ActiveDocument == null || ContainsFocus)
                 return;
 
-            CodeEditBox code = MainForm.Instance.ActiveDocument.Code;
+            //CodeEditBox code = MainForm.Instance.ActiveDocument.Code;
 
-            lockEvent = true;
-            View.BeginUpdate();
-            View.Nodes.Clear();
+            //lockEvent = true;
+            //View.BeginUpdate();
+            //View.Nodes.Clear();
 
-            TreeNode rootNode = new TreeNode();
-            rootNode.Text = "not section";
-            rootNode.Tag = 0;
+            //TreeNode rootNode = new TreeNode();
+            //rootNode.Text = "not section";
+            //rootNode.Tag = 0;
 
-            for (int i = 0; i < code.Length; i++)
-            {
-                string line = code[i].ToString();
-                int n = line.IndexOf(':');
-                int comment = line.IndexOf(';');
+            //for (int i = 0; i < code.Length; i++)
+            //{
+            //    string line = code[i].ToString();
+            //    int n = line.IndexOf(':');
+            //    int comment = line.IndexOf(';');
 
-                if (n != -1 && (comment == -1 || n < comment))
-                {
-                    int sect = line.IndexOf("csect");
-                    string name = line.Substring(0, n);
+            //    if (n != -1 && (comment == -1 || n < comment))
+            //    {
+            //        int sect = line.IndexOf("csect");
+            //        string name = line.Substring(0, n);
 
-                    if (sect != -1 && (comment == -1 || sect < comment))
-                    {
-                        View.Nodes.Add(rootNode);
-                        rootNode = new TreeNode();
-                        rootNode.Tag = i;
-                        rootNode.Text = name;
-                    }
-                    else
-                    {
-                        TreeNode node = new TreeNode();
-                        node.Text = name;
-                        node.Tag = i;
-                        rootNode.Nodes.Add(node);
-                    }
-                }
-            }
+            //        if (sect != -1 && (comment == -1 || sect < comment))
+            //        {
+            //            View.Nodes.Add(rootNode);
+            //            rootNode = new TreeNode();
+            //            rootNode.Tag = i;
+            //            rootNode.Text = name;
+            //        }
+            //        else
+            //        {
+            //            TreeNode node = new TreeNode();
+            //            node.Text = name;
+            //            node.Tag = i;
+            //            rootNode.Nodes.Add(node);
+            //        }
+            //    }
+            //}
 
-            View.Nodes.Add(rootNode);
-            View.ExpandAll();
-            View.EndUpdate();
+            //View.Nodes.Add(rootNode);
+            //View.ExpandAll();
+            //View.EndUpdate();
 
-            lockEvent = false;
+            //lockEvent = false;
         }
 
         private void View_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -77,7 +77,7 @@ namespace ASM
             if (lockEvent)
                 return;
 
-            CodeEditBox code = MainForm.GetActiveCodeBox();
+            CodeEditBox code = null;// MainForm.GetActiveCodeBox();
             if (code == null)
                 return;
 

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CodeEditBox));
             this.vScrollBar = new System.Windows.Forms.VScrollBar();
             this.hScrollBar = new System.Windows.Forms.HScrollBar();
             this.CaredIndicator = new System.Windows.Forms.Timer(this.components);
@@ -40,6 +41,8 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imgList = new System.Windows.Forms.ImageList(this.components);
+            this.autoCompiler = new ASM.UI.IconListControl();
             this.ContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,18 +50,18 @@
             // 
             this.vScrollBar.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.vScrollBar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.vScrollBar.Location = new System.Drawing.Point(334, 0);
+            this.vScrollBar.Location = new System.Drawing.Point(542, 0);
             this.vScrollBar.Name = "vScrollBar";
-            this.vScrollBar.Size = new System.Drawing.Size(16, 279);
+            this.vScrollBar.Size = new System.Drawing.Size(16, 358);
             this.vScrollBar.TabIndex = 1;
             this.vScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar_Scroll);
             // 
             // hScrollBar
             // 
             this.hScrollBar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.hScrollBar.Location = new System.Drawing.Point(0, 279);
+            this.hScrollBar.Location = new System.Drawing.Point(0, 358);
             this.hScrollBar.Name = "hScrollBar";
-            this.hScrollBar.Size = new System.Drawing.Size(350, 16);
+            this.hScrollBar.Size = new System.Drawing.Size(558, 16);
             this.hScrollBar.TabIndex = 2;
             this.hScrollBar.Visible = false;
             // 
@@ -136,18 +139,40 @@
             this.redoToolStripMenuItem.Text = "Redo";
             this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
             // 
+            // imgList
+            // 
+            this.imgList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgList.ImageStream")));
+            this.imgList.TransparentColor = System.Drawing.Color.Transparent;
+            this.imgList.Images.SetKeyName(0, "component.png");
+            this.imgList.Images.SetKeyName(1, "link.png");
+            this.imgList.Images.SetKeyName(2, "rg.png");
+            // 
+            // autoCompiler
+            // 
+            this.autoCompiler.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
+            this.autoCompiler.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.autoCompiler.CausesValidation = false;
+            this.autoCompiler.ForeColor = System.Drawing.Color.Gainsboro;
+            this.autoCompiler.ImageLib = this.imgList;
+            this.autoCompiler.LeftPading = 1;
+            this.autoCompiler.Location = new System.Drawing.Point(80, 96);
+            this.autoCompiler.Name = "autoCompiler";
+            this.autoCompiler.Size = new System.Drawing.Size(252, 138);
+            this.autoCompiler.TabIndex = 4;
+            // 
             // CodeEditBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.ContextMenuStrip = this.ContextMenu;
+            this.Controls.Add(this.autoCompiler);
             this.Controls.Add(this.vScrollBar);
             this.Controls.Add(this.hScrollBar);
             this.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ForeColor = System.Drawing.Color.Gainsboro;
             this.Name = "CodeEditBox";
-            this.Size = new System.Drawing.Size(350, 295);
+            this.Size = new System.Drawing.Size(558, 374);
             this.ContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -165,5 +190,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
+        private System.Windows.Forms.ImageList imgList;
+        private IconListControl autoCompiler;
     }
 }

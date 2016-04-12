@@ -19,8 +19,7 @@ namespace ASM
             item.Height = 22;
         }
     }
-
-    //get { return Color.FromArgb(0, 122, 204); }
+    
     public class MenuStripColorTable : ProfessionalColorTable
     {
         public override Color MenuItemSelected
