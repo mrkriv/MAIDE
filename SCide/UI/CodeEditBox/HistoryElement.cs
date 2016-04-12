@@ -139,7 +139,7 @@ namespace ASM.UI
             public override void InvokeEvent(CodeEditBox owner)
             {
                 if (Row.Length != 0)
-                    owner.textChanged(owner, new TextChangedEventArgs(Row, Offest));
+                    owner.textChanged(owner, new TextChangedEventArgs(Row));
             }
         }
 

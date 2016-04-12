@@ -7,10 +7,11 @@ namespace ASM.UI
     {
         public class Word : IEnumerable
         {
+            private Enumerator enumerator;
             public readonly Row Owner;
             public readonly int Offest;
-            public readonly int Length;
-            private Enumerator enumerator;
+            public int Length { get; private set; }
+            public int End { get; private set; }
 
             public Symbol this[int index]
             {
@@ -22,9 +23,8 @@ namespace ASM.UI
             {
                 Owner = owner;
                 Offest = offest;
-
                 Length = length;
-                enumerator = new Enumerator(owner, offest, length);
+                End = Offest + Length;
             }
 
             public void SetColor(Color color)
@@ -37,13 +37,18 @@ namespace ASM.UI
             {
                 Owner.Owner.StartRecordHystory();
                 Owner.Remove(Offest, Length);
-                Owner.Write(value, Offest);
+                if (!string.IsNullOrEmpty(value))
+                    Owner.Write(value, Offest);
                 Owner.Owner.CommitHystory();
+
+                Length = value.Length;
+                End = Offest + Length;
+                enumerator = null;
             }
 
             public static bool operator ==(Word a, string b)
             {
-                if (a.Length != b.Length)
+                if (b == null || a.Length != b.Length)
                     return false;
                 for (int i = 0; i < b.Length; i++)
                 {
@@ -55,7 +60,7 @@ namespace ASM.UI
 
             public static bool operator !=(Word a, string b)
             {
-                if (a.Length != b.Length)
+                if (b == null || a.Length != b.Length)
                     return true;
                 for (int i = 0; i < b.Length; i++)
                 {
@@ -93,11 +98,13 @@ namespace ASM.UI
 
             IEnumerator IEnumerable.GetEnumerator()
             {
-                return enumerator;
+                return GetEnumerator();
             }
 
             public Enumerator GetEnumerator()
             {
+                if (enumerator == null)
+                    enumerator = new Enumerator(Owner, Offest, Length);
                 return enumerator;
             }
 

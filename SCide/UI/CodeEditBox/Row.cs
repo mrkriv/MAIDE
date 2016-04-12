@@ -89,7 +89,7 @@ namespace ASM.UI
             public void Merger(Row line)
             {
                 if (line.Length != 0)
-                    Write((IEnumerable<char>)line.data, Length - 1);
+                    Write(line.data.Select(e => (char)e), Length);
             }
 
             public string GetRange(int offest, int count)
@@ -100,7 +100,13 @@ namespace ASM.UI
             public List<Word> GetWords(int offest, int end)
             {
                 var result = new List<Word>();
-                result.Add(GetWord(offest));
+
+                if (offest < data.Count())
+                    result.Add(GetWord(offest));
+
+                if (end >= data.Count())
+                    end = data.Count() - 1;
+
                 for (offest++; offest < end; offest++)
                 {
                     if (wordSplitSymbols.Contains(data[offest - 1]))
@@ -111,6 +117,9 @@ namespace ASM.UI
 
             public Word GetWord(int offest)
             {
+                if (wordSplitSymbols.Contains(data[offest].Value))
+                    return new Word(this, offest, 1);
+
                 int s = offest;
                 int e = offest;
 

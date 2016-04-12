@@ -22,7 +22,7 @@ namespace ASM.UI
         private class item : IComparable<item>
         {
             public string Value;
-            public bool visable;
+            public bool Visable;
             public int ImgIndex;
             public int Render_old_Y;
 
@@ -61,6 +61,9 @@ namespace ASM.UI
                 Invalidate();
             }
         }
+        
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        public bool VisiableAny { get; private set; }
 
         [Category("Items")]
         public string Filter
@@ -69,12 +72,28 @@ namespace ASM.UI
             set
             {
                 filter = value;
-                foreach (var i in items)
-                    i.visable = isValid(i.Value);
+                if (items.Count() != 0)
+                {
+                    VisiableAny = false;
+                    bool eq = false;
 
-                if (!items.Any(a => a.visable))
-                    Visible = false;
-                Invalidate(false);
+                    foreach (var i in items)
+                    {
+                        i.Visable = isValid(i.Value);
+                        if (i.Visable)
+                            VisiableAny = true;
+                        if (!eq && i.Value == filter)
+                        {
+                            selectItem = i;
+                            eq = true;
+                        }
+                    }
+                    
+                    if (!eq && (selectItem == null || !selectItem.Visable))
+                        selectItem = items.FirstOrDefault(a => a.Visable);
+                    
+                    Invalidate(false);
+                }
             }
         }
 
@@ -93,6 +112,36 @@ namespace ASM.UI
             }
         }
 
+        public void SelectUp()
+        {
+            if (selectItem == null)
+                return;
+
+            var coll = items.Where(a => a.Visable).ToList();
+            int i = coll.IndexOf(selectItem);
+
+            if (i != 0)
+            {
+                selectItem = coll[i - 1];
+                Invalidate(false);
+            }
+        }
+
+        public void SelectDown()
+        {
+            if (selectItem == null)
+                return;
+
+            var coll = items.Where(a => a.Visable).ToList();
+            int i = coll.IndexOf(selectItem);
+
+            if (i + 1 < coll.Count())
+            {
+                selectItem = coll[i + 1];
+                Invalidate(false);
+            }
+        }
+
         bool isValid(string value)
         {
             return filter.All(e => value.Contains(e));
@@ -104,12 +153,10 @@ namespace ASM.UI
             {
                 Value = text,
                 ImgIndex = img,
-                visable = isValid(text)
+                Visable = isValid(text)
             });
             modifyCollection = true;
-
-            if (!items.Any(a => a.visable))
-                Visible = false;
+            VisiableAny = items.Any(a => a.Visable);
 
             Invalidate(false);
         }
@@ -135,10 +182,10 @@ namespace ASM.UI
             }
 
             float y = 0;
-            float ddy = (ImageLib.ImageSize.Height - h) / -2;
+            float dh2 = (ImageLib.ImageSize.Height - h) / -2;
             foreach (var i in items)
             {
-                if (!i.visable)
+                if (!i.Visable)
                     continue;
 
                 if (y >= e.ClipRectangle.Y)
@@ -146,7 +193,7 @@ namespace ASM.UI
                     if (selectItem == i)
                         e.Graphics.FillRectangle(selectBrush, 0, y, Width, h);
 
-                    ImageLib.Draw(e.Graphics, LeftPading + (int)ddy, (int)(y + ddy), i.ImgIndex);
+                    ImageLib.Draw(e.Graphics, LeftPading + (int)dh2, (int)(y + dh2), i.ImgIndex);
                     e.Graphics.DrawString(i.Value, Font, br, LeftPading + ImageLib.ImageSize.Width + 2, y);
                     i.Render_old_Y = (int)y;
                 }
@@ -160,20 +207,17 @@ namespace ASM.UI
         protected override void OnMouseMove(MouseEventArgs e)
         {
             float h = Font.GetHeight(Graphics.FromHwnd(Handle));
-            item newTarget = null;
-
             foreach (var i in items)
             {
-                if (i.Render_old_Y <= e.Y && i.Render_old_Y + h >= e.Y)
+                if (i.Visable && i.Render_old_Y <= e.Y && i.Render_old_Y + h >= e.Y)
                 {
-                    newTarget = i;
+                    if (i != selectItem)
+                    {
+                        selectItem = i;
+                        Invalidate(false);
+                    }
                     break;
                 }
-            }
-            if (newTarget != selectItem)
-            {
-                selectItem = newTarget;
-                Invalidate(false);
             }
         }
     }

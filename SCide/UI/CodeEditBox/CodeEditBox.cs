@@ -40,6 +40,8 @@ namespace ASM.UI
         private Point selectEnd = new Point();
         private EventHandler<TextChangedEventArgs> textChanged;
         private EventHandler rowsChanged;
+        private Word selectWord;
+        private bool autoCompileNextSkip = true;
 
         [DefaultValue(false)]
         [Category("Behavior")]
@@ -216,7 +218,7 @@ namespace ASM.UI
             public int Start { get; set; }
             public int Count { get; set; }
 
-            public TextChangedEventArgs(Row row, int start = 0) : this(row, start, row.Length)
+            public TextChangedEventArgs(Row row, int start = 0) : this(row, start, row.Length - start)
             { }
 
             public TextChangedEventArgs(Row row, int start, int count)
@@ -271,7 +273,8 @@ namespace ASM.UI
         private void AutoCompiler_MouseDown(object sender, MouseEventArgs e)
         {
             autoCompiler.Visible = false;
-            rows[selectStart.Y].GetWord(selectStart.X - 1).Set(autoCompiler.SelectItem);
+            selectWord.Set(autoCompiler.SelectItem);
+            SelectStart = new Point(selectWord.End, selectStart.Y);
         }
 
         protected virtual void OnRowsChanged(object s, EventArgs e)
@@ -306,7 +309,7 @@ namespace ASM.UI
                         break;
                     }
                 }
-                
+
                 foreach (Word word in e.Row.GetWords(e.Start, e.Start + e.Count))
                 {
                     Color color = ForeColor;
@@ -588,7 +591,7 @@ namespace ASM.UI
             caretVisible = true;
             SelectEnd = SelectStart;
         }
-        
+
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
             foreach (ToolStripItem m in ContextMenu.Items)
@@ -607,12 +610,12 @@ namespace ASM.UI
                 }
             }
 
-            if (ModifierKeys != 0 && (ModifierKeys& Keys.Shift) == 0)
+            if (ModifierKeys != 0 && (ModifierKeys & Keys.Shift) == 0)
                 return;
 
-            switch (e.KeyChar)
+            switch ((Keys)e.KeyChar)
             {
-                case (char)8:
+                case Keys.Back:
                     if (GetSelectLen() != 0)
                         RemoveSelected();
                     else
@@ -627,17 +630,30 @@ namespace ASM.UI
                         }
                     }
                     break;
-                case (char)13:
-                    RemoveSelected();
-                    if (rows[SelectStart.Y].Length != SelectStart.X)
-                        InsertRow(SelectStart.Y + 1, new Row(this, rows[SelectStart.Y].Cut(SelectStart.X, rows[SelectStart.Y].Length - SelectStart.X)));
+                case Keys.Enter:
+                    if (autoCompiler.Visible)
+                    {
+                        AutoCompiler_MouseDown(autoCompiler, null);
+                        autoCompileNextSkip = true;
+                    }
                     else
-                        InsertRow(SelectStart.Y + 1, new Row(this));
-                    selectStart.Y++;
-                    selectStart.X = 0;
+                    {
+                        RemoveSelected();
+                        if (rows[SelectStart.Y].Length != SelectStart.X)
+                            InsertRow(SelectStart.Y + 1, new Row(this, rows[SelectStart.Y].Cut(SelectStart.X, rows[SelectStart.Y].Length - SelectStart.X)));
+                        else
+                            InsertRow(SelectStart.Y + 1, new Row(this));
+                        selectStart.Y++;
+                        selectStart.X = 0;
+                    }
                     break;
-                case (char)11:
+                case (Keys)11:  // wtf?
                     break;
+                case Keys.Space:
+                case Keys.Tab:
+                    if (autoCompiler.Visible)
+                        AutoCompiler_MouseDown(autoCompiler, null);
+                    goto default;
                 default:
                     RemoveSelected();
                     rows[SelectStart.Y].Write(e.KeyChar, SelectStart.X);
@@ -645,17 +661,26 @@ namespace ASM.UI
                     break;
             }
 
-            if (rows[selectStart.Y].Length != 0 && selectStart.X != 0)
-            {
-                autoCompiler.Location = GetLocationByPoint(selectStart.Substract(1, 0)).Add(0, (int)lineHeight);
-                autoCompiler.Visible = true;
-                autoCompiler.Filter = rows[selectStart.Y].GetWord(selectStart.X - 1).ToString();
-            }
-            else
-                autoCompiler.Visible = false;
+            updateAutoCompiler();
 
             ResetSelect();
             Invalidate(false);
+        }
+
+        void updateAutoCompiler()
+        {
+            if (rows[selectStart.Y].Length != 0 && selectStart.X != 0)
+            {
+                selectWord = rows[selectStart.Y].GetWord(selectStart.X - 1);
+                autoCompiler.Location = GetLocationByPoint(selectStart.Substract(1, 0)).Add(0, (int)lineHeight);
+                autoCompiler.Filter = selectWord.ToString();
+                autoCompiler.Visible = !autoCompileNextSkip && autoCompiler.VisiableAny;
+                autoCompileNextSkip = false;
+            }
+            else {
+                autoCompiler.Visible = false;
+                selectWord = null;
+            }
         }
 
         protected override void OnKeyUp(KeyEventArgs e)
@@ -672,31 +697,39 @@ namespace ASM.UI
             switch (e.KeyCode)
             {
                 case Keys.Up:
-                    if (SelectStart.Y > 0)
-                    {
-                        selectStart.Y--;
-                        int len = rows[SelectStart.Y].Length;
-                        if (selectStart.X > len)
-                            selectStart.X = len;
+                    if (autoCompiler.Visible)
+                        autoCompiler.SelectUp();
+                    else {
+                        if (SelectStart.Y > 0)
+                        {
+                            selectStart.Y--;
+                            int len = rows[SelectStart.Y].Length;
+                            if (selectStart.X > len)
+                                selectStart.X = len;
 
-                        if (e.Modifiers == Keys.Shift)
-                            selectEnd.Y--;
-                        else
-                            ResetSelect();
+                            if (e.Modifiers == Keys.Shift)
+                                selectEnd.Y--;
+                            else
+                                ResetSelect();
+                        }
                     }
                     break;
                 case Keys.Down:
-                    if (SelectStart.Y + 1 < rows.Count)
-                    {
-                        selectStart.Y++;
-                        int len = rows[SelectStart.Y].Length;
-                        if (SelectStart.X > len)
-                            selectStart.X = len;
+                    if (autoCompiler.Visible)
+                        autoCompiler.SelectDown();
+                    else {
+                        if (SelectStart.Y + 1 < rows.Count)
+                        {
+                            selectStart.Y++;
+                            int len = rows[SelectStart.Y].Length;
+                            if (SelectStart.X > len)
+                                selectStart.X = len;
 
-                        if (e.Modifiers == Keys.Shift)
-                            selectEnd.Y++;
-                        else
-                            ResetSelect();
+                            if (e.Modifiers == Keys.Shift)
+                                selectEnd.Y++;
+                            else
+                                ResetSelect();
+                        }
                     }
                     break;
                 case Keys.Left:
@@ -749,7 +782,10 @@ namespace ASM.UI
             }
 
             if (needUpdate)
+            {
+                autoCompiler.Visible = false;
                 Invalidate(false);
+            }
 
             base.OnKeyDown(e);
         }
