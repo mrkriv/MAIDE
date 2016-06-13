@@ -184,7 +184,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.aboutToolStripMenuItem.Text = "О программе";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -280,7 +280,7 @@
             this.BuildMenuRestart.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BuildMenuRestart.Name = "BuildMenuRestart";
             this.BuildMenuRestart.Size = new System.Drawing.Size(36, 36);
-            this.BuildMenuRestart.MouseDown += new System.Windows.Forms.MouseEventHandler(this.restartToolStripMenuItem_Click);
+            this.BuildMenuRestart.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BuildMenuRestart_Click);
             // 
             // statusStrip1
             // 

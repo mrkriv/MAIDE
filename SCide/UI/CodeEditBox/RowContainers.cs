@@ -44,7 +44,11 @@ namespace ASM.UI
             public RowFlag Flag
             {
                 get { return row.Flag; }
-                set { row.Flag = value; } // need fix
+                set
+                {
+                    row.Flag = value;
+                    row.Owner.Invalidate();
+                }
             }
 
             public Symbol this[int index]
@@ -65,6 +69,21 @@ namespace ASM.UI
             public override string ToString()
             {
                 return row.ToString();
+            }
+
+            public bool IsFlag(RowFlag flag)
+            {
+                return (row.Flag & flag) != 0;
+            }
+
+            public void SetFlag(RowFlag flag)
+            {
+                Flag |= flag;
+            }
+
+            public void ResetFlag(RowFlag flag)
+            {
+                Flag &= ~flag;
             }
         }
     }

@@ -19,8 +19,8 @@ namespace ASM
         private string[] startArgs;
         private Thread runThread;
         public static MainForm Instance { get; private set; }
-        public Core core;
         public DocumentForm ActiveDocument;
+        public Core core;
 
         public MainForm(string[] args)
         {
@@ -33,6 +33,7 @@ namespace ASM
             Icon = Properties.Resources.IconApplication;
 
             core = new Core();
+            core.StateChanged += Core_StateChanged;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -90,7 +91,7 @@ namespace ASM
             DocumentForm doc = new DocumentForm();
             doc.LoadFile(filePath);
             doc.Show(dockPanel);
-            updateState();
+            Core_StateChanged(core, null);
 
             return doc;
         }
@@ -100,7 +101,7 @@ namespace ASM
             DocumentForm doc = new DocumentForm();
             doc.Text = string.Format(CultureInfo.CurrentCulture, "{0}{1}", newDocumentName, ++newDocumentCount);
             doc.Show(dockPanel);
-            updateState();
+            Core_StateChanged(core, null);
             return doc;
         }
 
@@ -118,8 +119,7 @@ namespace ASM
             {
                 Text += " - " + ActiveDocument.Text;
             }
-
-            updateState();
+            Core_StateChanged(core, null);
         }
         
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -135,11 +135,6 @@ namespace ASM
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFile();
-        }
-
-        private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-           // ActiveDocument.Code.FindReplace.ShowReplace();
         }
 
         private void saveAllStripMenuItem_Click(object sender, EventArgs e)
@@ -168,7 +163,6 @@ namespace ASM
             ActiveDocument.Save();
             runThread = new Thread(run);
             runThread.Start();
-            updateState();
         }
 
         private void ConsoleClosed(object sender, FormClosedEventArgs e)
@@ -176,33 +170,30 @@ namespace ASM
             core.Destroy();
             runThread.Abort();
             RegistersWindow.Binding.DataSource = null;
-            updateState();
         }
 
-        void updateState()
+        private void Core_StateChanged(object sender, EventArgs e)
         {
             bool isDoc = ActiveDocument != null;
-            bool isStart = isDoc && core.IsReady;
-            bool isFinished = isStart && core.IsFinished;
-            bool isPaused = isStart && core.IsPaused;
+            bool runOrLau = core.Status == Core.State.Pause || core.Status == Core.State.Launched;
 
-            BuildMenuRun.Visible = isDoc && !isStart;
-            BuildMenuStop.Visible = isStart;
-            BuildMenuRestart.Visible = isStart;
-            BuildMenuPause.Visible = isStart && !isFinished && !isPaused;
-            BuildMenuResume.Visible = isStart && !isFinished && isPaused;
+            BuildMenuRun.Visible = isDoc && !runOrLau;
+            BuildMenuStop.Visible = runOrLau || core.Status == Core.State.Finish;
+            BuildMenuRestart.Visible = BuildMenuStop.Visible;
+            BuildMenuPause.Visible = core.Status == Core.State.Launched;
+            BuildMenuResume.Visible = core.Status == Core.State.Pause;
+            BuildMenuBuild.Visible = BuildMenuRun.Visible;
         }
 
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             core.Pause();
-            updateState();
+            RegistersWindow.Instance.Refresh();
         }
 
         private void resumeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             core.Resume();
-            updateState();
         }
 
         private void stopToolStripMenuItem_Click(object sender, EventArgs e)
@@ -210,19 +201,11 @@ namespace ASM
             Console.Destroy();
         }
 
-        private void restartToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            stopToolStripMenuItem_Click(sender, e);
-            runToolStripMenuItem_Click(sender, e);
-            updateState();
-        }
-
         bool build()
         {
             if (!core.Build(ActiveDocument.CombineCode()))
             {
                 status.Text = "В ходе сборки возникли ошибки.";
-                BeginInvoke((Action)updateState);
                 ModuleAtribute.Show(typeof(ErrorWindow));
                 return false;
             }
@@ -269,13 +252,15 @@ namespace ASM
             new Setting().Show();
         }
 
-        private void restartToolStripMenuItem_Click(object sender, MouseEventArgs e)
-        {
-        }
-
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new AboutForm().ShowDialog();
+        }
+
+        private void BuildMenuRestart_Click(object sender, EventArgs e)
+        {
+            stopToolStripMenuItem_Click(sender, e);
+            runToolStripMenuItem_Click(sender, e);
         }
     }
 }

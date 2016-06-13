@@ -267,8 +267,8 @@ namespace ASM.UI
                     inf.SetValue(this, ((DefaultValueAttribute)atrs.First()).Value, BindingFlags.SetProperty, null, null, null);
             }
 
-            ContextMenu.Renderer = new MenuStripRenderer();
-            foreach (ToolStripItem item in ContextMenu.Items)
+            contextMenu.Renderer = new MenuStripRenderer();
+            foreach (ToolStripItem item in contextMenu.Items)
                 MenuStripRenderer.SetStyle(item);
 
             autoCompiler.Visible = false;
@@ -571,12 +571,12 @@ namespace ASM.UI
                     {
                         SelectStart = GetPointByLocation(e.Location);
                         SelectEnd = SelectStart;
+                        leftMouseDown = true;
                     }
                     Invalidate(false);
-                    leftMouseDown = true;
                     break;
                 case MouseButtons.Right:
-                    ContextMenu.Show(PointToScreen(new Point(e.X, e.Y)));
+                    contextMenu.Show(PointToScreen(new Point(e.X, e.Y)));
                     break;
             }
             base.OnMouseDown(e);
@@ -615,7 +615,7 @@ namespace ASM.UI
 
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
-            foreach (ToolStripItem m in ContextMenu.Items)
+            foreach (ToolStripItem m in contextMenu.Items)
             {
                 if (m is ToolStripMenuItem)
                 {

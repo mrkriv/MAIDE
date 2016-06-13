@@ -12,6 +12,7 @@ namespace ASM
         public List<ErrorMessageRow> Errors = new List<ErrorMessageRow>();
         public string FilePath { get; set; }
         private List<CodeBlock> blocks = new List<CodeBlock>();
+        public CodeBlock CodeBlock;
 
         public DocumentForm()
         {
@@ -33,6 +34,7 @@ namespace ASM
             CodeBlock bl = new CodeBlock();
             Controls.Add(bl);
             blocks.Add(bl);
+            CodeBlock = bl;
             return bl;
         }
 

@@ -16,17 +16,17 @@ namespace ASM.UI
         public static CodeBlock MainBlock
         {
             get { return mainBlock; }
-            set
-            {
-                //if (mainBlock != null)
-                mainBlock = value;
-                //if (mainBlock != null)
-            }
+            set { mainBlock = value; }
         }
 
         public CodeBlock()
         {
             InitializeComponent();
+        }
+
+        public void GoTo(int line)
+        {
+            codeEditBox.GoTo(line);
         }
 
         public void SetCode(string text)

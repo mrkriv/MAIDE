@@ -33,7 +33,7 @@
             this.vScrollBar = new System.Windows.Forms.VScrollBar();
             this.hScrollBar = new System.Windows.Forms.HScrollBar();
             this.CaredIndicator = new System.Windows.Forms.Timer(this.components);
-            this.ContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cmCut = new System.Windows.Forms.ToolStripMenuItem();
             this.cmCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.cmPaste = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,7 +43,7 @@
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imgList = new System.Windows.Forms.ImageList(this.components);
             this.autoCompiler = new ASM.UI.IconListControl();
-            this.ContextMenu.SuspendLayout();
+            this.contextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // vScrollBar
@@ -73,7 +73,7 @@
             // 
             // ContextMenu
             // 
-            this.ContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cmCut,
             this.cmCopy,
             this.cmPaste,
@@ -81,10 +81,10 @@
             this.toolStripSeparator1,
             this.undoToolStripMenuItem,
             this.redoToolStripMenuItem});
-            this.ContextMenu.Name = "ContextMenu";
-            this.ContextMenu.ShowImageMargin = false;
-            this.ContextMenu.Size = new System.Drawing.Size(157, 142);
-            this.ContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenu_Opening);
+            this.contextMenu.Name = "ContextMenu";
+            this.contextMenu.ShowImageMargin = false;
+            this.contextMenu.Size = new System.Drawing.Size(157, 142);
+            this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenu_Opening);
             // 
             // cmCut
             // 
@@ -165,7 +165,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.ContextMenuStrip = this.ContextMenu;
+            this.ContextMenuStrip = this.contextMenu;
             this.Controls.Add(this.autoCompiler);
             this.Controls.Add(this.vScrollBar);
             this.Controls.Add(this.hScrollBar);
@@ -173,7 +173,7 @@
             this.ForeColor = System.Drawing.Color.Gainsboro;
             this.Name = "CodeEditBox";
             this.Size = new System.Drawing.Size(558, 374);
-            this.ContextMenu.ResumeLayout(false);
+            this.contextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -182,7 +182,7 @@
         private System.Windows.Forms.VScrollBar vScrollBar;
         private System.Windows.Forms.HScrollBar hScrollBar;
         private System.Windows.Forms.Timer CaredIndicator;
-        private System.Windows.Forms.ContextMenuStrip ContextMenu;
+        private System.Windows.Forms.ContextMenuStrip contextMenu;
         private System.Windows.Forms.ToolStripMenuItem cmCut;
         private System.Windows.Forms.ToolStripMenuItem cmCopy;
         private System.Windows.Forms.ToolStripMenuItem cmPaste;

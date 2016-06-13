@@ -12,9 +12,21 @@ namespace ASM.VM
     {
         public static readonly BindingSource Errors;
 
+        public enum State
+        {
+            NoBuild,
+            Ready,
+            Launched,
+            Pause,
+            Finish,
+            Error,
+        }
+
         private List<Operation> source = new List<Operation>();
         private ManualResetEvent waitEvent;
         private CombineRows code;
+        private EventHandler stateChanged;
+        private State status;
 
         public Dictionary<string, int> Links = new Dictionary<string, int>();
         public Dictionary<int, List<byte>> DataByte = new Dictionary<int, List<byte>>();
@@ -22,9 +34,28 @@ namespace ASM.VM
         public Stack<int> Stack = new Stack<int>();
         public int ActiveIndex = 0;
         public int TotalTick { get; private set; }
-        public bool IsFinished { get; private set; }
-        public bool IsPaused { get; private set; }
-        public bool IsReady { get; private set; }
+
+        public State Status
+        {
+            get { return status; }
+            private set
+            {
+                status = value;
+                stateChanged.Invoke(this, null);
+            }
+        }
+
+        public event EventHandler StateChanged
+        {
+            add
+            {
+                lock (this) { stateChanged += value; }
+            }
+            remove
+            {
+                lock (this) { stateChanged -= value; }
+            }
+        }
 
         public class Operation
         {
@@ -41,17 +72,11 @@ namespace ASM.VM
             Errors.RemoveAt(0);
         }
 
-        public static void Main(string[] argv)
-        {
-            string h = "-//-";
-            System.Console.WriteLine(h);
-            System.Console.ReadKey();
-        }
-
         public Core()
         {
             Operators.ActiveCore = this;
 
+            stateChanged = (s, e) => { };
             waitEvent = new ManualResetEvent(true);
             RecreateRegisters();
             Properties.Settings.Default.SettingsSaving += SettingsSaving;
@@ -107,14 +132,14 @@ namespace ASM.VM
 
         public void Invoke()
         {
-            if (!IsReady)
+            if (status != State.Ready)
                 return;
 
             Stack.Clear();
             ActiveIndex = 0;
             TotalTick = 0;
-            IsFinished = false;
-            Resume();
+            waitEvent.Set();
+            Status = State.Launched;
 
             int i = 500;
             while (Console.Instance == null)
@@ -127,7 +152,7 @@ namespace ASM.VM
                 }
             }
 
-            while (ActiveIndex < source.Count && !IsFinished)
+            while (ActiveIndex < source.Count && status == State.Launched)
             {
                 Operation op = source[ActiveIndex];
 
@@ -135,41 +160,44 @@ namespace ASM.VM
                 {
                     if (MessageBox.Show("Возможно, Ваша программа зациклилась.\nОстановть ее?", "Слишком много операций", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
-                        IsFinished = true;
+                        Status = State.Error;
                         return;
                     }
                     TotalTick = -TotalTick;
                 }
 
-                if ((op.row.Flag & CodeEditBox.RowFlag.Breakpoint) != 0)
+                if (op.row.IsFlag(CodeEditBox.RowFlag.Breakpoint))
                     Pause();
 
-                op.row.Flag |= CodeEditBox.RowFlag.Run;
+                op.row.SetFlag(CodeEditBox.RowFlag.Run);
 
                 waitEvent.WaitOne();
 
-                if (Program.Debug)
-                    op.method.Invoke(null, op.args);
-                else
+                if (status == State.Launched)
                 {
-                    try
-                    {
+                    if (Program.Debug)
                         op.method.Invoke(null, op.args);
-                    }
-                    catch
+                    else
                     {
-                        MessageBox.Show(string.Format("Не обрабатываемая ошибка на строке {0}.\nОтладка не возможна.", op.row.Index + 1));
-                        IsFinished = true;
+                        try
+                        {
+                            op.method.Invoke(null, op.args);
+                        }
+                        catch
+                        {
+                            MessageBox.Show(string.Format("Не обрабатываемая ошибка на строке {0}.\nОтладка не возможна.", op.row.Index + 1));
+                            Status = State.Error;
+                        }
                     }
                 }
 
-                op.row.Flag &= ~CodeEditBox.RowFlag.Run;
+                op.row.ResetFlag(CodeEditBox.RowFlag.Run);
 
                 ActiveIndex++;
                 TotalTick++;
             }
 
-            IsFinished = true;
+            Status = State.Finish;
 
             Console.MoveCaretToEnd();
             Console.Write("\nPress any key to continue.");
@@ -183,7 +211,6 @@ namespace ASM.VM
             Links.Clear();
             DataByte.Clear();
             Errors.Clear();
-            IsReady = false;
 
             code = rows;
 
@@ -199,8 +226,8 @@ namespace ASM.VM
                     source.Add(op);
             }
 
-            IsReady = Errors.Count == 0;
-            return IsReady;
+            Status = Errors.Count == 0 ? State.Ready : State.Error;
+            return Errors.Count == 0;
         }
 
         public Dictionary<CodeEditBox.RowReadonly, string[]> Preprocessor()
@@ -226,7 +253,7 @@ namespace ASM.VM
                 }
                 else
                     data = text[0];
-                 
+
                 text = data.Split(new char[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries);
 
                 if (text.Length != 0)
@@ -263,7 +290,7 @@ namespace ASM.VM
                     return ParseOperation(op, args) ? op : null;
                 }
             }
-            Errors.Add(new ErrorMessageRow(string.Format("Операция '{0}' не определена.", op.operation), row.Index+1));
+            Errors.Add(new ErrorMessageRow(string.Format("Операция '{0}' не определена.", op.operation), row.Index + 1));
             return null;
         }
 
@@ -359,26 +386,30 @@ namespace ASM.VM
         public void Pause()
         {
             waitEvent.Reset();
-            IsPaused = true;
+            Status = State.Pause;
         }
 
         public void Resume()
         {
-            waitEvent.Set();
-            IsPaused = false;
+            if (status == State.Pause)
+            {
+                waitEvent.Set();
+                Status = State.Launched;
+            }
         }
 
         public void Stop()
         {
-            Resume();
-            IsFinished = true;
+            if (status == State.Launched || status == State.Pause)
+            {
+                waitEvent.Set();
+                Status = State.Ready;
+            }
         }
 
         public void Destroy()
         {
-            Stop();
-            IsPaused = false;
-            IsReady = false;
+            Status = State.NoBuild;
         }
     }
 }
