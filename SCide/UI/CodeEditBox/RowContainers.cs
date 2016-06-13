@@ -41,9 +41,10 @@ namespace ASM.UI
                 get { return row.Index; }
             }
 
-            public bool Flag
+            public RowFlag Flag
             {
                 get { return row.Flag; }
+                set { row.Flag = value; } // need fix
             }
 
             public Symbol this[int index]

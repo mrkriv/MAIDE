@@ -41,15 +41,22 @@
             this.MianMenuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewDropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.BuildMenuRun = new System.Windows.Forms.ToolStripButton();
             this.BuildMenuBuild = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.BuildMenuStop = new System.Windows.Forms.ToolStripButton();
             this.BuildMenuPause = new System.Windows.Forms.ToolStripButton();
             this.BuildMenuResume = new System.Windows.Forms.ToolStripButton();
             this.BuildMenuRestart = new System.Windows.Forms.ToolStripButton();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.status = new System.Windows.Forms.ToolStripStatusLabel();
             this.MainMenu.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // openFileDialog
@@ -63,7 +70,8 @@
             this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSplitFile,
             this.ViewDropDown,
-            this.toolStripButton1});
+            this.toolStripButton1,
+            this.toolStripDropDownButton1});
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
             this.MainMenu.Size = new System.Drawing.Size(840, 25);
@@ -161,6 +169,25 @@
             this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
+            // toolStripDropDownButton1
+            // 
+            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
+            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+            this.toolStripDropDownButton1.ShowDropDownArrow = false;
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(57, 22);
+            this.toolStripDropDownButton1.Text = "Справка";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Text = "О программе";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
             // dockPanel
             // 
             this.dockPanel.ActiveAutoHideContent = null;
@@ -170,10 +197,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dockPanel.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.dockPanel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
-            this.dockPanel.Location = new System.Drawing.Point(0, 52);
+            this.dockPanel.Location = new System.Drawing.Point(0, 66);
             this.dockPanel.Margin = new System.Windows.Forms.Padding(2);
             this.dockPanel.Name = "dockPanel";
-            this.dockPanel.Size = new System.Drawing.Size(840, 417);
+            this.dockPanel.Size = new System.Drawing.Size(840, 379);
             this.dockPanel.TabIndex = 26;
             this.dockPanel.ActiveContentChanged += new System.EventHandler(this.dockPanel_ActiveContentChanged);
             // 
@@ -181,17 +208,29 @@
             // 
             this.toolStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BuildMenuRun,
             this.BuildMenuBuild,
+            this.toolStripSeparator2,
             this.BuildMenuStop,
             this.BuildMenuPause,
             this.BuildMenuResume,
             this.BuildMenuRestart});
             this.toolStrip1.Location = new System.Drawing.Point(0, 25);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(840, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(840, 39);
             this.toolStrip1.TabIndex = 29;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // BuildMenuRun
+            // 
+            this.BuildMenuRun.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BuildMenuRun.Image = global::ASM.Properties.Resources.resume;
+            this.BuildMenuRun.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BuildMenuRun.Name = "BuildMenuRun";
+            this.BuildMenuRun.Size = new System.Drawing.Size(36, 36);
+            this.BuildMenuRun.MouseDown += new System.Windows.Forms.MouseEventHandler(this.runToolStripMenuItem_Click);
             // 
             // BuildMenuBuild
             // 
@@ -199,8 +238,13 @@
             this.BuildMenuBuild.Image = global::ASM.Properties.Resources.build;
             this.BuildMenuBuild.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BuildMenuBuild.Name = "BuildMenuBuild";
-            this.BuildMenuBuild.Size = new System.Drawing.Size(23, 22);
-            this.BuildMenuBuild.MouseDown += new System.Windows.Forms.MouseEventHandler(this.runToolStripMenuItem_Click);
+            this.BuildMenuBuild.Size = new System.Drawing.Size(36, 36);
+            this.BuildMenuBuild.Click += new System.EventHandler(this.BuildMenuBuild_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 39);
             // 
             // BuildMenuStop
             // 
@@ -208,7 +252,7 @@
             this.BuildMenuStop.Image = global::ASM.Properties.Resources.cancel;
             this.BuildMenuStop.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BuildMenuStop.Name = "BuildMenuStop";
-            this.BuildMenuStop.Size = new System.Drawing.Size(23, 22);
+            this.BuildMenuStop.Size = new System.Drawing.Size(36, 36);
             this.BuildMenuStop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.stopToolStripMenuItem_Click);
             // 
             // BuildMenuPause
@@ -217,7 +261,7 @@
             this.BuildMenuPause.Image = global::ASM.Properties.Resources.pause;
             this.BuildMenuPause.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BuildMenuPause.Name = "BuildMenuPause";
-            this.BuildMenuPause.Size = new System.Drawing.Size(23, 22);
+            this.BuildMenuPause.Size = new System.Drawing.Size(36, 36);
             this.BuildMenuPause.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pauseToolStripMenuItem_Click);
             // 
             // BuildMenuResume
@@ -226,7 +270,7 @@
             this.BuildMenuResume.Image = global::ASM.Properties.Resources.resume;
             this.BuildMenuResume.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BuildMenuResume.Name = "BuildMenuResume";
-            this.BuildMenuResume.Size = new System.Drawing.Size(23, 22);
+            this.BuildMenuResume.Size = new System.Drawing.Size(36, 36);
             this.BuildMenuResume.MouseDown += new System.Windows.Forms.MouseEventHandler(this.resumeToolStripMenuItem_Click);
             // 
             // BuildMenuRestart
@@ -235,8 +279,23 @@
             this.BuildMenuRestart.Image = global::ASM.Properties.Resources.refresh;
             this.BuildMenuRestart.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BuildMenuRestart.Name = "BuildMenuRestart";
-            this.BuildMenuRestart.Size = new System.Drawing.Size(23, 22);
+            this.BuildMenuRestart.Size = new System.Drawing.Size(36, 36);
             this.BuildMenuRestart.MouseDown += new System.Windows.Forms.MouseEventHandler(this.restartToolStripMenuItem_Click);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.status});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 447);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(840, 22);
+            this.statusStrip1.TabIndex = 32;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // status
+            // 
+            this.status.Name = "status";
+            this.status.Size = new System.Drawing.Size(0, 17);
             // 
             // MainForm
             // 
@@ -244,6 +303,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.ClientSize = new System.Drawing.Size(840, 469);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.MainMenu);
             this.Controls.Add(this.dockPanel);
@@ -257,6 +317,8 @@
             this.MainMenu.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -279,7 +341,13 @@
         private System.Windows.Forms.ToolStripButton BuildMenuRestart;
         private System.Windows.Forms.ToolStripDropDownButton ViewDropDown;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton BuildMenuBuild;
+        private System.Windows.Forms.ToolStripButton BuildMenuRun;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton BuildMenuBuild;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel status;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
     }
 }

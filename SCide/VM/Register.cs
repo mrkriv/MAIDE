@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ASM.VM
 {
-    internal abstract class Register
+    public abstract class Register
     {
         public string Name { get; private set; }
         public string TValue
@@ -25,7 +25,7 @@ namespace ASM.VM
         protected abstract void inString(string str);
     }
 
-    internal class Register32 : Register
+    public class Register32 : Register
     {
         public int Value;
 
@@ -44,7 +44,7 @@ namespace ASM.VM
         }
     }
 
-    internal class Register16 : Register
+    public class Register16 : Register
     {
         private readonly Register32 owner;
         private readonly int offest;
@@ -72,7 +72,7 @@ namespace ASM.VM
         }
     }
 
-    internal class Register8 : Register
+    public class Register8 : Register
     {
         private readonly Register32 owner;
         private readonly int offest;
@@ -100,7 +100,7 @@ namespace ASM.VM
         }
     }
 
-    internal class RegisterFlag : Register
+    public class RegisterFlag : Register
     {
         /// <summary>Carry Flag</summary>
         public bool CF = false;

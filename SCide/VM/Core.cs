@@ -8,7 +8,7 @@ using ASM.UI;
 
 namespace ASM.VM
 {
-    internal class Core
+    public class Core
     {
         public static readonly BindingSource Errors;
 
@@ -41,6 +41,13 @@ namespace ASM.VM
             Errors.RemoveAt(0);
         }
 
+        public static void Main(string[] argv)
+        {
+            string h = "-//-";
+            System.Console.WriteLine(h);
+            System.Console.ReadKey();
+        }
+
         public Core()
         {
             Operators.ActiveCore = this;
@@ -48,7 +55,6 @@ namespace ASM.VM
             waitEvent = new ManualResetEvent(true);
             RecreateRegisters();
             Properties.Settings.Default.SettingsSaving += SettingsSaving;
-
         }
 
         private void SettingsSaving(object sender, System.ComponentModel.CancelEventArgs e)
@@ -135,8 +141,10 @@ namespace ASM.VM
                     TotalTick = -TotalTick;
                 }
 
-                if (op.row.Flag)
+                if ((op.row.Flag & CodeEditBox.RowFlag.Breakpoint) != 0)
                     Pause();
+
+                op.row.Flag |= CodeEditBox.RowFlag.Run;
 
                 waitEvent.WaitOne();
 
@@ -154,6 +162,8 @@ namespace ASM.VM
                         IsFinished = true;
                     }
                 }
+
+                op.row.Flag &= ~CodeEditBox.RowFlag.Run;
 
                 ActiveIndex++;
                 TotalTick++;

@@ -58,6 +58,8 @@ namespace ASM
             }
             else
                 NewDocument();
+
+            status.Text = "Готово.";
         }
 
         private void OpenFile()
@@ -184,7 +186,7 @@ namespace ASM
             bool isFinished = isStart && core.IsFinished;
             bool isPaused = isStart && core.IsPaused;
 
-            BuildMenuBuild.Visible = isDoc && !isStart;
+            BuildMenuRun.Visible = isDoc && !isStart;
             BuildMenuStop.Visible = isStart;
             BuildMenuRestart.Visible = isStart;
             BuildMenuPause.Visible = isStart && !isFinished && !isPaused;
@@ -215,16 +217,24 @@ namespace ASM
             updateState();
         }
 
+        bool build()
+        {
+            if (!core.Build(ActiveDocument.CombineCode()))
+            {
+                status.Text = "В ходе сборки возникли ошибки.";
+                BeginInvoke((Action)updateState);
+                ModuleAtribute.Show(typeof(ErrorWindow));
+                return false;
+            }
+            status.Text = "Постоение успешно завершено.";
+            return true;
+        }
+
         private void run()
         {
             //ActiveDocument.Code.ReadOnly = true;
-            
-            if (!core.Build(ActiveDocument.CombineCode()))
-            {
-                BeginInvoke((Action)updateState);
-                ModuleAtribute.Show(typeof(ErrorWindow));
+            if (!build())
                 return;
-            }
 
             RegistersWindow.Binding.DataSource = core.Registers;
 
@@ -238,6 +248,14 @@ namespace ASM
             Console.Destroy();
         }
 
+        private void BuildMenuBuild_Click(object sender, EventArgs e)
+        {
+            if (!build())
+                return;
+
+            CodeBuilder cb = new CodeBuilder(core, ActiveDocument.Text.Split('.')[0]);
+        }
+
         protected override void OnClosing(CancelEventArgs e)
         {
             if (runThread != null)
@@ -249,6 +267,15 @@ namespace ASM
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             new Setting().Show();
+        }
+
+        private void restartToolStripMenuItem_Click(object sender, MouseEventArgs e)
+        {
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new AboutForm().ShowDialog();
         }
     }
 }

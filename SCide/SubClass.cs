@@ -2,6 +2,7 @@
 using System.Drawing;
 using ASM.VM;
 
+// Sub class mur mur mur mur
 namespace ASM
 {
     public class ErrorMessageRow
@@ -16,7 +17,7 @@ namespace ASM
         }
     }
 
-    internal struct DataIndex
+    public struct DataIndex
     {
         public int Line;
         public int Offest;
@@ -57,6 +58,24 @@ namespace ASM
         public static Point Substract(this Point a, Point b)
         {
             return new Point(a.X - b.X, a.Y - b.Y);
+        }
+
+        public static Point Center(this Rectangle self)
+        {
+            return new Point(self.Left + self.Width / 2, self.Top + self.Height / 2);
+        }
+
+        public static void DrawTriangle(this Graphics self, Brush brush, int x, int y, int w, int h)
+        {
+            Point[] points = { new Point(x, y), new Point(x + w, y + h / 2), new Point(x, y + h) };
+            self.FillPolygon(brush, points);
+        }
+
+        public static object GetDefault(this Type self)
+        {
+            if (self.IsValueType)
+                return Activator.CreateInstance(self);
+            return null;
         }
     }
 }

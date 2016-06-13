@@ -34,7 +34,6 @@
             this.log = new System.Windows.Forms.TextBox();
             this.hendel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // close
@@ -94,9 +93,9 @@
             this.hendel.ForeColor = System.Drawing.Color.Gainsboro;
             this.hendel.Location = new System.Drawing.Point(12, 3);
             this.hendel.Name = "hendel";
-            this.hendel.Size = new System.Drawing.Size(302, 47);
+            this.hendel.Size = new System.Drawing.Size(310, 47);
             this.hendel.TabIndex = 4;
-            this.hendel.Text = "Nas beru uhn`adarr?";
+            this.hendel.Text = "Возникла проблемка";
             // 
             // label1
             // 
@@ -109,17 +108,6 @@
             this.label1.TabIndex = 5;
             this.label1.Text = "Если продолжить работу программы все может полететь в обливион";
             // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.Color.Silver;
-            this.label2.Location = new System.Drawing.Point(751, 26);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(60, 13);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Endi beraki";
-            // 
             // ExceptionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -127,7 +115,6 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.ClientSize = new System.Drawing.Size(818, 294);
             this.ControlBox = false;
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ignore);
             this.Controls.Add(this.restart);
@@ -156,6 +143,5 @@
         private System.Windows.Forms.TextBox log;
         private System.Windows.Forms.Label hendel;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
     }
 }

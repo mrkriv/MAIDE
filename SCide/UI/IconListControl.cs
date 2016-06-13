@@ -14,6 +14,7 @@ namespace ASM.UI
     public partial class IconListControl : UserControl
     {
         private List<item> items = new List<item>();
+        private List<item> visiable_items = new List<item>();
         private item selectItem;
         private SolidBrush selectBrush;
         private string filter;
@@ -71,29 +72,12 @@ namespace ASM.UI
             get { return filter; }
             set
             {
-                filter = value;
-                if (items.Count() != 0)
-                {
-                    VisiableAny = false;
-                    bool eq = false;
+                if (filter == value)
+                    return;
 
-                    foreach (var i in items)
-                    {
-                        i.Visable = isValid(i.Value);
-                        if (i.Visable)
-                            VisiableAny = true;
-                        if (!eq && i.Value == filter)
-                        {
-                            selectItem = i;
-                            eq = true;
-                        }
-                    }
-                    
-                    if (!eq && (selectItem == null || !selectItem.Visable))
-                        selectItem = items.FirstOrDefault(a => a.Visable);
-                    
-                    Invalidate(false);
-                }
+                filter = value;
+                filtre();
+                Invalidate(false);
             }
         }
 
@@ -147,23 +131,31 @@ namespace ASM.UI
             return filter.All(e => value.Contains(e));
         }
 
+        void filtre()
+        {
+            visiable_items.Clear();
+            
+            foreach (var i in items)
+            {
+                if (isValid(i.Value))
+                    visiable_items.Add(i);
+            }
+
+            selectItem = visiable_items.FirstOrDefault();
+            VisiableAny = visiable_items.Count() != 0;
+        }
+
         public void AddItem(string text, int img)
         {
-            items.Add(new item()
-            {
-                Value = text,
-                ImgIndex = img,
-                Visable = isValid(text)
-            });
+            items.Add(new item() { Value = text, ImgIndex = img, });
             modifyCollection = true;
-            VisiableAny = items.Any(a => a.Visable);
-
             Invalidate(false);
         }
 
         public void Clear()
         {
             items.Clear();
+            visiable_items.Clear();
             modifyCollection = true;
             Invalidate(false);
         }
@@ -175,19 +167,14 @@ namespace ASM.UI
 
             if (modifyCollection)
             {
-                if (Sorted)
-                    items.Sort();
-
+                filtre();
                 modifyCollection = false;
             }
 
             float y = 0;
             float dh2 = (ImageLib.ImageSize.Height - h) / -2;
-            foreach (var i in items)
+            foreach (var i in visiable_items)
             {
-                if (!i.Visable)
-                    continue;
-
                 if (y >= e.ClipRectangle.Y)
                 {
                     if (selectItem == i)
@@ -207,9 +194,9 @@ namespace ASM.UI
         protected override void OnMouseMove(MouseEventArgs e)
         {
             float h = Font.GetHeight(Graphics.FromHwnd(Handle));
-            foreach (var i in items)
+            foreach (var i in visiable_items)
             {
-                if (i.Visable && i.Render_old_Y <= e.Y && i.Render_old_Y + h >= e.Y)
+                if (i.Render_old_Y <= e.Y && i.Render_old_Y + h >= e.Y)
                 {
                     if (i != selectItem)
                     {

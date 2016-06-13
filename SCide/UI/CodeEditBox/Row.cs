@@ -6,13 +6,20 @@ namespace ASM.UI
 {
     partial class CodeEditBox
     {
+        public enum RowFlag : byte
+        {
+            None = 0,
+            Breakpoint = 1,
+            Run = 2,
+        };
+
         public class Row : IEnumerable<Symbol>
         {
             private List<Symbol> data = new List<Symbol>();
             
             public readonly CodeEditBox Owner;
             public bool IsChange { get; internal set; }
-            public bool Flag { get; set; } = false;
+            public RowFlag Flag { get; set; }
 
             public int Index
             {

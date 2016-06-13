@@ -27,6 +27,7 @@ namespace ASM.UI
         private SolidBrush selectBrush;
         private SolidBrush linesNumBrush;
         private SolidBrush selectLineBrush;
+        private SolidBrush runLineBrush;
         private SolidBrush textBaseBrush;
         private Pen selectLinePen;
         private float lineHeight;
@@ -167,6 +168,17 @@ namespace ASM.UI
             {
                 selectLineBrush = new SolidBrush(value);
                 selectLinePen = new Pen(Color.FromArgb(value.R + 64, value.G + 64, value.B + 64));
+            }
+        }
+
+        [Category("Appearance")]
+        [DefaultValue(typeof(Color), "15, 50, 15")]
+        public Color RunLineBrush
+        {
+            get { return runLineBrush.Color; }
+            set
+            {
+                runLineBrush = new SolidBrush(value);
             }
         }
 
@@ -395,6 +407,9 @@ namespace ASM.UI
                     e.Graphics.FillRectangle(selectLineBrush, offestX + 2, py + 1, Width - offestX - 2, lineHeight - 2);
                 }
 
+                if ((row.Flag & RowFlag.Run) != 0)
+                    e.Graphics.FillRectangle(runLineBrush, offestX + 2, py + 1, Width - offestX - 2, lineHeight - 2);
+
                 e.Graphics.DrawString(string.Format(linesNumFormat, y + 1), Font, textBaseBrush, LeftOffest, py, StringFormat.GenericDefault);
 
                 for (int x = 0; x < row.Length; x++)
@@ -442,7 +457,7 @@ namespace ASM.UI
                     }
                 }
 
-                if (row.Flag)
+                if ((row.Flag & RowFlag.Breakpoint) != 0)
                     e.Graphics.FillEllipse(Brushes.MediumVioletRed, 2, py, lineHeight, lineHeight);
 
                 py += lineHeight;
@@ -545,7 +560,13 @@ namespace ASM.UI
             {
                 case MouseButtons.Left:
                     if (e.Location.X < offestX)
-                        rows[GetPointByLocation(e.Location).Y].Flag = !rows[GetPointByLocation(e.Location).Y].Flag;
+                    {
+                        Row row = rows[GetPointByLocation(e.Location).Y];
+                        if ((row.Flag & RowFlag.Breakpoint) != 0)
+                            row.Flag &= ~RowFlag.Breakpoint;
+                        else
+                            row.Flag |= RowFlag.Breakpoint;
+                    }
                     else
                     {
                         SelectStart = GetPointByLocation(e.Location);

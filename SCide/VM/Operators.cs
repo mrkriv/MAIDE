@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace ASM.VM
 {
-    internal static class Operators
+    public static class Operators
     {
         public static Core ActiveCore;
         public static readonly MethodInfo[] OperationsList;

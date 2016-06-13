@@ -79,6 +79,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CombineRows.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UI\CodeBlock.cs">
@@ -138,6 +144,7 @@
     <Compile Include="UI\MGroupBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="VM\CodeBuilder.cs" />
     <Compile Include="VM\Core.cs" />
     <Compile Include="DocumentForm.cs">
       <SubType>Form</SubType>
@@ -188,6 +195,9 @@
     <Compile Include="Modules\RegistersWindow.Designer.cs">
       <DependentUpon>RegistersWindow.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\CodeBlock.resx">
       <DependentUpon>CodeBlock.cs</DependentUpon>
     </EmbeddedResource>
@@ -300,9 +310,7 @@
   <ItemGroup>
     <None Include="Resources\settings.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\DataSources\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\rune.png" />
   </ItemGroup>
