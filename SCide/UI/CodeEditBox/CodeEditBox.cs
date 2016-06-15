@@ -1000,12 +1000,9 @@ namespace ASM.UI
             {
                 if (vScrollBar.Visible)
                 {
-                    int newValue = (int)(vScrollBar.Value - Math.Sign(e.Delta) * Height * 0.1f);
-                    if (vScrollBar.Minimum <= newValue && vScrollBar.Maximum >= newValue)
-                    {
-                        vScrollBar.Value = newValue;
-                        vScrollBar_Scroll(vScrollBar, new ScrollEventArgs(ScrollEventType.ThumbPosition, newValue));
-                    }
+                    int newValue = vScrollBar.Value - e.Delta / 3;
+                    vScrollBar.Value = newValue.Clamp(vScrollBar.Minimum, vScrollBar.Maximum);
+                    vScrollBar_Scroll(vScrollBar, new ScrollEventArgs(ScrollEventType.ThumbPosition, newValue));
                 }
             }
             else
