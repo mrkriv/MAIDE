@@ -86,6 +86,7 @@
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CombineRows.cs" />
+    <Compile Include="PropertyJoin.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UI\CodeBlock.cs">
       <SubType>UserControl</SubType>

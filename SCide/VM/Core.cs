@@ -236,13 +236,13 @@ namespace ASM.VM
 
             for (int i = 0; i < code.Length; i++)
             {
-                string[] text = code[i].ToString().Replace('\t', ' ').Trim(' ').Split(';')[0].Split(':');
-                string data;
+                string[] text = code[i].ToString().Replace('\t', ' ').Trim(' ').Split(Properties.Settings.Default.CommentChar)[0].Split(':');
 
-                if (text[0] == "")
+                if (text.Length == 0)
                     continue;
 
-                if (text.Length != 1)
+                string data;
+                if (text.Count() == 2)
                 {
                     data = text[1];
 

@@ -22,6 +22,7 @@ namespace ASM.UI
         public CodeBlock()
         {
             InitializeComponent();
+            new PropertyJoin(codeEditBox, "CommentChar", Properties.Settings.Default, "CommentChar");
         }
 
         public void GoTo(int line)

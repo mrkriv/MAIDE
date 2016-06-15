@@ -105,7 +105,7 @@ namespace ASM
 
         private void reset_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.Reload();
+            Properties.Settings.Default.Reset();
             Close();
             new Setting().Show();
         }

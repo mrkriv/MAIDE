@@ -33,6 +33,7 @@ namespace ASM.UI
         private float lineHeight;
         private float offestX;
         private float zoom;
+        private char commentChar;
         private bool caretVisible;
         private bool syntaxHighlighter;
         private bool leftMouseDown;
@@ -59,7 +60,7 @@ namespace ASM.UI
         [DefaultValue(5)]
         [Category("Appearance")]
         public int RightOffest { get; set; }
-
+        
         [DefaultValue(true)]
         [Category("Appearance")]
         public bool SyntaxHighlighter
@@ -73,11 +74,25 @@ namespace ASM.UI
                 if (value != syntaxHighlighter)
                 {
                     syntaxHighlighter = value;
-                    if (syntaxHighlighter)
-                    {
-                        foreach (Row r in rows)
-                            textChanged(this, new TextChangedEventArgs(r));
-                    }
+                    UpdateSyntax();
+                }
+            }
+        }
+
+        [DefaultValue(';')]
+        [Category("Appearance")]
+        public char CommentChar
+        {
+            get
+            {
+                return commentChar;
+            }
+            set
+            {
+                if (value != commentChar)
+                {
+                    commentChar = value;
+                    UpdateSyntax();
                 }
             }
         }
@@ -304,17 +319,16 @@ namespace ASM.UI
 
         protected virtual void OnTextChanged(object s, TextChangedEventArgs e)
         {
-            CodeEditBox sender = s as CodeEditBox;
-            sender.Invalidate(false);
-            sender.Modified = true;
-            sender.updateSizes();
+            Invalidate(false);
+            Modified = true;
+            updateSizes();
 
             if (syntaxHighlighter)
             {
                 int commentIndex = int.MaxValue;
                 for (int i = 0; i < e.Row.Length; i++)
                 {
-                    if (e.Row[i] == Properties.Settings.Default.CommentChar)
+                    if (e.Row[i] == commentChar)
                     {
                         e.Row[i].Color = Color.FromArgb(87, 166, 74);
                         commentIndex = i;
@@ -339,7 +353,16 @@ namespace ASM.UI
                 }
             }
         }
-        
+
+        public void UpdateSyntax()
+        {
+            if (syntaxHighlighter)
+            {
+                foreach (Row r in rows)
+                    textChanged(this, new TextChangedEventArgs(r));
+            }
+        }
+
         protected override void OnFontChanged(EventArgs e)
         {
             base.OnFontChanged(e);
