@@ -23,7 +23,6 @@ namespace ASM.UI
         private class item : IComparable<item>
         {
             public string Value;
-            public bool Visable;
             public int ImgIndex;
             public int Render_old_Y;
 
@@ -100,13 +99,11 @@ namespace ASM.UI
         {
             if (selectItem == null)
                 return;
-
-            var coll = items.Where(a => a.Visable).ToList();
-            int i = coll.IndexOf(selectItem);
-
+            
+            int i = visiable_items.IndexOf(selectItem);
             if (i != 0)
             {
-                selectItem = coll[i - 1];
+                selectItem = visiable_items[i - 1];
                 Invalidate(false);
             }
         }
@@ -116,12 +113,10 @@ namespace ASM.UI
             if (selectItem == null)
                 return;
 
-            var coll = items.Where(a => a.Visable).ToList();
-            int i = coll.IndexOf(selectItem);
-
-            if (i + 1 < coll.Count())
+            int i = visiable_items.IndexOf(selectItem);
+            if (i + 1 < visiable_items.Count())
             {
-                selectItem = coll[i + 1];
+                selectItem = visiable_items[i + 1];
                 Invalidate(false);
             }
         }

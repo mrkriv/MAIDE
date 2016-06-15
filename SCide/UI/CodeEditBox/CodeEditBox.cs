@@ -646,8 +646,7 @@ namespace ASM.UI
                         else if (SelectStart.Y != 0)
                         {
                             selectStart.X = rows[SelectStart.Y - 1].Length;
-                            rows[SelectStart.Y - 1].Merger(rows[SelectStart.Y]);
-                            RemoveRow(selectStart.Y--);
+                            rows[SelectStart.Y - 1].Merger(rows[selectStart.Y--]);
                         }
                     }
                     break;
@@ -719,8 +718,12 @@ namespace ASM.UI
             {
                 case Keys.Up:
                     if (autoCompiler.Visible)
+                    {
                         autoCompiler.SelectUp();
-                    else {
+                        needUpdate = false;
+                    }
+                    else
+                    {
                         if (SelectStart.Y > 0)
                         {
                             selectStart.Y--;
@@ -728,17 +731,18 @@ namespace ASM.UI
                             if (selectStart.X > len)
                                 selectStart.X = len;
 
-                            if (e.Modifiers == Keys.Shift)
-                                selectEnd.Y--;
-                            else
-                                ResetSelect();
+                            ResetSelect();
                         }
                     }
                     break;
                 case Keys.Down:
                     if (autoCompiler.Visible)
+                    {
                         autoCompiler.SelectDown();
-                    else {
+                        needUpdate = false;
+                    }
+                    else
+                    {
                         if (SelectStart.Y + 1 < rows.Count)
                         {
                             selectStart.Y++;
@@ -746,10 +750,7 @@ namespace ASM.UI
                             if (SelectStart.X > len)
                                 selectStart.X = len;
 
-                            if (e.Modifiers == Keys.Shift)
-                                selectEnd.Y++;
-                            else
-                                ResetSelect();
+                            ResetSelect();
                         }
                     }
                     break;
@@ -757,21 +758,12 @@ namespace ASM.UI
                     if (SelectStart.X > 0)
                     {
                         selectStart.X--;
-                        if (e.Modifiers == Keys.Shift)
-                            selectEnd.X--;
-                        else
-                            ResetSelect();
+                        ResetSelect();
                     }
                     else if (SelectStart.Y > 0)
                     {
                         selectStart.X = rows[--selectStart.Y].Length;
-                        if (e.Modifiers == Keys.Shift)
-                        {
-                            selectEnd.Y--;
-                            selectEnd.X = SelectStart.X;
-                        }
-                        else
-                            ResetSelect();
+                        ResetSelect();
                     }
                     else
                         needUpdate = false;
@@ -780,10 +772,7 @@ namespace ASM.UI
                     if (SelectStart.X < rows[SelectStart.Y].Length)
                     {
                         selectStart.X++;
-                        if (e.Modifiers == Keys.Shift)
-                            selectEnd.X++;
-                        else
-                            ResetSelect();
+                        ResetSelect();
                     }
                     else if (SelectStart.Y + 1 < rows.Count)
                     {
@@ -796,6 +785,22 @@ namespace ASM.UI
                     RemoveSelected();
                     rows[SelectStart.Y].Write('\t', SelectStart.X);
                     selectStart.X++;
+                    break;
+                case Keys.Delete:
+                    if (GetSelectLen() != 0)
+                        RemoveSelected();
+                    else
+                    {
+                        if (SelectStart.X == rows[SelectStart.Y].Length)
+                        {
+                            if (rows.Count > SelectStart.Y + 1)
+                                rows[SelectStart.Y].Merger(rows[SelectStart.Y + 1]);
+                            else
+                                needUpdate = false;
+                        }
+                        else
+                            rows[SelectStart.Y].Remove(SelectStart.X);
+                    }
                     break;
                 default:
                     needUpdate = false;
@@ -909,21 +914,7 @@ namespace ASM.UI
 
         protected override bool IsInputKey(Keys keyData)
         {
-            switch (keyData)
-            {
-                case Keys.Right | Keys.Shift:
-                case Keys.Left | Keys.Shift:
-                case Keys.Up | Keys.Shift:
-                case Keys.Down | Keys.Shift:
-                case Keys.Right:
-                case Keys.Left:
-                case Keys.Up:
-                case Keys.Down:
-                case Keys.Tab:
-                case Keys.Control:
-                    return true;
-            }
-            return base.IsInputKey(keyData);
+            return true;
         }
 
         public void GoTo(Point p)

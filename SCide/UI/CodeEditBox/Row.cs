@@ -97,6 +97,7 @@ namespace ASM.UI
             {
                 if (line.Length != 0)
                     Write(line.data.Select(e => (char)e), Length);
+                Owner.RemoveRow(line.Index);
             }
 
             public string GetRange(int offest, int count)
