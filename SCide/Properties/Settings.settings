@@ -33,5 +33,8 @@
     <Setting Name="Register8" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="CommentChar" Type="System.Char" Scope="User">
+      <Value Profile="(Default)">;</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

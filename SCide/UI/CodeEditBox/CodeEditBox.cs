@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Forms;
-using System.Runtime.CompilerServices;
-using System.Reflection;
 
 namespace ASM.UI
 {
@@ -314,7 +314,7 @@ namespace ASM.UI
                 int commentIndex = int.MaxValue;
                 for (int i = 0; i < e.Row.Length; i++)
                 {
-                    if (e.Row[i] == '%')
+                    if (e.Row[i] == Properties.Settings.Default.CommentChar)
                     {
                         e.Row[i].Color = Color.FromArgb(87, 166, 74);
                         commentIndex = i;
@@ -1064,15 +1064,13 @@ namespace ASM.UI
             else
             {
                 rows[SelectStart.Y].Remove(SelectStart.X, rows[SelectStart.Y].Length - SelectStart.X);
-                if (SelectEnd.Y - SelectStart.Y > 2)
-                {
+                if (SelectEnd.Y - SelectStart.Y > 1)
                     RemoveRows(SelectStart.Y + 1, SelectEnd.Y - SelectStart.Y - 1);
-                }
-                if (SelectEnd.X != rows[SelectStart.Y + 1].Length)
-                {
-                    var txt = rows[SelectStart.Y + 1].Cut(SelectEnd.X, rows[SelectStart.Y + 1].Length - SelectEnd.X);
-                    rows[SelectStart.Y].Write(txt, SelectStart.X);
-                }
+
+                Row end = rows[SelectStart.Y + 1];
+                if (SelectEnd.X < end.Length)
+                    rows[SelectStart.Y].Write(end.GetRange(SelectEnd.X, end.Length - SelectEnd.X), SelectStart.X);
+
                 RemoveRow(SelectStart.Y + 1);
             }
             ResetSelect();

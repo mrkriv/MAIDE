@@ -26,53 +26,63 @@ namespace ASM
                         continue;
 
                     object value = prop.GetValue(Properties.Settings.Default);
-                    if (c is NumericUpDown)
-                    {
-                        ((NumericUpDown)c).Value = (int)value;
-                        ((NumericUpDown)c).ValueChanged += (s, e) =>
-                        {
-                            prop.SetValue(Properties.Settings.Default, (int)((NumericUpDown)s).Value);
-                        };
-                    }
-                    else if (c is TextBox)
+
+                    if (prop.PropertyType == typeof(string))
                     {
                         TextBox tb = c as TextBox;
-                        if (tb.Multiline)
+                        tb.Text = (string)value;
+                        tb.TextChanged += (s, e) =>
                         {
-                            tb.Text = "";
-                            if (value != null)
-                            {
-                                foreach (var i in ((StringCollection)value))
-                                {
-                                    if (i.Length != 0)
-                                        tb.Text += i + "\r\n";
-                                }
-                                if (tb.Text.Length != 0)
-                                    tb.Text = tb.Text.Substring(0, tb.Text.Length - 1);
-                            }
-
-                            tb.TextChanged += (s, e) =>
-                            {
-                                StringCollection coll = new StringCollection();
-                                coll.AddRange(((TextBox)s).Text.Replace("\r", "").Split('\n'));
-                                prop.SetValue(Properties.Settings.Default, coll);
-                            };
-                        }
-                        else
-                        {
-                            tb.Text = (string)value;
-                            tb.TextChanged += (s, e) =>
-                            {
-                                prop.SetValue(Properties.Settings.Default, ((TextBox)s).Text);
-                            };
-                        }
+                            prop.SetValue(Properties.Settings.Default, ((TextBox)s).Text);
+                        };
                     }
-                    else if (c is CheckBox)
+                    else if (prop.PropertyType == typeof(char))
                     {
-                        ((CheckBox)c).Checked = (bool)value;
-                        ((CheckBox)c).CheckedChanged += (s, e) =>
+                        TextBox tb = c as TextBox;
+                        tb.Text = value.ToString();
+                        tb.TextChanged += (s, e) =>
                         {
-                            prop.SetValue(Properties.Settings.Default, ((CheckBox)s).Checked);
+                            prop.SetValue(Properties.Settings.Default, ((TextBox)s).Text.FirstOrDefault());
+                        };
+                    }
+                    else if (prop.PropertyType == typeof(int))
+                    {
+                        NumericUpDown control = c as NumericUpDown;
+                        control.Value = (int)value;
+                        control.ValueChanged += (s, e) =>
+                        {
+                            prop.SetValue(Properties.Settings.Default, (int)control.Value);
+                        };
+                    }
+                    else if (prop.PropertyType == typeof(StringCollection))
+                    {
+                        TextBox tb = c as TextBox;
+                        tb.Text = "";
+                        if (value != null)
+                        {
+                            foreach (var i in ((StringCollection)value))
+                            {
+                                if (i.Length != 0)
+                                    tb.Text += i + "\r\n";
+                            }
+                            if (tb.Text.Length != 0)
+                                tb.Text = tb.Text.Substring(0, tb.Text.Length - 1);
+                        }
+
+                        tb.TextChanged += (s, e) =>
+                        {
+                            StringCollection coll = new StringCollection();
+                            coll.AddRange(((TextBox)s).Text.Replace("\r", "").Split('\n'));
+                            prop.SetValue(Properties.Settings.Default, coll);
+                        };
+                    }
+                    else if (prop.PropertyType == typeof(bool))
+                    {
+                        CheckBox control = c as CheckBox;
+                        control.Checked = (bool)value;
+                        control.CheckedChanged += (s, e) =>
+                        {
+                            prop.SetValue(Properties.Settings.Default, control.Checked);
                         };
                     }
                 }

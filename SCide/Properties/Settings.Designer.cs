@@ -87,5 +87,17 @@ namespace ASM.Properties {
                 this["Register8"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(";")]
+        public char CommentChar {
+            get {
+                return ((char)(this["CommentChar"]));
+            }
+            set {
+                this["CommentChar"] = value;
+            }
+        }
     }
 }

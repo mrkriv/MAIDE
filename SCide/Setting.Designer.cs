@@ -42,6 +42,8 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBox4 = new System.Windows.Forms.TextBox();
             this.mGroupBox1.SuspendLayout();
             this.mGroupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -89,6 +91,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.mGroupBox1.BorderColor = System.Drawing.Color.White;
+            this.mGroupBox1.Controls.Add(this.textBox4);
+            this.mGroupBox1.Controls.Add(this.label5);
             this.mGroupBox1.Controls.Add(this.mGroupBox2);
             this.mGroupBox1.Controls.Add(this.label1);
             this.mGroupBox1.Controls.Add(this.numericUpDown1);
@@ -110,7 +114,7 @@
             this.mGroupBox2.Controls.Add(this.textBox2);
             this.mGroupBox2.Controls.Add(this.label2);
             this.mGroupBox2.Controls.Add(this.textBox1);
-            this.mGroupBox2.Location = new System.Drawing.Point(12, 67);
+            this.mGroupBox2.Location = new System.Drawing.Point(12, 88);
             this.mGroupBox2.Name = "mGroupBox2";
             this.mGroupBox2.Size = new System.Drawing.Size(596, 186);
             this.mGroupBox2.TabIndex = 9;
@@ -236,6 +240,27 @@
             0,
             0});
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(8, 62);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(110, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Символ коментария";
+            // 
+            // textBox4
+            // 
+            this.textBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(32)))));
+            this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox4.ForeColor = System.Drawing.Color.Gainsboro;
+            this.textBox4.Location = new System.Drawing.Point(523, 62);
+            this.textBox4.MaxLength = 1;
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(85, 20);
+            this.textBox4.TabIndex = 11;
+            this.textBox4.Tag = "CommentChar";
+            // 
             // Setting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -275,5 +300,7 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Label label5;
     }
 }
