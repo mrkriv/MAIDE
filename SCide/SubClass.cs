@@ -77,5 +77,10 @@ namespace ASM
                 return Activator.CreateInstance(self);
             return null;
         }
+
+        public static Color GetMultiplay(this Color self, float mul)
+        {
+            return Color.FromArgb((int)(self.A * mul), (int)(self.R * mul), (int)(self.G * mul), (int)(self.B * mul));
+        }
     }
 }

@@ -34,7 +34,7 @@
             this.toolStripSplitFile = new System.Windows.Forms.ToolStripDropDownButton();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MianMenuOpen = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator1 = new UI.MToolStripSeparator();
             this.MianMenuSave = new System.Windows.Forms.ToolStripMenuItem();
             this.MianMenuSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.MianMenuAll = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,7 +47,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.BuildMenuRun = new System.Windows.Forms.ToolStripButton();
             this.BuildMenuBuild = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new UI.MToolStripSeparator();
             this.BuildMenuStop = new System.Windows.Forms.ToolStripButton();
             this.BuildMenuPause = new System.Windows.Forms.ToolStripButton();
             this.BuildMenuResume = new System.Windows.Forms.ToolStripButton();
@@ -330,7 +330,7 @@
         private System.Windows.Forms.ToolStripDropDownButton toolStripSplitFile;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem MianMenuOpen;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private UI.MToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem MianMenuSave;
         private System.Windows.Forms.ToolStripMenuItem MianMenuSaveAs;
         private System.Windows.Forms.ToolStripMenuItem MianMenuAll;
@@ -344,7 +344,7 @@
         private System.Windows.Forms.ToolStripButton BuildMenuRun;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton BuildMenuBuild;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private UI.MToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel status;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;

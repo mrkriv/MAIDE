@@ -145,6 +145,9 @@
     <Compile Include="UI\MGroupBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\MToolStripSeparator.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="VM\CodeBuilder.cs" />
     <Compile Include="VM\Core.cs" />
     <Compile Include="DocumentForm.cs">
@@ -159,7 +162,7 @@
     <Compile Include="ExceptionForm.Designer.cs">
       <DependentUpon>ExceptionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MenuStripRenderer.cs" />
+    <Compile Include="UI\MenuStripRenderer.cs" />
     <Compile Include="SubClass.cs" />
     <Compile Include="Modules\ErrorWindow.cs">
       <SubType>Form</SubType>

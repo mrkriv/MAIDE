@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ASM
+namespace ASM.UI
 {
     public class MenuStripRenderer : ToolStripProfessionalRenderer
     {
@@ -15,7 +15,15 @@ namespace ASM
         public static void SetStyle(ToolStripItem item)
         {
             item.BackColor = Color.FromArgb(27, 27, 28);
-            item.ForeColor = Color.FromArgb(241, 241, 241);
+
+            if (item is MToolStripSeparator)
+                if (((MToolStripSeparator)item).IsVertical)
+                    item.ForeColor = Color.FromArgb(70, 70, 74);
+                else
+                    item.ForeColor = Color.FromArgb(50, 50, 54);
+            else
+                item.ForeColor = Color.FromArgb(241, 241, 241);
+
             item.Height = 22;
         }
     }
