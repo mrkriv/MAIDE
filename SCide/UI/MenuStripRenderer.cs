@@ -32,10 +32,9 @@ namespace ASM.UI
             e.Graphics.Clear(e.Item.BackColor);
             RectangleF rect = e.Graphics.ClipBounds;
             PointF center = rect.Center();
+
             if (e.Vertical)
-            {
-                e.Graphics.DrawLine(new Pen(e.Item.ForeColor), center.X, rect.Top, center.X, rect.Bottom);
-            }
+                e.Graphics.DrawLine(new Pen(e.Item.ForeColor), center.X, rect.Top + 2, center.X, rect.Bottom - 2);
             else
                 e.Graphics.DrawLine(new Pen(e.Item.ForeColor), rect.Left, center.Y, rect.Right, center.Y);
         }

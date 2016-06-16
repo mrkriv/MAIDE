@@ -245,6 +245,7 @@
             // 
             // toolStripSeparator2
             // 
+            this.toolStripSeparator2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 39);
             // 
