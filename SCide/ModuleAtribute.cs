@@ -30,23 +30,20 @@ namespace ASM
                     ModuleAtribute atrib = a as ModuleAtribute;
                     DockContent form = type.GetConstructor(new Type[] { }).Invoke(null) as DockContent;
 
-                    ToolStripButton btn = new ToolStripButton(atrib.dysplayName);
-                    btn.CheckOnClick = true;
-                    btn.Checked = atrib.defaultShow;
+                    ToolStripMenuItem btn = new ToolStripMenuItem(atrib.dysplayName);
                     menu.DropDownItems.Add(btn);
                     btn.Click += (s, e) =>
                     {
-                        if (btn.Checked)
-                            Show(type);
-                        else
+                        if (form.Visible)
                             form.Hide();
+                        else
+                            Show(type);
                     };
 
                     form.TabText = atrib.dysplayName;
                     form.FormClosing += (s, e) =>
                     {
                         e.Cancel = true;
-                        btn.Checked = false;
                         form.Hide();
                     };
                     forms.Add(type, new key()

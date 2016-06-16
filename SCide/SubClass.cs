@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.ComponentModel;
 using ASM.VM;
 
 // Sub class mur mur mur mur
@@ -8,12 +9,12 @@ namespace ASM
     public class ErrorMessageRow
     {
         public string Message { get; set; }
-        public int Index { get; set; }
+        public int Row { get; set; }
 
         public ErrorMessageRow(string message, int index)
         {
             Message = message;
-            Index = index;
+            Row = index;
         }
     }
 
@@ -63,6 +64,11 @@ namespace ASM
         public static Point Center(this Rectangle self)
         {
             return new Point(self.Left + self.Width / 2, self.Top + self.Height / 2);
+        }
+
+        public static PointF Center(this RectangleF self)
+        {
+            return new PointF(self.Left + self.Width / 2.0f, self.Top + self.Height / 2.0f);
         }
 
         public static void DrawTriangle(this Graphics self, Brush brush, int x, int y, int w, int h)

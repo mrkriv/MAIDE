@@ -21,7 +21,7 @@ namespace ASM
         private void dataGridView1_Click(object sender, EventArgs e)
         {
             if (dataGridView1.CurrentRow != null)
-                MainForm.Instance.ActiveDocument.CodeBlock.GoTo(((ErrorMessageRow)dataGridView1.CurrentRow.DataBoundItem).Index - 1);
+                MainForm.Instance.ActiveDocument.CodeBlock.GoTo(((ErrorMessageRow)dataGridView1.CurrentRow.DataBoundItem).Row - 1);
         }
     }
 }

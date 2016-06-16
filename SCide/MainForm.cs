@@ -28,17 +28,26 @@ namespace ASM
             Instance = this;
 
             InitializeComponent();
-            
-            MainMenu.Renderer = new MenuStripRenderer();
+
             Icon = Properties.Resources.IconApplication;
 
             core = new Core();
             core.StateChanged += Core_StateChanged;
         }
 
+        void setStyle(Control c, ToolStripRenderer render)
+        {
+            if (c is ToolStrip)
+                ((ToolStrip)c).Renderer = render;
+
+            foreach (Control ch in c.Controls)
+                setStyle(ch, render);
+        }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             ModuleAtribute.Init(dockPanel, ViewDropDown);
+            setStyle(this, new MenuStripRenderer());
 
             foreach (ToolStripItem menu in MainMenu.Items)
             {

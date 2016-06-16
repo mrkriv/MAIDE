@@ -944,6 +944,15 @@ namespace ASM.UI
         {
             ResetSelect();
             SelectStart = p;
+
+            int scroll = (int)lineHeight * p.Y - vScrollBar.Value;
+            if (vScrollBar.Visible && (scroll > Height || scroll < 0))
+            {
+                int newValue = (int)(lineHeight * p.Y - Height / 2);
+                vScrollBar.Value = newValue.Clamp(vScrollBar.Minimum, vScrollBar.Maximum);
+                vScrollBar_Scroll(vScrollBar, new ScrollEventArgs(ScrollEventType.ThumbPosition, newValue));
+            }
+
             Invalidate(false);
         }
 

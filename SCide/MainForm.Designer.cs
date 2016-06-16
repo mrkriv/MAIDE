@@ -34,7 +34,7 @@
             this.toolStripSplitFile = new System.Windows.Forms.ToolStripDropDownButton();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MianMenuOpen = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new UI.MToolStripSeparator();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.MianMenuSave = new System.Windows.Forms.ToolStripMenuItem();
             this.MianMenuSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.MianMenuAll = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,16 +47,16 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.BuildMenuRun = new System.Windows.Forms.ToolStripButton();
             this.BuildMenuBuild = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new UI.MToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.BuildMenuStop = new System.Windows.Forms.ToolStripButton();
             this.BuildMenuPause = new System.Windows.Forms.ToolStripButton();
             this.BuildMenuResume = new System.Windows.Forms.ToolStripButton();
             this.BuildMenuRestart = new System.Windows.Forms.ToolStripButton();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.status = new System.Windows.Forms.ToolStripStatusLabel();
             this.MainMenu.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // openFileDialog
@@ -79,6 +79,7 @@
             // 
             // toolStripSplitFile
             // 
+            this.toolStripSplitFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.toolStripSplitFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripSplitFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolStripMenuItem,
@@ -151,6 +152,7 @@
             // 
             // ViewDropDown
             // 
+            this.ViewDropDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.ViewDropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.ViewDropDown.Image = ((System.Drawing.Image)(resources.GetObject("ViewDropDown.Image")));
             this.ViewDropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -282,15 +284,15 @@
             this.BuildMenuRestart.Size = new System.Drawing.Size(36, 36);
             this.BuildMenuRestart.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BuildMenuRestart_Click);
             // 
-            // statusStrip1
+            // statusStrip
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.status});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 447);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(840, 22);
-            this.statusStrip1.TabIndex = 32;
-            this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip.Location = new System.Drawing.Point(0, 447);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(840, 22);
+            this.statusStrip.SizingGrip = false;
+            this.statusStrip.TabIndex = 32;
             // 
             // status
             // 
@@ -303,7 +305,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.ClientSize = new System.Drawing.Size(840, 469);
-            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.MainMenu);
             this.Controls.Add(this.dockPanel);
@@ -317,8 +319,8 @@
             this.MainMenu.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -330,7 +332,7 @@
         private System.Windows.Forms.ToolStripDropDownButton toolStripSplitFile;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem MianMenuOpen;
-        private UI.MToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem MianMenuSave;
         private System.Windows.Forms.ToolStripMenuItem MianMenuSaveAs;
         private System.Windows.Forms.ToolStripMenuItem MianMenuAll;
@@ -344,8 +346,8 @@
         private System.Windows.Forms.ToolStripButton BuildMenuRun;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton BuildMenuBuild;
-        private UI.MToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel status;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;

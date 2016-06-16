@@ -195,7 +195,7 @@ namespace ASM.VM
         }
 
         [Description("Переход на заданую метку, если первый операнд меньше второго")]
-        public static void jl(DataIndex index)
+        public static void jlt(DataIndex index)
         {
             RegisterFlag reg = reg<RegisterFlag>("flag");
             if (reg.SF != reg.OF)

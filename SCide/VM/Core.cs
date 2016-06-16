@@ -371,7 +371,7 @@ namespace ASM.VM
                 }
 
                 if (oldCount == output.Count)
-                    error.Message = string.Format("Не допустимый пораметр {0}.", operation.operation, input[i]);
+                    error.Message = string.Format("Не допустимый пораметр {0}.", input[i]);
             }
 
             operation.args = output.ToArray();

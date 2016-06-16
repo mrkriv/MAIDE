@@ -145,9 +145,6 @@
     <Compile Include="UI\MGroupBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\MToolStripSeparator.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="VM\CodeBuilder.cs" />
     <Compile Include="VM\Core.cs" />
     <Compile Include="DocumentForm.cs">
