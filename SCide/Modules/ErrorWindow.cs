@@ -11,7 +11,6 @@ namespace ASM
         public ErrorWindow()
         {
             InitializeComponent();
-            CheckForIllegalCrossThreadCalls = false;
 
             dataGridView1.DataSource = VM.Core.Errors;
             dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;

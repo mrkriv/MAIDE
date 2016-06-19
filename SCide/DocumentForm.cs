@@ -72,13 +72,7 @@ namespace ASM
 
         public bool Save(string filePath)
         {
-            //using (FileStream fs = File.Create(filePath))
-            //{
-            //    using (BinaryWriter bw = new BinaryWriter(fs))
-            //        bw.Write(Code.Text.ToCharArray(), 0, Code.Text.Length - 1);
-            //}
-
-            //Code.Modified = false;
+            File.WriteAllText(filePath, blocks[0].GetCode());
             return true;
         }
 

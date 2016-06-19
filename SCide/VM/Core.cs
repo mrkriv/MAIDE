@@ -27,10 +27,11 @@ namespace ASM.VM
         private CombineRows code;
         private EventHandler stateChanged;
         private State status;
-
+        
         public Dictionary<string, int> Links = new Dictionary<string, int>();
-        public Dictionary<int, List<byte>> DataByte = new Dictionary<int, List<byte>>();
+        public Dictionary<string, int> DataByte = new Dictionary<string, int>();
         public List<Register> Registers;
+        public List<byte> Data = new List<byte>();
         public Stack<int> Stack = new Stack<int>();
         public int ActiveIndex = 0;
         public int TotalTick { get; private set; }
@@ -211,6 +212,7 @@ namespace ASM.VM
             Links.Clear();
             DataByte.Clear();
             Errors.Clear();
+            Data.Clear();
 
             code = rows;
 
@@ -249,7 +251,7 @@ namespace ASM.VM
                     if (!Links.ContainsKey(text[0]))
                         Links.Add(text[0], result.Count);
                     else
-                        Errors.Add(new ErrorMessageRow(string.Format("Метка '{0} уже определена.", text[0]), i));
+                        addError(new ErrorMessageRow(string.Format("Метка '{0} уже определена.", text[0]), i));
                 }
                 else
                     data = text[0];
@@ -257,11 +259,32 @@ namespace ASM.VM
                 text = data.Split(new char[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries);
 
                 if (text.Length != 0)
-                    result.Add(code[i], text);
+                {
+                    if (text[0] == "byte")
+                    {
+                        if (DataByte.ContainsKey(text[0]))
+                            addError(new ErrorMessageRow(string.Format("Метка '{0} уже определена.", text[0]), i));
+                        else
+                        {
+                            DataByte.Add(Links.Last().Key, Data.Count);
+                            string[] values = text[1].Split(',');
+                            foreach (string val in values)
+                            {
+                                string v = val.Trim(' ');
+                                if (v.StartsWith("'"))
+                                    Data.AddRange(v.Substring(1, v.Length - 2).Select(c => (byte)c));
+                                else
+                                    Data.Add((byte)char.Parse(v));
+                            }
+                        }
+                    }
+                    else
+                        result.Add(code[i], text);
+                }
             }
 
             if (result.Count == 0)
-                Errors.Add(new ErrorMessageRow("Нужен код!", 0));
+                addError(new ErrorMessageRow("Нужен код!", 0));
 
             return result;
         }
@@ -290,7 +313,7 @@ namespace ASM.VM
                     return ParseOperation(op, args) ? op : null;
                 }
             }
-            Errors.Add(new ErrorMessageRow(string.Format("Операция '{0}' не определена.", op.operation), row.Index + 1));
+            addError(new ErrorMessageRow(string.Format("Операция '{0}' не определена.", op.operation), row.Index + 1));
             return null;
         }
 
@@ -334,6 +357,13 @@ namespace ASM.VM
                 }
                 else if (needType == typeof(DataIndex))
                 {
+                    if (!DataByte.ContainsKey(input[i]))
+                        error.Message = string.Format("Метка '{0}' ресурса не определена.", input[i]);
+                    else
+                        output.Add(new DataIndex(DataByte[input[i]]));
+                }
+                else if (needType == typeof(LineIndex))
+                {
                     if (input[i].Contains('['))
                     {
                         input[i] = input[i].Substring(0, input[i].Length - 1);
@@ -350,13 +380,13 @@ namespace ASM.VM
                                     line = Links[temp[0]];
                             }
                             else
-                                error.Message = string.Format("Ничего не понятно, наверное это эльфийский.");
+                                error.Message = string.Format("Ничего не понятно, наверное, это эльфийский.");
                         }
                         Register32 reg = GetRegister(temp[1].ToLower()) as Register32;
                         if (reg == null)
                             error.Message = string.Format("Регистр '{0}' не сущесвует или не может использоватся здесь.", temp[1]);
                         else
-                            output.Add(new DataIndex(line, reg));
+                            output.Add(new LineIndex(line, reg));
                     }
                     else
                     {
@@ -366,12 +396,12 @@ namespace ASM.VM
                         if (!Links.ContainsKey(input[i]))
                             error.Message = string.Format("Метка '{0}' не определена.", input[i]);
                         else
-                            output.Add(new DataIndex(Links[input[i]]));
+                            output.Add(new LineIndex(Links[input[i]]));
                     }
                 }
 
-                if (oldCount == output.Count)
-                    error.Message = string.Format("Не допустимый пораметр {0}.", input[i]);
+                if (oldCount == output.Count && error.Message != "")
+                    error.Message = string.Format("Недопустимый пораметр {0}.", input[i]);
             }
 
             operation.args = output.ToArray();
@@ -379,8 +409,13 @@ namespace ASM.VM
             if (error.Message == null)
                 return true;
 
-            Errors.Add(error);
+            addError(error);
             return false;
+        }
+
+        private void addError(ErrorMessageRow msg)
+        {
+            Errors.Add(msg);
         }
 
         public void Pause()

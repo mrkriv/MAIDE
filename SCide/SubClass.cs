@@ -21,17 +21,26 @@ namespace ASM
     public struct DataIndex
     {
         public int Line;
+        public DataIndex(int line)
+        {
+            Line = line;
+        }
+    }
+
+    public struct LineIndex
+    {
+        public int Line;
         public int Offest;
         public Register32 reg32;
 
-        public DataIndex(int line, int offest = 0)
+        public LineIndex(int line, int offest = 0)
         {
             Line = line;
             Offest = offest;
             reg32 = null;
         }
 
-        public DataIndex(int line, Register32 offest)
+        public LineIndex(int line, Register32 offest)
         {
             Line = line;
             Offest = 0;

@@ -294,7 +294,13 @@ namespace ASM.UI
                 autoCompiler.AddItem(c, 2);
 
             AddRow(new Row(this));
+            ClearHistory();
+        }
+
+        public void ClearHistory()
+        {
             undoStack.Clear();
+            redoStack.Clear();
         }
 
         private void AutoCompiler_MouseDown(object sender, MouseEventArgs e)
@@ -367,7 +373,7 @@ namespace ASM.UI
         {
             base.OnFontChanged(e);
 
-            for (int i = 20; i < 127; i++)
+            for (int i = 20; i < 255; i++)
                 charSizes[i] = getCharWidth((char)i);
 
             for (int i = 1024; i < 1279; i++)
@@ -402,7 +408,7 @@ namespace ASM.UI
             e.Graphics.FillRectangle(linesNumBrush, 0, 0, offestX, Height);
             e.Graphics.DrawLine(Pens.Black, offestX, 0, offestX, Height);
 
-            int start = vScrollBar.Value == 0 ? 0 : (int)(vScrollBar.Value / lineHeight) + 1;
+            int start = (int)(vScrollBar.Value / lineHeight);
             int end = Math.Min(rows.Count, start + (int)(Width / lineHeight));
 
             Point selectS, selectE;
@@ -550,7 +556,7 @@ namespace ASM.UI
 
         public Point GetPointByLocation(Point pos)
         {
-            int y = Math.Max(Math.Min(rows.Count - 1, (int)((vScrollBar.Value + pos.Y) / lineHeight)), 0);
+            int y = Math.Max(Math.Min(rows.Count - 1, (int)(vScrollBar.Value / lineHeight) + (int)(pos.Y / lineHeight)), 0);
 
             if (rows[y].Length == 0)
                 return new Point(0, y);

@@ -33,6 +33,7 @@ namespace ASM.UI
         public void SetCode(string text)
         {
             codeEditBox.Text = text;
+            codeEditBox.ClearHistory();
         }
 
         public string GetCode()

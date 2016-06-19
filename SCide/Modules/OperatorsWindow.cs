@@ -42,7 +42,7 @@ namespace ASM
                     name = "reg";
                     color = Color.BlueViolet;
                 }
-                else if (paramTypes[i].ParameterType == typeof(DataIndex))
+                else if (paramTypes[i].ParameterType == typeof(LineIndex))
                 {
                     name = "metka";
                     color = Color.Green;

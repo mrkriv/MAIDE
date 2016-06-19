@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.ComponentModel;
 using System.Reflection;
+using System;
 
 namespace ASM.VM
 {
@@ -31,28 +32,18 @@ namespace ASM.VM
         [Description("Записывает в регистр '{0}' байт считаный с консоли (смещение пока не работает)")]
         public static void rd(int offest)
         {
-            //offest %= 4;
-            //int mask = 255 << offest;
-            //int value = reg<Register32>("a").Value;
             reg<Register32>("a").Value = Console.ReadKey();
         }
 
         [Description("Загружает в регистр '{0}' 4 байта из памяти по адрессу '{1}'")]
-        public static void ldb(Register32 reg, DataIndex data)
+        public static void ldb(Register32 reg, DataIndex index)
         {
-            var buff = ActiveCore.DataByte[data.Line];
-            int offest = data.reg32 == null ? data.Offest : data.reg32.Value;
-            reg<Register32>("a").Value = 0;
-
-            for (int i = 0; i < 4; i++)
-            {
-                if (buff.Count > i + offest)
-                    reg<Register32>("a").Value |= buff[i + offest] << i * 8;
-            }
+            var buff = ActiveCore.Data.GetRange(index.Line, 4).ToArray();
+            reg.Value = BitConverter.ToInt32(buff, 0);
         }
 
         [Description("Безусловный переход, в стек помещается текущий адресс")]
-        public static void call(DataIndex index)
+        public static void call(LineIndex index)
         {
             ActiveCore.Stack.Push(ActiveCore.ActiveIndex);
             ActiveCore.ActiveIndex = index.Line - 1;
@@ -173,13 +164,13 @@ namespace ASM.VM
         }
 
         [Description("Безусловный переход")]
-        public static void jmp(DataIndex index)
+        public static void jmp(LineIndex index)
         {
             ActiveCore.ActiveIndex = index.Line - 1;
         }
 
         [Description("Переход на заданую метку, если операнды равны")]
-        public static void jeq(DataIndex index)
+        public static void jeq(LineIndex index)
         {
             RegisterFlag reg = reg<RegisterFlag>("flag");
             if (reg.ZF)
@@ -187,7 +178,7 @@ namespace ASM.VM
         }
 
         [Description("Переход на заданую метку, если первый операнд больше нуля")]
-        public static void jgt(DataIndex index)
+        public static void jgt(LineIndex index)
         {
             RegisterFlag reg = reg<RegisterFlag>("flag");
             if (!reg.ZF && reg.SF)
@@ -195,7 +186,7 @@ namespace ASM.VM
         }
 
         [Description("Переход на заданую метку, если первый операнд меньше второго")]
-        public static void jlt(DataIndex index)
+        public static void jlt(LineIndex index)
         {
             RegisterFlag reg = reg<RegisterFlag>("flag");
             if (reg.SF != reg.OF)
@@ -203,7 +194,7 @@ namespace ASM.VM
         }
 
         [Description("Переход на заданую метку, если первый операнд больше второго")]
-        public static void jge(DataIndex index)
+        public static void jge(LineIndex index)
         {
             Register32 a = reg<Register32>("a");
             RegisterFlag reg = reg<RegisterFlag>("flag");
@@ -212,7 +203,7 @@ namespace ASM.VM
         }
 
         [Description("Переход на заданую метку, если первый операнд больше второго")]
-        public static void jпе(DataIndex index)
+        public static void jпе(LineIndex index)
         {
             RegisterFlag reg = reg<RegisterFlag>("flag");
             if (!reg.ZF)
