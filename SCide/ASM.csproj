@@ -86,6 +86,12 @@
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CombineRows.cs" />
+    <Compile Include="Modules\RegisterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\RegisterControl.Designer.cs">
+      <DependentUpon>RegisterControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="PropertyJoin.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UI\CodeBlock.cs">
@@ -180,6 +186,7 @@
     <Compile Include="Modules\NavigationWindow.Designer.cs">
       <DependentUpon>NavigationWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="VM\Link.cs" />
     <Compile Include="VM\Operators.cs" />
     <Compile Include="Modules\OperatorsWindow.cs">
       <SubType>Form</SubType>
@@ -198,6 +205,9 @@
     </Compile>
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\RegisterControl.resx">
+      <DependentUpon>RegisterControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\CodeBlock.resx">
       <DependentUpon>CodeBlock.cs</DependentUpon>

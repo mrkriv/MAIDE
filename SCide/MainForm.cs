@@ -178,7 +178,6 @@ namespace ASM
         {
             core.Destroy();
             runThread.Abort();
-            RegistersWindow.Binding.DataSource = null;
         }
 
         private void Core_StateChanged(object sender, EventArgs e)
@@ -197,7 +196,6 @@ namespace ASM
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             core.Pause();
-            RegistersWindow.Instance.Refresh();
         }
 
         private void resumeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -227,9 +225,7 @@ namespace ASM
             //ActiveDocument.Code.ReadOnly = true;
             if (!build())
                 return;
-
-            RegistersWindow.Binding.DataSource = core.Registers;
-
+            
             BeginInvoke((Action)(() =>
             {
                 Console.Create();

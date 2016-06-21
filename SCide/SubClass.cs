@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.ComponentModel;
 using ASM.VM;
+using System.Reflection;
+using System.Linq;
 
 // Sub class mur mur mur mur
 namespace ASM
@@ -15,36 +17,6 @@ namespace ASM
         {
             Message = message;
             Row = index;
-        }
-    }
-
-    public struct DataIndex
-    {
-        public int Line;
-        public DataIndex(int line)
-        {
-            Line = line;
-        }
-    }
-
-    public struct LineIndex
-    {
-        public int Line;
-        public int Offest;
-        public Register32 reg32;
-
-        public LineIndex(int line, int offest = 0)
-        {
-            Line = line;
-            Offest = offest;
-            reg32 = null;
-        }
-
-        public LineIndex(int line, Register32 offest)
-        {
-            Line = line;
-            Offest = 0;
-            reg32 = offest;
         }
     }
 
@@ -98,13 +70,26 @@ namespace ASM
             return Color.FromArgb((int)(self.A * mul), (int)(self.R * mul), (int)(self.G * mul), (int)(self.B * mul));
         }
 
-        public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
+        public static T Clamp<T>(this T self, T min, T max) where T : IComparable<T>
         {
-            if (val.CompareTo(min) < 0)
+            if (self.CompareTo(min) < 0)
                 return min;
-            else if (val.CompareTo(max) > 0)
+            else if (self.CompareTo(max) > 0)
                 return max;
-            return val;
+            return self;
+        }
+
+        /// <summary>
+        /// Устанавливает значения всем свойствам с атрибутом DefaultValue
+        /// </summary>
+        public static void LoadDefaultProperties<T>(this T self)
+        {
+            foreach (var inf in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance))
+            {
+                var atrs = inf.GetCustomAttributes(typeof(DefaultValueAttribute), true);
+                if (atrs.Length != 0)
+                    inf.SetValue(self, ((DefaultValueAttribute)atrs.First()).Value, BindingFlags.SetProperty, null, null, null);
+            }
         }
     }
 }

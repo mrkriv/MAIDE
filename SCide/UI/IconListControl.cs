@@ -87,12 +87,7 @@ namespace ASM.UI
             DoubleBuffered = true;
             Filter = "";
 
-            foreach (var inf in typeof(IconListControl).GetProperties(BindingFlags.Public | BindingFlags.Instance))
-            {
-                var atrs = inf.GetCustomAttributes(typeof(DefaultValueAttribute), true);
-                if (atrs.Count() != 0)
-                    inf.SetValue(this, ((DefaultValueAttribute)atrs.First()).Value, BindingFlags.SetProperty, null, null, null);
-            }
+            this.LoadDefaultProperties();
         }
 
         public void SelectUp()

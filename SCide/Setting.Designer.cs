@@ -33,6 +33,8 @@
             this.exit = new System.Windows.Forms.Button();
             this.reset = new System.Windows.Forms.Button();
             this.mGroupBox1 = new ASM.UI.MGroupBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.mGroupBox2 = new ASM.UI.MGroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
@@ -42,8 +44,6 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
             this.mGroupBox1.SuspendLayout();
             this.mGroupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -102,6 +102,27 @@
             this.mGroupBox1.TabIndex = 5;
             this.mGroupBox1.TabStop = false;
             this.mGroupBox1.Text = "Основные параметры";
+            // 
+            // textBox4
+            // 
+            this.textBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(32)))));
+            this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox4.ForeColor = System.Drawing.Color.Gainsboro;
+            this.textBox4.Location = new System.Drawing.Point(523, 62);
+            this.textBox4.MaxLength = 1;
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(85, 20);
+            this.textBox4.TabIndex = 11;
+            this.textBox4.Tag = "CommentChar";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(8, 62);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(110, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Символ коментария";
             // 
             // mGroupBox2
             // 
@@ -205,9 +226,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(9, 35);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(345, 13);
+            this.label1.Size = new System.Drawing.Size(359, 13);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Количество тактов, сведетельстуеще о зацикливании программы";
+            this.label1.Text = "Количество операций, сведетельстуеще о зацикливании программы";
             // 
             // numericUpDown1
             // 
@@ -239,27 +260,6 @@
             0,
             0,
             0});
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 62);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(110, 13);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "Символ коментария";
-            // 
-            // textBox4
-            // 
-            this.textBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(32)))));
-            this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox4.ForeColor = System.Drawing.Color.Gainsboro;
-            this.textBox4.Location = new System.Drawing.Point(523, 62);
-            this.textBox4.MaxLength = 1;
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(85, 20);
-            this.textBox4.TabIndex = 11;
-            this.textBox4.Tag = "CommentChar";
             // 
             // Setting
             // 

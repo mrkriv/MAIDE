@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -12,7 +11,7 @@ namespace ASM
         {
             InitializeComponent();
 
-            dataGridView1.DataSource = VM.Core.Errors;
+            dataGridView1.DataSource = new BindingSource(VM.Core.Errors, null);
             dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.RowHeadersVisible = false;
         }

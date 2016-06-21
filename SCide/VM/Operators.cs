@@ -36,14 +36,13 @@ namespace ASM.VM
         }
 
         [Description("Загружает в регистр '{0}' 4 байта из памяти по адрессу '{1}'")]
-        public static void ldb(Register32 reg, DataIndex index)
+        public static void ldb(Register32 reg, Link index)
         {
-            var buff = ActiveCore.Data.GetRange(index.Line, 4).ToArray();
-            reg.Value = BitConverter.ToInt32(buff, 0);
+            reg.Value = ActiveCore.GetWord(index.GetValue());
         }
 
         [Description("Безусловный переход, в стек помещается текущий адресс")]
-        public static void call(LineIndex index)
+        public static void call(Link index)
         {
             ActiveCore.Stack.Push(ActiveCore.ActiveIndex);
             ActiveCore.ActiveIndex = index.Line - 1;
@@ -164,13 +163,13 @@ namespace ASM.VM
         }
 
         [Description("Безусловный переход")]
-        public static void jmp(LineIndex index)
+        public static void jmp(Link index)
         {
             ActiveCore.ActiveIndex = index.Line - 1;
         }
 
         [Description("Переход на заданую метку, если операнды равны")]
-        public static void jeq(LineIndex index)
+        public static void jeq(Link index)
         {
             RegisterFlag reg = reg<RegisterFlag>("flag");
             if (reg.ZF)
@@ -178,7 +177,7 @@ namespace ASM.VM
         }
 
         [Description("Переход на заданую метку, если первый операнд больше нуля")]
-        public static void jgt(LineIndex index)
+        public static void jgt(Link index)
         {
             RegisterFlag reg = reg<RegisterFlag>("flag");
             if (!reg.ZF && reg.SF)
@@ -186,7 +185,7 @@ namespace ASM.VM
         }
 
         [Description("Переход на заданую метку, если первый операнд меньше второго")]
-        public static void jlt(LineIndex index)
+        public static void jlt(Link index)
         {
             RegisterFlag reg = reg<RegisterFlag>("flag");
             if (reg.SF != reg.OF)
@@ -194,7 +193,7 @@ namespace ASM.VM
         }
 
         [Description("Переход на заданую метку, если первый операнд больше второго")]
-        public static void jge(LineIndex index)
+        public static void jge(Link index)
         {
             Register32 a = reg<Register32>("a");
             RegisterFlag reg = reg<RegisterFlag>("flag");
@@ -203,7 +202,7 @@ namespace ASM.VM
         }
 
         [Description("Переход на заданую метку, если первый операнд больше второго")]
-        public static void jпе(LineIndex index)
+        public static void jпе(Link index)
         {
             RegisterFlag reg = reg<RegisterFlag>("flag");
             if (!reg.ZF)
