@@ -370,17 +370,20 @@ namespace ASM.VM
                 }
                 else if (needType == typeof(int) || needType == typeof(short) || needType == typeof(char) || needType == typeof(byte))
                 {
-                    int result;
-                    if (!int.TryParse(value, out result))
-                        error.Message = string.Format("'{0}' не является числом.", value);
-                    else
+                    double? result = value.MathToDouble();
+                    if (result != null)
                         output.Add(Convert.ChangeType(result, needType));
+                    else
+                        error.Message = string.Format("'{0}' не является числом.", value);
                 }
                 else if (needType == typeof(Link))
                 {
                     string[] temp = value.Split('[');
                     Link link = new Link();
-                    if (!int.TryParse(temp[0], out link.Line))
+                    double? row = value.MathToDouble();
+                    if (row != null)
+                        link.Line = (int)row;
+                    else
                     {
                         if (!Links.ContainsKey(temp[0]))
                             error.Message = string.Format("Метка '{0}' не определена.", temp[0]);

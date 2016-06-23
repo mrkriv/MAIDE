@@ -93,6 +93,9 @@
     <Compile Include="Modules\RegisterControl.Designer.cs">
       <DependentUpon>RegisterControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utilit\Calculator\Calculator.cs" />
+    <Compile Include="Utilit\Calculator\Element.cs" />
+    <Compile Include="Utilit\Calculator\Operator.cs" />
     <Compile Include="Utilit\PropertyJoin.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UI\CodeBlock.cs">
