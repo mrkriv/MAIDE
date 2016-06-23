@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace ASM
+namespace ASM.Utilit
 {
     public class PropertyJoin
     {

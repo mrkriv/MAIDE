@@ -4,7 +4,7 @@ using System.Threading;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
-namespace ASM
+namespace ASM.Utilit
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class ModuleAtribute : Attribute

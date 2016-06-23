@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using ASM.VM;
+using ASM.Utilit;
 
 namespace ASM.Modules
 {

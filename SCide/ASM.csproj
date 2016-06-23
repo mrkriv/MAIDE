@@ -86,13 +86,14 @@
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CombineRows.cs" />
+    <Compile Include="ErrorMessageRow.cs" />
     <Compile Include="Modules\RegisterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Modules\RegisterControl.Designer.cs">
       <DependentUpon>RegisterControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="PropertyJoin.cs" />
+    <Compile Include="Utilit\PropertyJoin.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UI\CodeBlock.cs">
       <SubType>UserControl</SubType>
@@ -166,14 +167,14 @@
       <DependentUpon>ExceptionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\MenuStripRenderer.cs" />
-    <Compile Include="SubClass.cs" />
+    <Compile Include="Utilit\Exep.cs" />
     <Compile Include="Modules\ErrorWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Modules\ErrorWindow.Designer.cs">
       <DependentUpon>ErrorWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="ModuleAtribute.cs" />
+    <Compile Include="Utilit\ModuleAtribute.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

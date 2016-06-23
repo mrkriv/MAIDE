@@ -6,6 +6,7 @@ using WeifenLuo.WinFormsUI.Docking;
 using System;
 using System.Drawing;
 using ASM.VM;
+using ASM.Utilit;
 
 namespace ASM
 {

@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using System.Threading;
 using ASM.UI;
+using ASM.Utilit;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
@@ -202,7 +203,7 @@ namespace ASM.VM
                     }
 
                     if (ActiveIndex >= source.Count)
-                        throw new RuntimeException("Не возможно выполнить инструкцию, эта пямять не для инструкций", getCurrentRow());
+                        throw new RuntimeException("Не возможно выполнить инструкцию, эта пямять не для инструкций", op.row.Index + 1);
 
                     ActiveIndex++;
                     total++;
@@ -215,8 +216,8 @@ namespace ASM.VM
                 Status = State.Error;
             }
 
+            Console.Write("Нажмите любую клавишу для продолжения");
             Console.MoveCaretToEnd();
-            Console.Write("Нажмите любую клавишу для продолжения.");
             Console.ReadKey();
         }
 

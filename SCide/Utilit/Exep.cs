@@ -1,25 +1,11 @@
 ﻿using System;
 using System.Drawing;
 using System.ComponentModel;
-using ASM.VM;
 using System.Reflection;
 using System.Linq;
 
-// Sub class mur mur mur mur
-namespace ASM
+namespace ASM.Utilit
 {
-    public class ErrorMessageRow
-    {
-        public string Message { get; set; }
-        public int Row { get; set; }
-
-        public ErrorMessageRow(string message, int index)
-        {
-            Message = message;
-            Row = index;
-        }
-    }
-
     public static class Exep
     {
         public static Point Add(this Point a, Point b)

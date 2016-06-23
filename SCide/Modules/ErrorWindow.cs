@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
+using ASM.Utilit;
 
 namespace ASM
 {

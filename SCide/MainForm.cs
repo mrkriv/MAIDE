@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Text;
 using ASM.VM;
 using ASM.UI;
+using ASM.Utilit;
 
 namespace ASM
 {
