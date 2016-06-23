@@ -7,12 +7,13 @@ using System.Threading;
 using ASM.UI;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace ASM.VM
 {
     public class Core
     {
-        public static readonly BindingList<ErrorMessageRow> Errors = new BindingList<ErrorMessageRow>();
+        public static readonly ObservableCollection<ErrorMessageRow> Errors = new ObservableCollection<ErrorMessageRow>();
 
         public enum State
         {
@@ -143,7 +144,7 @@ namespace ASM.VM
 
         public void Invoke()
         {
-            if (status != State.Ready)
+            if (status != State.Ready && status != State.Finish)
                 return;
 
             Stack.Clear();
@@ -163,58 +164,59 @@ namespace ASM.VM
                 }
             }
 
-            while (ActiveIndex < source.Count && status == State.Launched)
+            try
             {
-                Operation op = source[ActiveIndex];
-
-                if (total > Properties.Settings.Default.TotalTickLimit)
+                while (ActiveIndex < source.Count && status == State.Launched)
                 {
-                    if (MessageBox.Show("Возможно, Ваша программа зациклилась.\nОстановть ее?", "Слишком много операций", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    Operation op = source[ActiveIndex];
+
+                    if (total > Properties.Settings.Default.TotalTickLimit)
                     {
-                        Status = State.Error;
-                        return;
-                    }
-                    total = -total;
-                }
-
-                if (op.row.IsFlag(CodeEditBox.RowFlag.Breakpoint))
-                    Pause();
-
-                op.row.SetFlag(CodeEditBox.RowFlag.Run);
-
-                waitEvent.WaitOne();
-
-                if (status == State.Launched)
-                {
-                    if (Program.Debug)
-                        op.method.Invoke(null, op.args);
-                    else
-                    {
-                        try
+                        if (MessageBox.Show("Возможно, Ваша программа зациклилась.\nОстановть ее?", "Слишком много операций", MessageBoxButtons.YesNo) == DialogResult.Yes)
                         {
-                            op.method.Invoke(null, op.args);
-                        }
-                        catch
-                        {
-                            MessageBox.Show(string.Format("Не обрабатываемая ошибка на строке {0}.\nОтладка не возможна.", op.row.Index + 1));
                             Status = State.Error;
+                            return;
                         }
+                        total = -total;
                     }
+
+                    if (op.row.IsFlag(CodeEditBox.RowFlag.Breakpoint))
+                        Pause();
+
+                    op.row.SetFlag(CodeEditBox.RowFlag.Run);
+                    waitEvent.WaitOne();
+
+                    try
+                    {
+                        op.method.Invoke(null, op.args);
+                    }
+                    catch (TargetInvocationException e)
+                    {
+                        if (e.InnerException is RuntimeException)
+                            throw e.InnerException;
+                        throw new RuntimeException("Не обрабатываемая ошибка при выполнении инструкуии " + op.method.Name, getCurrentRow());
+                    }
+                    finally
+                    {
+                        op.row.ResetFlag(CodeEditBox.RowFlag.Run);
+                    }
+
+                    if (ActiveIndex >= source.Count)
+                        throw new RuntimeException("Не возможно выполнить инструкцию, эта пямять не для инструкций", getCurrentRow());
+
+                    ActiveIndex++;
+                    total++;
                 }
-
-                op.row.ResetFlag(CodeEditBox.RowFlag.Run);
-
-                if (ActiveIndex >= source.Count)
-                    throw new Exception("Не возможно выполнить, эта пямять не содержит инструкций");
-
-                ActiveIndex++;
-                total++;
+                Status = State.Finish;
+            }
+            catch (RuntimeException e)
+            {
+                Console.WriteLine("Строка " + e.Row + ": " + e.Message + "\n");
+                Status = State.Error;
             }
 
-            Status = State.Finish;
-
             Console.MoveCaretToEnd();
-            Console.Write("\nPress any key to continue.");
+            Console.Write("Нажмите любую клавишу для продолжения.");
             Console.ReadKey();
         }
 
@@ -411,16 +413,27 @@ namespace ASM.VM
 
         public byte GetByte(int adress)
         {
-            if (adress < dataZoneOffest)
-                throw new Exception("Эта пямять не доступна здесь");
-            return data[adress - dataZoneOffest];
+            return data[GetDataAdress(adress)];
         }
 
         public int GetWord(int adress)
         {
-            if (adress < dataZoneOffest)
-                throw new Exception("Эта пямять не доступна здесь");
-            return BitConverter.ToInt32(data, adress - dataZoneOffest);
+            return BitConverter.ToInt32(data, GetDataAdress(adress));
+        }
+
+        public int GetDataAdress(int adress)
+        {
+            adress -= dataZoneOffest;
+            if (adress < 0)
+                throw new RuntimeException("Память с инструкциями не доступна здесь", getCurrentRow());
+            if (adress >= data.Length)
+                throw new RuntimeException("Адресс за пределами выделенной памяти", getCurrentRow());
+            return adress;
+        }
+
+        private int getCurrentRow()
+        {
+            return source[ActiveIndex].row.Index + 1;
         }
 
         private void addError(ErrorMessageRow msg)

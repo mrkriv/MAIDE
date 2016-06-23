@@ -10,10 +10,16 @@ namespace ASM
         public ErrorWindow()
         {
             InitializeComponent();
+            VM.Core.Errors.CollectionChanged += Errors_Changed;
 
             dataGridView1.DataSource = new BindingSource(VM.Core.Errors, null);
             dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.RowHeadersVisible = false;
+        }
+
+        private void Errors_Changed(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            
         }
 
         private void dataGridView1_Click(object sender, EventArgs e)

@@ -264,8 +264,11 @@ namespace ASM
 
         private void BuildMenuRestart_Click(object sender, EventArgs e)
         {
-            stopToolStripMenuItem_Click(sender, e);
-            runToolStripMenuItem_Click(sender, e);
+            Console.Clear();
+            if (runThread != null)
+                runThread.Abort();
+            runThread = new Thread(core.Invoke);
+            runThread.Start();
         }
     }
 }

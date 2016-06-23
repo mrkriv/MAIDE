@@ -33,24 +33,33 @@ namespace ASM
 
         public static void Create()
         {
-            if (Instance != null)
-                return;
+            if (Instance == null)
+                new Console().Show();
+        }
 
-            new Console().Show();
+        public static void Clear()
+        {
+            Create();
+            waitEvent.Reset();
+            Instance.BeginInvoke((Action)(() => {
+                Instance.viewport.Text = "";
+            }));
         }
 
         public static char ReadKey()
         {
-            if (Instance == null)
-                return (char)0;
+            if (Instance != null)
+            {
+                readOnly = true;
+                readMode = true;
+                readData = "";
+                waitEvent.Reset();
+                waitEvent.WaitOne();
 
-            readOnly = true;
-            readMode = true;
-            readData = "";
-            waitEvent.Reset();
-            waitEvent.WaitOne();
-
-            return readData[0];
+                if (readData.Length != 0)
+                    return readData[0];
+            }
+            return '\0';
         }
 
         public static string ReadLine()
@@ -115,7 +124,7 @@ namespace ASM
         public static void WriteLine(string text)
         {
             Instance.BeginInvoke((Action)(() => {
-                Instance.viewport.Text += text + '\n';
+                Instance.viewport.Text += text + "\r\n";
             }));
         }
 

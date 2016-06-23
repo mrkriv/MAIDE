@@ -237,6 +237,7 @@
             // BuildMenuBuild
             // 
             this.BuildMenuBuild.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BuildMenuBuild.Enabled = false;
             this.BuildMenuBuild.Image = global::ASM.Properties.Resources.build;
             this.BuildMenuBuild.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BuildMenuBuild.Name = "BuildMenuBuild";
