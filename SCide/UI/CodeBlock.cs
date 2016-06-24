@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ASM.Utilit;
+using System.Windows.Forms;
 
 namespace ASM.UI
 {
@@ -49,7 +50,7 @@ namespace ASM.UI
 
         private void fillSetButton_Click(object sender, EventArgs e)
         {
-            SetFillMode(Dock == System.Windows.Forms.DockStyle.None);
+            SetFillMode(Dock == DockStyle.None);
         }
 
         public void SetFillMode(bool enable)
@@ -74,7 +75,8 @@ namespace ASM.UI
             // 
             // caption
             // 
-            this.caption.Size = new System.Drawing.Size(454, 25);
+            this.caption.Size = new System.Drawing.Size(447, 25);
+            this.caption.DoubleClick += new System.EventHandler(this.caption_DoubleClick);
             // 
             // codeEditBox
             // 
@@ -116,6 +118,11 @@ namespace ASM.UI
             this.Size = new System.Drawing.Size(476, 283);
             this.ResumeLayout(false);
 
+        }
+
+        private void caption_DoubleClick(object sender, EventArgs e)
+        {
+            new OverlayEditBox(sender as Control, "Text").ShowDialog();
         }
     }
 }
