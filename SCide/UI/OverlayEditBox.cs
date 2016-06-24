@@ -19,7 +19,8 @@ namespace ASM.UI
         public OverlayEditBox(Control control, string propName)
             : this(control, propName, control.PointToScreen(new Point(0, 0)))
         {
-            InputHook.MouseDown += OnGlobalMouseDown;
+            editor.Size = control.Size;
+            editor.Font = control.Font;
         }
 
         public OverlayEditBox(object Obj, string propName, Point position)
@@ -28,6 +29,8 @@ namespace ASM.UI
             obj = Obj;
             prop = TypeDescriptor.GetProperties(obj).Find(propName, true);
             Location = position;
+            editor.Text = prop.GetValue(obj).ToString();
+            InputHook.MouseDown += OnGlobalMouseDown;
         }
 
         private void OverlayEditBox_KeyDown(object sender, KeyEventArgs e)
