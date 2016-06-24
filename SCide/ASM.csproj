@@ -93,9 +93,19 @@
     <Compile Include="Modules\RegisterControl.Designer.cs">
       <DependentUpon>RegisterControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\OverlayEditBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\OverlayEditBox.Designer.cs">
+      <DependentUpon>OverlayEditBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utilit\Calculator\Calculator.cs" />
     <Compile Include="Utilit\Calculator\Element.cs" />
     <Compile Include="Utilit\Calculator\Operator.cs" />
+    <Compile Include="Utilit\InputHook\Events.cs" />
+    <Compile Include="Utilit\InputHook\InputHook.cs" />
+    <Compile Include="Utilit\InputHook\Structs.cs" />
+    <Compile Include="Utilit\InputHook\WinAPI.cs" />
     <Compile Include="Utilit\PropertyJoin.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UI\CodeBlock.cs">
@@ -266,6 +276,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\IconListControl.resx">
       <DependentUpon>IconListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\OverlayEditBox.resx">
+      <DependentUpon>OverlayEditBox.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
