@@ -54,6 +54,7 @@
             this.BuildMenuRestart = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.status = new System.Windows.Forms.ToolStripStatusLabel();
+            this.BuildMenuResumeOne = new System.Windows.Forms.ToolStripButton();
             this.MainMenu.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -218,6 +219,7 @@
             this.BuildMenuStop,
             this.BuildMenuPause,
             this.BuildMenuResume,
+            this.BuildMenuResumeOne,
             this.BuildMenuRestart});
             this.toolStrip1.Location = new System.Drawing.Point(0, 25);
             this.toolStrip1.Name = "toolStrip1";
@@ -301,6 +303,15 @@
             this.status.Name = "status";
             this.status.Size = new System.Drawing.Size(0, 17);
             // 
+            // BuildMenuResumeOne
+            // 
+            this.BuildMenuResumeOne.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BuildMenuResumeOne.Image = global::ASM.Properties.Resources.resumeOne;
+            this.BuildMenuResumeOne.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BuildMenuResumeOne.Name = "BuildMenuResumeOne";
+            this.BuildMenuResumeOne.Size = new System.Drawing.Size(36, 36);
+            this.BuildMenuResumeOne.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BuildMenuResumeOne_MouseDown);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -353,5 +364,6 @@
         private System.Windows.Forms.ToolStripStatusLabel status;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton BuildMenuResumeOne;
     }
 }

@@ -86,12 +86,15 @@
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CombineRows.cs" />
-    <Compile Include="ErrorMessageRow.cs" />
+    <Compile Include="ErrorMessage.cs" />
     <Compile Include="Modules\RegisterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Modules\RegisterControl.Designer.cs">
       <DependentUpon>RegisterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CodeMap.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\OverlayEditBox.cs">
       <SubType>Form</SubType>
@@ -201,6 +204,7 @@
       <DependentUpon>NavigationWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="VM\Link.cs" />
+    <Compile Include="VM\DescriptorAttribute.cs" />
     <Compile Include="VM\Operators.cs" />
     <Compile Include="Modules\OperatorsWindow.cs">
       <SubType>Form</SubType>
@@ -210,6 +214,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VM\Refactor.cs" />
     <Compile Include="VM\Register.cs" />
     <Compile Include="Modules\RegistersWindow.cs">
       <SubType>Form</SubType>
@@ -339,7 +344,9 @@
   <ItemGroup>
     <None Include="Resources\settings.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\resumeOne.png" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\rune.png" />
   </ItemGroup>

@@ -1,97 +1,48 @@
 ﻿using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
-using System.Collections.Generic;
 using System.IO;
-using System.Xml;
-using ASM.UI;
 
 namespace ASM
 {
     internal sealed partial class DocumentForm : DockContent
     {
-        public List<ErrorMessageRow> Errors = new List<ErrorMessageRow>();
-        public string FilePath { get; set; }
-        private List<CodeBlock> blocks = new List<CodeBlock>();
-        public CodeBlock CodeBlock;
+        public string FileName { get; set; }
 
         public DocumentForm()
         {
             InitializeComponent();
-            CodeBlock.MainBlock = addBlock();
-            CodeBlock.MainBlock.SetFillMode(true);
         }
 
         public void LoadFile(string filePath)
         {
-            CodeBlock.MainBlock.SetCode(File.ReadAllText(filePath));
-
             Text = Path.GetFileName(filePath);
-            FilePath = filePath;
+            map.Load(filePath);
         }
 
-        private CodeBlock addBlock()
+        public CombineRows GetCode()
         {
-            CodeBlock bl = new CodeBlock();
-            Controls.Add(bl);
-            blocks.Add(bl);
-            CodeBlock = bl;
-            return bl;
+            return map.GetCode();
         }
 
-        public CombineRows CombineCode()
+        public void Save()
         {
-            CombineRows cb = new CombineRows();
-
-            foreach (var b in blocks)
-                cb.Add(b.GetCodeRows());
-
-            return cb;
+            map.Save();
         }
 
-        private void AddOrRemoveAsteric()
-        {
-            //if (Code.Modified)
-            //{
-            //    if (!Text.EndsWith(" *"))
-            //        Text += " *";
-            //}
-            //else
-            //{
-            //    if (Text.EndsWith(" *"))
-            //        Text = Text.Substring(0, Text.Length - 2);
-            //}
-        }
-
-        public bool Save()
-        {
-            if (string.IsNullOrEmpty(FilePath))
-                return SaveAs();
-
-            return Save(FilePath);
-        }
-
-        public bool Save(string filePath)
-        {
-            File.WriteAllText(filePath, blocks[0].GetCode());
-            return true;
-        }
-
-        public bool SaveAs()
+        public void SaveAs()
         {
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                FilePath = saveFileDialog.FileName;
-                return Save(FilePath);
+                map.FileName = saveFileDialog.FileName;
+                Save();
             }
-
-            return false;
         }
 
         private void DocumentForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-           // if (Code.Modified)
+            if (map.Modified)
             {
-                string message = string.Format("The _text in the {0} file has changed.\n\nDo you want to save the changes?", Text.TrimEnd(' ', '*'));
+                string message = string.Format("Сохранить изменения?");
                 DialogResult dr = MessageBox.Show(this, message, "ASM", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
                 if (dr == DialogResult.Cancel)
                 {
@@ -99,10 +50,7 @@ namespace ASM
                     return;
                 }
                 else if (dr == DialogResult.Yes)
-                {
-                    e.Cancel = !Save();
-                    return;
-                }
+                    Save();
             }
         }
     }

@@ -24,7 +24,7 @@ namespace ASM.UI
         private class item : IComparable<item>
         {
             public string Value;
-            public int ImgIndex;
+            public string ImgKey;
             public int Render_old_Y;
 
             public int CompareTo(item obj)
@@ -85,6 +85,7 @@ namespace ASM.UI
         {
             InitializeComponent();
 
+            ImageLib = new ImageList();
             DoubleBuffered = true;
             Filter = "";
 
@@ -117,28 +118,35 @@ namespace ASM.UI
             }
         }
 
-        bool isValid(string value)
+        private bool isValid(string value)
         {
             return filter.All(e => value.Contains(e));
         }
 
-        void filtre()
+        private void filtre()
         {
             visiable_items.Clear();
-            
+            selectItem = null;
+
             foreach (var i in items)
             {
                 if (isValid(i.Value))
+                {
                     visiable_items.Add(i);
+                    if (i.Value == filter)
+                        selectItem = i;
+                }
             }
 
-            selectItem = visiable_items.FirstOrDefault();
+            if (selectItem == null)
+                selectItem = visiable_items.FirstOrDefault();
+
             VisiableAny = visiable_items.Count() != 0;
         }
-
-        public void AddItem(string text, int img)
+    
+        public void AddItem(string text, string img)
         {
-            items.Add(new item() { Value = text, ImgIndex = img, });
+            items.Add(new item() { Value = text, ImgKey = img, });
             modifyCollection = true;
             Invalidate(false);
         }
@@ -171,7 +179,10 @@ namespace ASM.UI
                     if (selectItem == i)
                         e.Graphics.FillRectangle(selectBrush, 0, y, Width, h);
 
-                    ImageLib.Draw(e.Graphics, LeftPading + (int)dh2, (int)(y + dh2), i.ImgIndex);
+                    int index = ImageLib.Images.IndexOfKey(i.ImgKey);
+                    if (index != -1)
+                        ImageLib.Draw(e.Graphics, LeftPading + (int)dh2, (int)(y + dh2), index);
+
                     e.Graphics.DrawString(i.Value, Font, br, LeftPading + ImageLib.ImageSize.Width + 2, y);
                     i.Render_old_Y = (int)y;
                 }

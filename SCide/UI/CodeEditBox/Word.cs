@@ -96,6 +96,11 @@ namespace ASM.UI
                 return Owner.GetRange(Offest, Length);
             }
 
+            public static implicit operator string(Word self)
+            {
+                return self.ToString();
+            }
+
             IEnumerator IEnumerable.GetEnumerator()
             {
                 return GetEnumerator();

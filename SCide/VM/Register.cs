@@ -1,44 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ASM.VM
+﻿namespace ASM.VM
 {
     public abstract class Register
     {
         public string Name { get; private set; }
         public string TValue
         {
-            get { return toString(); }
-            set { inString(value); }
+            get { return ToString(); }
+            set { InString(value); }
         }
-
+        
         public Register(string name)
         {
             Name = name;
         }
 
-        protected abstract string toString();
-        protected abstract void inString(string str);
+        public abstract void InString(string str);
     }
 
     public class Register32 : Register
     {
         public int Value;
 
-        public Register32(string name) : base(name)
-        {
-        }
+        public Register32(string name) : base(name) { }
 
-        protected override string toString()
+        public override string ToString()
         {
             return Value.ToString();
         }
 
-        protected override void inString(string str)
+        public override void InString(string str)
         {
             Value = int.Parse(str);
         }
@@ -46,57 +36,35 @@ namespace ASM.VM
 
     public class Register16 : Register
     {
-        private readonly Register32 owner;
-        private readonly int offest;
+        public short Value { get; set; }
 
-        public Int16 value
+        public Register16(string name) : base(name) { }
+
+        public override string ToString()
         {
-            get { return (Int16)owner.Value; }
-            set { owner.Value = value; }
+            return Value.ToString();
         }
 
-        public Register16(string name, Register32 owner, int offest = 0) : base(name)
+        public override void InString(string str)
         {
-            this.offest = offest;
-            this.owner = owner;
-        }
-
-        protected override string toString()
-        {
-            return value.ToString();
-        }
-
-        protected override void inString(string str)
-        {
-            value = Int16.Parse(str);
+            Value = short.Parse(str);
         }
     }
 
     public class Register8 : Register
     {
-        private readonly Register32 owner;
-        private readonly int offest;
+        public char Value { get; set; }
 
-        public char value
+        public Register8(string name) : base(name) { }
+
+        public override string ToString()
         {
-            get { return (char)owner.Value; }
-            set { owner.Value = value; }
+            return ((int)Value).ToString();
         }
 
-        public Register8(string name, Register32 owner, int offest = 0) : base(name)
+        public override void InString(string str)
         {
-            this.offest = offest;
-            this.owner = owner;
-        }
-
-        protected override string toString()
-        {
-            return ((int)value).ToString();
-        }
-
-        protected override void inString(string str)
-        {
-            value = (char)int.Parse(str);
+            Value = (char)int.Parse(str);
         }
     }
 
@@ -141,12 +109,12 @@ namespace ASM.VM
         {
         }
 
-        protected override string toString()
+        public override string ToString()
         {
             return "More...";
         }
 
-        protected override void inString(string str)
+        public override void InString(string str)
         {
         }
     }

@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using ASM.VM;
 using ASM.Utilit;
+using System.Collections.Specialized;
 
 namespace ASM.Modules
 {
@@ -16,13 +17,18 @@ namespace ASM.Modules
             InitializeComponent();
             Instance = this;
 
+            MainForm.Instance.Core.ChangedPropertyEvent("RegNames32", regsUpdate);
+            MainForm.Instance.Core.ChangedPropertyEvent("RegNames16", regsUpdate);
+            MainForm.Instance.Core.ChangedPropertyEvent("RegNames8", regsUpdate);
+            regsUpdate();
         }
 
-        void addReg(Register reg)
+        void regsUpdate()
         {
-            RegisterControl rc = new RegisterControl();
-            rc.BitSize = reg is Register32 ? 32 : reg is Register32 ? 16 : 8;
-            table.Controls.Add(rc);
+            table.Controls.Clear();
+
+            foreach (Register reg in MainForm.Instance.Core.Registers)
+                table.Controls.Add(new RegisterControl(reg));
         }
     }
 }

@@ -20,6 +20,8 @@ namespace ASM.UI
 
         private readonly Stack<List<HistoryElement>> undoStack = new Stack<List<HistoryElement>>();
         private readonly Stack<List<HistoryElement>> redoStack = new Stack<List<HistoryElement>>();
+        private readonly Dictionary<string, int> syntax = new Dictionary<string, int>();
+        private readonly Color[] syntaxColors = new Color[64];
         private readonly List<Keys> keyboardState = new List<Keys>();
         private readonly List<Row> rows = new List<Row>();
         private List<HistoryElement> recordStack;
@@ -268,8 +270,10 @@ namespace ASM.UI
 
             textChanged = new EventHandler<TextChangedEventArgs>(OnTextChanged);
             rowsChanged = new EventHandler(OnRowsChanged);
+
             autoCompiler.GotFocus += (s, e) => { Focus(); };
             autoCompiler.MouseDown += AutoCompiler_MouseDown;
+            autoCompiler.Visible = false;
 
             SetStyle(ControlStyles.Selectable, true);
             SetStyle(ControlStyles.UserPaint, true);
@@ -281,16 +285,39 @@ namespace ASM.UI
             contextMenu.Renderer = new MenuStripRenderer();
             foreach (ToolStripItem item in contextMenu.Items)
                 MenuStripRenderer.SetStyle(item);
-
-            autoCompiler.Visible = false;
-            foreach (var op in VM.Operators.OperationsList)
-                autoCompiler.AddItem(op.Name, 0);
-
-            foreach(var c in Properties.Settings.Default.Register32)
-                autoCompiler.AddItem(c, 2);
-
+            
             AddRow(new Row(this));
             ClearHistory();
+        }
+
+        public void SetSyntaxIcons(ImageList imgs)
+        {
+            autoCompiler.ImageLib = imgs;
+        }
+
+        public void AddSyntaxPhrase(string value, int type)
+        {
+            syntax.Add(value, type);
+            autoCompiler.AddItem(value, type.ToString());
+            UpdateSyntax();
+        }
+
+        public void ClearSyntax(string value, int type)
+        {
+            autoCompiler.Clear();
+            syntax.Clear();
+            autoCompiler.ImageLib.Images.Clear();
+            UpdateSyntax();
+        }
+
+        public void SetSyntaxColor(int type, Color color, Image img)
+        {
+            syntaxColors[type] = color;
+
+            if (autoCompiler.ImageLib.Images.ContainsKey(type.ToString()))
+                autoCompiler.ImageLib.Images.RemoveByKey(type.ToString());
+            if (img != null)
+                autoCompiler.ImageLib.Images.Add(type.ToString(), img);
         }
 
         public void ClearHistory()
@@ -346,10 +373,8 @@ namespace ASM.UI
                         color = Color.FromArgb(87, 166, 74);
                     else if (word[0] == '#')
                         color = Color.FromArgb(214, 157, 133);
-                    else if (VM.Operators.OperationsList.Any(op => word == op.Name))
-                        color = Color.FromArgb(86, 156, 214);
-                    else if (Properties.Settings.Default.Register32.Contains(word.ToString()))
-                        color = Color.FromArgb(78, 201, 176);
+                    else if (syntax.ContainsKey(word))
+                        color = syntaxColors[syntax[word]];
 
                     word.SetColor(color);
                 }
@@ -692,6 +717,7 @@ namespace ASM.UI
                         selectStart.X = 0;
                     }
                     break;
+                case Keys.Escape:
                 case (Keys)11:  // wtf?
                     break;
                 case Keys.Space:

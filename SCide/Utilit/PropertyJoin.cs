@@ -11,7 +11,7 @@ namespace ASM.Utilit
         /// <summary>
         /// object1.propertyName1 = object2.propertyName2
         /// </summary>
-        public PropertyJoin(object object1, string propertyName1, object object2, string propertyName2, bool doubleJoin = false)
+        public PropertyJoin(object object1, string propertyName1, object object2, string propertyName2, bool doubleJoin)
         {
             obj1 = object1;
             obj2 = object2;
@@ -24,6 +24,11 @@ namespace ASM.Utilit
             prop2.AddValueChanged(object2, Object2PropertyChanged);
 
             Object2PropertyChanged(this, EventArgs.Empty);
+        }
+
+        public static PropertyJoin Create(object object1, string propertyName1, object object2, string propertyName2, bool doubleJoin = false)
+        {
+            return new PropertyJoin(object1, propertyName1, object2, propertyName2, doubleJoin);
         }
 
         private void Object1PropertyChanged(object sender, EventArgs e)

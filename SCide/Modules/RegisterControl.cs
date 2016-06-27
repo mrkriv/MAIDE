@@ -8,42 +8,34 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ASM.Utilit;
+using ASM.VM;
 
 namespace ASM.Modules
 {
     public partial class RegisterControl : UserControl
     {
-        int bitSize;
+        private readonly int bitSize;
+        public readonly System.Type RegType;
 
-        [DefaultValue(32)]
-        [Category("Appearance")]
-        public int BitSize
-        {
-            get { return bitSize; }
-            set
-            {
-                bitSize = value;
-                rebuild();
-            }
-        }
-
-        public RegisterControl()
+        public RegisterControl(Register reg)
         {
             InitializeComponent();
-            this.LoadDefaultProperties();
-        }
 
-        private void rebuild()
-        {
+            l_name.Text = reg.Name;
+
+            bitSize = reg is Register32 ? 32 : reg is Register16 ? 16 : reg is Register8 ? 8 : 0;
             bitPanel.Controls.Clear();
+
             for (int i = 0; i < bitSize; i++)
             {
                 Button btn = new Button();
-                btn.Size = new Size(bitPanel.Height, bitPanel.Height);
+                btn.Size = new Size(5, bitPanel.Height);
                 btn.Text = "0";
                 btn.Click += Bit_Click;
                 bitPanel.Controls.Add(btn);
             }
+
+            Anchor = AnchorStyles.Left | AnchorStyles.Right;
         }
 
         private void Bit_Click(object _sender, EventArgs e)

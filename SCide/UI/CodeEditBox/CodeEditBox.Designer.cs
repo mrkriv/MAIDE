@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CodeEditBox));
             this.vScrollBar = new System.Windows.Forms.VScrollBar();
             this.hScrollBar = new System.Windows.Forms.HScrollBar();
             this.CaredIndicator = new System.Windows.Forms.Timer(this.components);
@@ -41,7 +40,6 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.imgList = new System.Windows.Forms.ImageList(this.components);
             this.autoCompiler = new ASM.UI.IconListControl();
             this.contextMenu.SuspendLayout();
             this.SuspendLayout();
@@ -71,7 +69,7 @@
             this.CaredIndicator.Interval = 650;
             this.CaredIndicator.Tick += new System.EventHandler(this.CaredIndicator_Tick);
             // 
-            // ContextMenu
+            // contextMenu
             // 
             this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cmCut,
@@ -139,24 +137,17 @@
             this.redoToolStripMenuItem.Text = "Redo";
             this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
             // 
-            // imgList
-            // 
-            this.imgList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgList.ImageStream")));
-            this.imgList.TransparentColor = System.Drawing.Color.Transparent;
-            this.imgList.Images.SetKeyName(0, "component.png");
-            this.imgList.Images.SetKeyName(1, "link.png");
-            this.imgList.Images.SetKeyName(2, "rg.png");
-            // 
             // autoCompiler
             // 
             this.autoCompiler.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
             this.autoCompiler.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.autoCompiler.CausesValidation = false;
+            this.autoCompiler.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.autoCompiler.Filter = "";
             this.autoCompiler.ForeColor = System.Drawing.Color.Gainsboro;
-            this.autoCompiler.ImageLib = this.imgList;
-            this.autoCompiler.LeftPading = 1;
             this.autoCompiler.Location = new System.Drawing.Point(80, 96);
             this.autoCompiler.Name = "autoCompiler";
+            this.autoCompiler.SelectItem = null;
             this.autoCompiler.Size = new System.Drawing.Size(252, 138);
             this.autoCompiler.TabIndex = 4;
             // 
@@ -190,7 +181,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
-        private System.Windows.Forms.ImageList imgList;
         private IconListControl autoCompiler;
     }
 }

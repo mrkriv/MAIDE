@@ -51,6 +51,11 @@ namespace ASM.UI
                 }
             }
 
+            public CodeEditBox Owner
+            {
+                get { return row.Owner; }
+            }
+
             public Symbol this[int index]
             {
                 get { return row[index]; }

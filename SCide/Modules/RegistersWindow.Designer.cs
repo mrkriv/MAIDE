@@ -33,15 +33,15 @@
             // 
             // table
             // 
+            this.table.AutoScroll = true;
+            this.table.AutoSize = true;
             this.table.ColumnCount = 1;
-            this.table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.table.Dock = System.Windows.Forms.DockStyle.Fill;
             this.table.Location = new System.Drawing.Point(0, 0);
             this.table.Name = "table";
             this.table.RowCount = 1;
-            this.table.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.table.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.table.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.table.Size = new System.Drawing.Size(278, 508);
             this.table.TabIndex = 0;
             // 
@@ -49,6 +49,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
             this.ClientSize = new System.Drawing.Size(278, 508);
             this.Controls.Add(this.table);
@@ -56,6 +57,7 @@
             this.TabText = "RegisterWindow";
             this.Text = "RegisterWindow";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

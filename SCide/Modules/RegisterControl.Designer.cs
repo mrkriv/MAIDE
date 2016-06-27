@@ -47,9 +47,9 @@
             // 
             this.bitPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.bitPanel.Location = new System.Drawing.Point(36, 3);
+            this.bitPanel.Location = new System.Drawing.Point(36, 7);
             this.bitPanel.Name = "bitPanel";
-            this.bitPanel.Size = new System.Drawing.Size(207, 34);
+            this.bitPanel.Size = new System.Drawing.Size(207, 25);
             this.bitPanel.TabIndex = 1;
             // 
             // RegisterControl

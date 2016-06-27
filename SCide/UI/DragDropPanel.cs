@@ -13,8 +13,33 @@ namespace ASM.UI
 {
     public partial class DragDropPanel : UserControl
     {
+        private EventHandler<DragEventArgs> drag;
         private bool mouseDown;
-        Point offestPosition;
+        private Point offestPosition;
+
+        public class DragEventArgs : EventArgs
+        {
+            public Point Old { get; set; }
+            public Point New { get; set; }
+
+            public DragEventArgs(Point old, Point @new)
+            {
+                Old = old;
+                New = @new;
+            }
+        }
+
+        public event EventHandler<DragEventArgs> Drag
+        {
+            add
+            {
+                lock (this) { drag += value; }
+            }
+            remove
+            {
+                lock (this) { drag -= value; }
+            }
+        }
 
         [Category("Appearance")]
         public Control Content
@@ -49,8 +74,8 @@ namespace ASM.UI
         [Category("Appearance")]
         public string Caption
         {
-            get { return caption.Text; }
-            set { caption.Text = value; }
+            get { return title.Text; }
+            set { title.Text = value; }
         }
 
         [Category("Appearance")]
@@ -62,6 +87,7 @@ namespace ASM.UI
         public DragDropPanel()
         {
             InitializeComponent();
+            drag = new EventHandler<DragEventArgs>(OnDrag);
         }
 
         private void splitContainer1_Panel1_MouseDown(object sender, MouseEventArgs e)
@@ -73,10 +99,15 @@ namespace ASM.UI
             }
         }
 
+        protected void OnDrag(object sender, DragEventArgs e)
+        {
+            Location = e.New;
+        }
+
         private void splitContainer1_Panel1_MouseMove(object sender, MouseEventArgs e)
         {
             if (mouseDown && DragDropEnable)
-                Location = Location.Add(new Point(e.X, e.Y).Substract(offestPosition));
+                drag(this, new DragEventArgs(Location, Location.Add(new Point(e.X, e.Y).Substract(offestPosition))));
         }
 
         private void splitContainer1_Panel1_MouseUp(object sender, MouseEventArgs e)

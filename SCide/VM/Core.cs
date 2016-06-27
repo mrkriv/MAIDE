@@ -14,7 +14,7 @@ namespace ASM.VM
 {
     public class Core
     {
-        public static readonly ObservableCollection<ErrorMessageRow> Errors = new ObservableCollection<ErrorMessageRow>();
+        public static readonly ObservableCollection<ErrorMessage> Errors = new ObservableCollection<ErrorMessage>();
 
         public enum State
         {
@@ -34,6 +34,7 @@ namespace ASM.VM
         private State status;
         private int dataZoneOffest;
         private byte[] data;
+        private bool needPause;
 
         public readonly Dictionary<string, int> Links = new Dictionary<string, int>();
         public readonly List<Register> Registers = new List<Register>();
@@ -65,50 +66,33 @@ namespace ASM.VM
         public StringCollection RegNames32
         {
             get { return Properties.Settings.Default.Register32; }
-            set
-            {
-                if (value != null)
-                {
-                    Registers.RemoveAll(reg => reg is Register32);
-                    foreach (string name in value)
-                    {
-                        if (name != "")
-                            Registers.Add(new Register32(name.Replace("\n", "")));
-                    }
-                }
-            }
+            set { setRegs<Register32>(value); }
         }
 
         public StringCollection RegNames16
         {
             get { return Properties.Settings.Default.Register16; }
-            set
-            {
-                Registers.RemoveAll(reg => reg is Register16);
-                if (value != null)
-                {
-                    foreach (string name in value)
-                    {
-                        if (name != "")
-                            Registers.Add(new Register16(name.Replace("\n", ""), new Register32("__crutch_" + name)));
-                    }
-                }
-            }
+            set { setRegs<Register16>(value); }
         }
 
         public StringCollection RegNames8
         {
             get { return Properties.Settings.Default.Register8; }
-            set
+            set { setRegs<Register8>(value); }
+        }
+
+        private void setRegs<T>(StringCollection regs) where T : Register
+        {
+            if (regs != null)
             {
-                if (value != null)
+                Registers.RemoveAll(reg => reg is T);
+                foreach (string name in regs)
                 {
-                    Registers.RemoveAll(reg => reg is Register8);
-                    foreach (string name in value)
-                    {
-                        if (name != "")
-                            Registers.Add(new Register8(name.Replace("\n", ""), new Register32("__crutch_" + name)));
-                    }
+                    if (string.IsNullOrWhiteSpace(name))
+                        continue;
+
+                    T reg = Activator.CreateInstance(typeof(T), new object[] { name.Replace("\n", "") }) as T;
+                    Registers.Add(reg);
                 }
             }
         }
@@ -127,9 +111,9 @@ namespace ASM.VM
 
             stateChanged = (s, e) => { };
             waitEvent = new ManualResetEvent(true);
-            new PropertyJoin(this, "RegNames32", Properties.Settings.Default, "Register32");
-            new PropertyJoin(this, "RegNames16", Properties.Settings.Default, "Register16");
-            new PropertyJoin(this, "RegNames8", Properties.Settings.Default, "Register8");
+            PropertyJoin.Create(this, "RegNames32", Properties.Settings.Default, "Register32");
+            PropertyJoin.Create(this, "RegNames16", Properties.Settings.Default, "Register16");
+            PropertyJoin.Create(this, "RegNames8", Properties.Settings.Default, "Register8");
             Registers.Add(new RegisterFlag("flag"));
         }
 
@@ -151,6 +135,7 @@ namespace ASM.VM
             Stack.Clear();
             ActiveIndex = 0;
             total = 0;
+            needPause = false;
             waitEvent.Set();
             Status = State.Launched;
 
@@ -167,7 +152,7 @@ namespace ASM.VM
 
             try
             {
-                while (ActiveIndex < source.Count && status == State.Launched)
+                while (ActiveIndex < source.Count && (status == State.Launched || status == State.Pause))
                 {
                     Operation op = source[ActiveIndex];
 
@@ -204,6 +189,12 @@ namespace ASM.VM
 
                     if (ActiveIndex >= source.Count)
                         throw new RuntimeException("Не возможно выполнить инструкцию, эта пямять не для инструкций", op.row.Index + 1);
+
+                    if (needPause)
+                    {
+                        needPause = false;
+                        Pause();
+                    }
 
                     ActiveIndex++;
                     total++;
@@ -266,7 +257,7 @@ namespace ASM.VM
                     if (!Links.ContainsKey(text[0]))
                         Links.Add(text[0], result.Count);
                     else
-                        addError(new ErrorMessageRow(string.Format("Метка '{0} уже определена.", text[0]), i));
+                        addError(new ErrorMessage(string.Format("Метка '{0} уже определена.", text[0]), i, code[i].Owner));
                 }
                 else
                     data = text[0];
@@ -299,9 +290,6 @@ namespace ASM.VM
                         result.Add(code[i], text);
                 }
             }
-
-            if (result.Count == 0)
-                addError(new ErrorMessageRow("Нужен код!", 0));
             
             dataZoneOffest = result.Count;
             foreach(var k in dataZone)
@@ -337,7 +325,7 @@ namespace ASM.VM
                     return ParseOperation(op, args) ? op : null;
                 }
             }
-            addError(new ErrorMessageRow(string.Format("Операция '{0}' не определена.", op.operation), row.Index + 1));
+            addError(new ErrorMessage(string.Format("Операция '{0}' не определена.", op.operation), row.Index, row.Owner));
             return null;
         }
 
@@ -345,14 +333,14 @@ namespace ASM.VM
         {
             ParameterInfo[] paramInfo = operation.method.GetParameters();
             List<object> output = new List<object>();
-            ErrorMessageRow error = new ErrorMessageRow(null, operation.row.Index + 1);
+            ErrorMessage error = new ErrorMessage(null, operation.row.Index, operation.row.Owner);
 
             if (input.Length != paramInfo.Length)
                 error.Message = string.Format("Операция '{0}' имеет {1} оргумент(а).", operation.operation, paramInfo.Length);
 
             for (int i = 0; i < input.Length && error.Message == null; i++)
             {
-                Type needType = paramInfo[i].ParameterType;
+                System.Type needType = paramInfo[i].ParameterType;
                 int oldCount = output.Count;
                 string value = input[i];
 
@@ -440,7 +428,7 @@ namespace ASM.VM
             return source[ActiveIndex].row.Index + 1;
         }
 
-        private void addError(ErrorMessageRow msg)
+        private void addError(ErrorMessage msg)
         {
             Errors.Add(msg);
         }
@@ -451,12 +439,13 @@ namespace ASM.VM
             Status = State.Pause;
         }
 
-        public void Resume()
+        public void Resume(bool oneOperation = false)
         {
             if (status == State.Pause)
             {
-                waitEvent.Set();
                 Status = State.Launched;
+                needPause = oneOperation;
+                waitEvent.Set();
             }
         }
 
@@ -464,8 +453,8 @@ namespace ASM.VM
         {
             if (status == State.Launched || status == State.Pause)
             {
-                waitEvent.Set();
                 Status = State.Ready;
+                waitEvent.Set();
             }
         }
 

@@ -3,11 +3,15 @@ using System.Drawing;
 using System.ComponentModel;
 using System.Reflection;
 using System.Linq;
+using System.Xml;
 
 namespace ASM.Utilit
 {
     public static class Exep
     {
+        public delegate void ChangedProperty<T>(T value);
+        public delegate void Clallback();
+
         public static Point Add(this Point a, Point b)
         {
             return new Point(a.X + b.X, a.Y + b.Y);
@@ -33,6 +37,16 @@ namespace ASM.Utilit
             return new Point(self.Left + self.Width / 2, self.Top + self.Height / 2);
         }
 
+        public static Point CenterTop(this Rectangle self)
+        {
+            return new Point(self.Left + self.Width / 2, self.Top);
+        }
+
+        public static Point CenterBottom(this Rectangle self)
+        {
+            return new Point(self.Left + self.Width / 2, self.Bottom);
+        }
+
         public static PointF Center(this RectangleF self)
         {
             return new PointF(self.Left + self.Width / 2.0f, self.Top + self.Height / 2.0f);
@@ -42,6 +56,12 @@ namespace ASM.Utilit
         {
             Point[] points = { new Point(x, y), new Point(x + w, y + h / 2), new Point(x, y + h) };
             self.FillPolygon(brush, points);
+        }
+
+        public static void DrawCubicLine(this Graphics self, Pen pen, Point a, Point b)
+        {
+            Point[] points = { a, new Point(a.X, (b.Y + a.Y) / 2), new Point(b.X, (b.Y + a.Y) / 2), b };
+            self.DrawCurve(pen, points);
         }
 
         public static object GetDefault(this Type self)
@@ -76,6 +96,56 @@ namespace ASM.Utilit
                 if (atrs.Length != 0)
                     inf.SetValue(self, ((DefaultValueAttribute)atrs.First()).Value, BindingFlags.SetProperty, null, null, null);
             }
+        }
+
+        public static XmlAttribute AddAttribute(this XmlDocument self, string name, string value)
+        {
+            XmlAttribute atrib = self.CreateAttribute(name);
+            atrib.Value = value;
+            return atrib;
+        }
+
+        public static T GetAttribute<T>(this MethodInfo self) where T : Attribute
+        {
+            return self.GetCustomAttributes<T>(false).FirstOrDefault();
+        }
+
+        public static string GetDisplayName(this Type self)
+        {
+            DisplayNameAttribute atrib = self.GetCustomAttribute<DisplayNameAttribute>();
+            return atrib != null ? atrib.DisplayName : self.Name;
+        }
+
+        public static string GetValue(this XmlNodeList self, string name)
+        {
+            foreach (XmlNode node in self)
+            {
+                if (node.Name == name)
+                    return node.Value;
+            }
+            return null;
+        }
+
+        public static XmlNode Get(this XmlNodeList self, string name)
+        {
+            foreach (XmlNode node in self)
+            {
+                if (node.Name == name)
+                    return node;
+            }
+            return null;
+        }
+
+        public static void ChangedPropertyEvent<T>(this object self, string propertyName, ChangedProperty<T> callback) where T : class
+        {
+            PropertyDescriptor prop = TypeDescriptor.GetProperties(self).Find(propertyName, true);
+            prop.AddValueChanged(self, (s, e) => { callback(prop.GetValue(self) as T); });
+        }
+
+        public static void ChangedPropertyEvent(this object self, string propertyName, Clallback callback)
+        {
+            PropertyDescriptor prop = TypeDescriptor.GetProperties(self).Find(propertyName, true);
+            prop.AddValueChanged(self, (s, e) => { callback(); });
         }
     }
 }

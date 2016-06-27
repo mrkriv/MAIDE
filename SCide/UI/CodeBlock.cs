@@ -1,97 +1,131 @@
-﻿using System;
-using System.Windows.Forms.VisualStyles;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ASM.Utilit;
+﻿using ASM.Utilit;
+using System;
+using System.Collections.Specialized;
+using System.Drawing;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace ASM.UI
 {
     public class CodeBlock : DragDropPanel
     {
-        private static CodeBlock mainBlock;
-        private System.Windows.Forms.Button fillSetButton;
-        private CodeEditBox codeEditBox;
+        private bool fill;
+        private Button fillSetButton;
+        public CodeEditBox CodeEditBox;
+        public CodeBlock ExtTrue;
+        private ImageList imgList;
+        private System.ComponentModel.IContainer components;
+        public CodeBlock ExtFalse;
 
-        public static CodeBlock MainBlock
+        public bool Fill
         {
-            get { return mainBlock; }
-            set { mainBlock = value; }
+            get { return fill; }
+            set
+            {
+                Dock = value ? DockStyle.Fill : DockStyle.None;
+                DragDropEnable = !value;
+                fill = value;
+                if (fill)
+                    BringToFront();
+            }
+        }
+
+        public string Title
+        {
+            get { return title.Text; }
+            set { title.Text = value; }
         }
 
         public CodeBlock()
         {
             InitializeComponent();
-            new PropertyJoin(codeEditBox, "CommentChar", Properties.Settings.Default, "CommentChar");
+            PropertyJoin.Create(CodeEditBox, "CommentChar", Properties.Settings.Default, "CommentChar");
+
+            Fill = false;
+
+            CodeEditBox.SetSyntaxColor(0, Color.FromArgb(86, 156, 214), null);
+            CodeEditBox.SetSyntaxColor(2, Color.FromArgb(78, 201, 176), null);
+            CodeEditBox.SetSyntaxIcons(imgList);
+
+            foreach (var op in VM.Operators.OperationsList)
+                CodeEditBox.AddSyntaxPhrase(op.Name, 0);
+
+            addSyntaxByRegLS(Properties.Settings.Default.Register32);
+            addSyntaxByRegLS(Properties.Settings.Default.Register16);
+            addSyntaxByRegLS(Properties.Settings.Default.Register8);
         }
 
-        public void GoTo(int line)
+        private void addSyntaxByRegLS(StringCollection regs)
         {
-            codeEditBox.GoTo(line);
-        }
-
-        public void SetCode(string text)
-        {
-            codeEditBox.Text = text;
-            codeEditBox.ClearHistory();
-        }
-
-        public string GetCode()
-        {
-            return codeEditBox.Text;
-        }
-
-        public CodeEditBox.RowReadonlyCollection GetCodeRows()
-        {
-            return codeEditBox.Rows;
+            if (regs != null)
+            {
+                foreach (var c in regs)
+                    CodeEditBox.AddSyntaxPhrase(c, 2);
+            }
         }
 
         private void fillSetButton_Click(object sender, EventArgs e)
         {
-            SetFillMode(Dock == DockStyle.None);
+            Fill = !Fill;
         }
 
-        public void SetFillMode(bool enable)
+        private void caption_DoubleClick(object sender, EventArgs e)
         {
-            if (enable)
-            {
-                Dock = System.Windows.Forms.DockStyle.Fill;
-                DragDropEnable = false;
-            }
-            else
-            {
-                Dock = System.Windows.Forms.DockStyle.None;
-                DragDropEnable = true;
-            }
+            new OverlayEditBox(sender as Control, "Text").ShowDialog();
+        }
+
+        public XmlNode Save(XmlDocument doc)
+        {
+            XmlNode node = doc.CreateNode(XmlNodeType.Element, title.Text.ToString(), string.Empty);
+
+            node.Attributes.Append(doc.AddAttribute("x", Location.X.ToString()));
+            node.Attributes.Append(doc.AddAttribute("y", Location.Y.ToString()));
+            node.Attributes.Append(doc.AddAttribute("fill", Fill.ToString()));
+            node.InnerText = CodeEditBox.Text;
+
+            return node;
+        }
+
+        public new void Load(XmlNode node)
+        {
+            Fill = bool.Parse(node.Attributes["fill"].Value);
+            Location = new Point(
+                int.Parse(node.Attributes["x"].Value),
+                int.Parse(node.Attributes["y"].Value));
+
+            title.Text = node.Name;
+            CodeEditBox.Text = node.InnerText;
+            CodeEditBox.ClearHistory();
         }
 
         private void InitializeComponent()
         {
-            this.codeEditBox = new ASM.UI.CodeEditBox();
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CodeBlock));
+            this.CodeEditBox = new ASM.UI.CodeEditBox();
             this.fillSetButton = new System.Windows.Forms.Button();
+            this.imgList = new System.Windows.Forms.ImageList(this.components);
             this.SuspendLayout();
             // 
             // caption
             // 
-            this.caption.Size = new System.Drawing.Size(447, 25);
-            this.caption.DoubleClick += new System.EventHandler(this.caption_DoubleClick);
+            this.title.Size = new System.Drawing.Size(1049, 25);
+            this.title.DoubleClick += new System.EventHandler(this.caption_DoubleClick);
             // 
-            // codeEditBox
+            // CodeEditBox
             // 
-            this.codeEditBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.codeEditBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.codeEditBox.Font = new System.Drawing.Font("Consolas", 10F);
-            this.codeEditBox.ForeColor = System.Drawing.Color.Gainsboro;
-            this.codeEditBox.Location = new System.Drawing.Point(0, 0);
-            this.codeEditBox.Name = "codeEditBox";
-            this.codeEditBox.SelectEnd = new System.Drawing.Point(0, 0);
-            this.codeEditBox.SelectStart = new System.Drawing.Point(0, 0);
-            this.codeEditBox.Size = new System.Drawing.Size(476, 257);
-            this.codeEditBox.TabIndex = 2;
-            this.codeEditBox.TextBaseBrush = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.codeEditBox.Zoom = 1F;
+            this.CodeEditBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.CodeEditBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CodeEditBox.Font = new System.Drawing.Font("Consolas", 10F);
+            this.CodeEditBox.ForeColor = System.Drawing.Color.Gainsboro;
+            this.CodeEditBox.Location = new System.Drawing.Point(0, 0);
+            this.CodeEditBox.Name = "CodeEditBox";
+            this.CodeEditBox.SelectEnd = new System.Drawing.Point(0, 0);
+            this.CodeEditBox.SelectStart = new System.Drawing.Point(0, 0);
+            this.CodeEditBox.Size = new System.Drawing.Size(476, 257);
+            this.CodeEditBox.TabIndex = 2;
+            this.CodeEditBox.TextBaseBrush = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.CodeEditBox.Zoom = 1F;
             // 
             // fillSetButton
             // 
@@ -108,21 +142,23 @@ namespace ASM.UI
             this.fillSetButton.UseVisualStyleBackColor = true;
             this.fillSetButton.Click += new System.EventHandler(this.fillSetButton_Click);
             // 
+            // imgList
+            // 
+            this.imgList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgList.ImageStream")));
+            this.imgList.TransparentColor = System.Drawing.Color.Transparent;
+            this.imgList.Images.SetKeyName(0, "0");
+            this.imgList.Images.SetKeyName(1, "1");
+            this.imgList.Images.SetKeyName(2, "2");
+            // 
             // CodeBlock
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Content = this.codeEditBox;
+            this.Content = this.CodeEditBox;
             this.Name = "CodeBlock";
             this.RightSlot = this.fillSetButton;
             this.Size = new System.Drawing.Size(476, 283);
             this.ResumeLayout(false);
-
-        }
-
-        private void caption_DoubleClick(object sender, EventArgs e)
-        {
-            new OverlayEditBox(sender as Control, "Text").ShowDialog();
         }
     }
 }

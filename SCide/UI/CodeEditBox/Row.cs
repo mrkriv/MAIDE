@@ -148,6 +148,11 @@ namespace ASM.UI
                 return new string(data.Select(s => (char)s).ToArray());
             }
 
+            public static implicit operator string(Row self)
+            {
+                return self.ToString();
+            }
+
             IEnumerator IEnumerable.GetEnumerator()
             {
                 return data.GetEnumerator();
