@@ -3,10 +3,12 @@ using System.Windows.Forms;
 using System.Linq;
 using System.Reflection;
 using System.Collections.Specialized;
+using ASM.Utilit;
+using ASM.UI;
 
 namespace ASM
 {
-    public partial class Setting : Form
+    public partial class Setting : LocForm
     {
         public Setting()
         {
@@ -89,6 +91,12 @@ namespace ASM
                 else
                     InitializeInclude(c);
             }
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            this.SetLanguage(Language.ResourceManager);
         }
 
         private void exit_Click(object sender, EventArgs e)

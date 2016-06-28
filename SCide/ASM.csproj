@@ -93,8 +93,16 @@
     <Compile Include="Modules\RegisterControl.Designer.cs">
       <DependentUpon>RegisterControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Language.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Language.resx</DependentUpon>
+    </Compile>
     <Compile Include="UI\CodeMap.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\LocForm.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\OverlayEditBox.cs">
       <SubType>Form</SubType>
@@ -228,6 +236,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\RegisterControl.resx">
       <DependentUpon>RegisterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Language.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Language.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\CodeBlock.resx">
       <DependentUpon>CodeBlock.cs</DependentUpon>

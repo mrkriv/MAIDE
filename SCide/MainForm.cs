@@ -13,7 +13,7 @@ using ASM.Utilit;
 
 namespace ASM
 {
-    internal sealed partial class MainForm : Form
+    internal sealed partial class MainForm : LocForm
     {
         private const string newDocumentName = "NewProgram";
         private int newDocumentCount = 0;
@@ -70,7 +70,7 @@ namespace ASM
             else
                 NewDocument();
 
-            status.Text = "Готово.";
+            status.Text = Language.Done;
         }
 
         private void OpenFile()
@@ -216,11 +216,11 @@ namespace ASM
         {
             if (!Core.Build(ActiveDocument.GetCode()))
             {
-                status.Text = "В ходе сборки возникли ошибки.";
+                status.Text = Language.BuildError;
                 ModuleAtribute.Show(typeof(ErrorWindow));
                 return false;
             }
-            status.Text = "Постоение успешно завершено.";
+            status.Text = Language.BuildDone;
             return true;
         }
 

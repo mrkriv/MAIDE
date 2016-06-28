@@ -145,7 +145,7 @@ namespace ASM.VM
                 Thread.Sleep(5);
                 if (--i == 0)
                 {
-                    MessageBox.Show("Консоль не отвечает.");
+                    MessageBox.Show(Language.ConsoleDontAnswer);
                     return;
                 }
             }
@@ -158,7 +158,7 @@ namespace ASM.VM
 
                     if (total > Properties.Settings.Default.TotalTickLimit)
                     {
-                        if (MessageBox.Show("Возможно, Ваша программа зациклилась.\nОстановть ее?", "Слишком много операций", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        if (MessageBox.Show(Language.ProgrammLoop, Language.ProgrammLoopTitle, MessageBoxButtons.YesNo) == DialogResult.Yes)
                         {
                             Status = State.Error;
                             return;
@@ -180,7 +180,7 @@ namespace ASM.VM
                     {
                         if (e.InnerException is RuntimeException)
                             throw e.InnerException;
-                        throw new RuntimeException("Не обрабатываемая ошибка при выполнении инструкуии " + op.method.Name, getCurrentRow());
+                        throw new RuntimeException(string.Format(Language.RuntimeException, op.method.Name), getCurrentRow());
                     }
                     finally
                     {
@@ -188,7 +188,7 @@ namespace ASM.VM
                     }
 
                     if (ActiveIndex >= source.Count)
-                        throw new RuntimeException("Не возможно выполнить инструкцию, эта пямять не для инструкций", op.row.Index + 1);
+                        throw new RuntimeException(Language.RuntimeExceptionMemory, op.row.Index + 1);
 
                     if (needPause)
                     {
@@ -203,11 +203,11 @@ namespace ASM.VM
             }
             catch (RuntimeException e)
             {
-                Console.WriteLine("Строка " + e.Row + ": " + e.Message + "\n");
+                Console.WriteLine(string.Format(Language.RuntimeExceptionRow, e.Row, e.Message));
                 Status = State.Error;
             }
 
-            Console.Write("Нажмите любую клавишу для продолжения");
+            Console.Write(Language.PressAnyKey);
             Console.MoveCaretToEnd();
             Console.ReadKey();
         }
@@ -257,7 +257,7 @@ namespace ASM.VM
                     if (!Links.ContainsKey(text[0]))
                         Links.Add(text[0], result.Count);
                     else
-                        addError(new ErrorMessage(string.Format("Метка '{0} уже определена.", text[0]), i, code[i].Owner));
+                        addError(new ErrorMessage(string.Format(Language.MarkerFound, text[0]), i, code[i].Owner));
                 }
                 else
                     data = text[0];
@@ -325,7 +325,7 @@ namespace ASM.VM
                     return ParseOperation(op, args) ? op : null;
                 }
             }
-            addError(new ErrorMessage(string.Format("Операция '{0}' не определена.", op.operation), row.Index, row.Owner));
+            addError(new ErrorMessage(string.Format(Language.OperationsNotFound, op.operation), row.Index, row.Owner));
             return null;
         }
 
@@ -336,7 +336,7 @@ namespace ASM.VM
             ErrorMessage error = new ErrorMessage(null, operation.row.Index, operation.row.Owner);
 
             if (input.Length != paramInfo.Length)
-                error.Message = string.Format("Операция '{0}' имеет {1} оргумент(а).", operation.operation, paramInfo.Length);
+                error.Message = string.Format(Language.OperationsArgumentError, operation.operation, paramInfo.Length);
 
             for (int i = 0; i < input.Length && error.Message == null; i++)
             {
@@ -349,10 +349,10 @@ namespace ASM.VM
                 {
                     Register reg = GetRegister(value.ToLower());
                     if (reg == null)
-                        error.Message = string.Format("Регистр '{0}' не сущесвует.", value);
+                        error.Message = string.Format(Language.RegisterNotFound, value);
 
                     if (!needType.IsInstanceOfType(reg))
-                        error.Message = string.Format("Регистр '{0}' не может использоватся здесь.", value);
+                        error.Message = string.Format(Language.RegisterDontUseHere, value);
 
                     output.Add(reg);
                 }
@@ -362,7 +362,7 @@ namespace ASM.VM
                     if (result != null)
                         output.Add(Convert.ChangeType(result, needType));
                     else
-                        error.Message = string.Format("'{0}' не является числом.", value);
+                        error.Message = string.Format(Language.NotNumber, value);
                 }
                 else if (needType == typeof(Link))
                 {
@@ -374,7 +374,7 @@ namespace ASM.VM
                     else
                     {
                         if (!Links.ContainsKey(temp[0]))
-                            error.Message = string.Format("Метка '{0}' не определена.", temp[0]);
+                            error.Message = string.Format(Language.MarkerNotFound, temp[0]);
                         else
                             link.Line = Links[temp[0]];
                     }
@@ -383,7 +383,7 @@ namespace ASM.VM
                         temp[1] = temp[1].Remove(temp[1].Length - 1).ToLower();
                         Register32 reg = GetRegister(temp[1]) as Register32;
                         if (reg == null)
-                            error.Message = string.Format("Регистр '{0}' не сущесвует или не может использоватся здесь.", temp[1]);
+                            error.Message = string.Format(Language.RegisterNotFoundOrDontUse, temp[1]);
                         else
                             link.reg32 = reg;
                     }
@@ -391,7 +391,7 @@ namespace ASM.VM
                 }
 
                 if (oldCount == output.Count && error.Message != "")
-                    error.Message = string.Format("Недопустимый пораметр {0}.", value);
+                    error.Message = string.Format(Language.InvalidParameter, value);
             }
 
             operation.args = output.ToArray();
@@ -417,9 +417,9 @@ namespace ASM.VM
         {
             adress -= dataZoneOffest;
             if (adress < 0)
-                throw new RuntimeException("Память с инструкциями не доступна здесь", getCurrentRow());
+                throw new RuntimeException(Language.IndexInInstuctionMemory, getCurrentRow());
             if (adress >= data.Length)
-                throw new RuntimeException("Адресс за пределами выделенной памяти", getCurrentRow());
+                throw new RuntimeException(Language.IndexMemoryOf, getCurrentRow());
             return adress;
         }
 

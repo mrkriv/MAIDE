@@ -117,16 +117,142 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="openFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>64, 27</value>
-  </metadata>
-  <metadata name="MainMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>214, 22</value>
-  </metadata>
-  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>324, 22</value>
-  </metadata>
-  <metadata name="statusStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>429, 22</value>
-  </metadata>
+  <data name="About" xml:space="preserve">
+    <value>О программе</value>
+  </data>
+  <data name="BaseSetting" xml:space="preserve">
+    <value>Основные параметры</value>
+  </data>
+  <data name="Bit16" xml:space="preserve">
+    <value>16 бит</value>
+  </data>
+  <data name="Bit32" xml:space="preserve">
+    <value>32 бита</value>
+  </data>
+  <data name="Bit8" xml:space="preserve">
+    <value>8 бит</value>
+  </data>
+  <data name="BuildDone" xml:space="preserve">
+    <value>Построение успешно завершено</value>
+  </data>
+  <data name="BuildError" xml:space="preserve">
+    <value>В ходе сборки возникли ошибки</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="CommentSymbol" xml:space="preserve">
+    <value>Символ коментария</value>
+  </data>
+  <data name="ConsoleDontAnswer" xml:space="preserve">
+    <value>Консоль не отвечает</value>
+  </data>
+  <data name="Contine" xml:space="preserve">
+    <value>Продолжить</value>
+  </data>
+  <data name="CreateNew" xml:space="preserve">
+    <value>Создать новый</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Готово</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Возникла проблемка</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Выход</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>Файл</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Помощь</value>
+  </data>
+  <data name="IfContineWarning" xml:space="preserve">
+    <value>Если продолжить работу программы все может полететь в Обливион</value>
+  </data>
+  <data name="IndexInInstuctionMemory" xml:space="preserve">
+    <value>Память с инструкциями не доступна здесь</value>
+  </data>
+  <data name="IndexMemoryOf" xml:space="preserve">
+    <value>Адрес за пределами выделенной памяти</value>
+  </data>
+  <data name="InvalidParameter" xml:space="preserve">
+    <value>Недопустимый параметр {0}</value>
+  </data>
+  <data name="loopIterationCount" xml:space="preserve">
+    <value>Количество операций, сведетельстуеще о зацикливании программы</value>
+  </data>
+  <data name="MarkerFound" xml:space="preserve">
+    <value>Метка '{0}' уже определена</value>
+  </data>
+  <data name="MarkerNotFound" xml:space="preserve">
+    <value>Метка '{0}' не определена</value>
+  </data>
+  <data name="NotNumber" xml:space="preserve">
+    <value>'{0}' не является числом</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Открыть</value>
+  </data>
+  <data name="OperationsArgumentError" xml:space="preserve">
+    <value>Операция '{0}' имеет {1} оргумент(а)</value>
+  </data>
+  <data name="OperationsNotFound" xml:space="preserve">
+    <value>Операция '{0}' не определена</value>
+  </data>
+  <data name="PressAnyKey" xml:space="preserve">
+    <value>Нажмите любую клавишу для продолжения</value>
+  </data>
+  <data name="ProgrammLoop" xml:space="preserve">
+    <value>Возможно, Ваша программа зациклилась.\nОстановить ее?</value>
+  </data>
+  <data name="ProgrammLoopTitle" xml:space="preserve">
+    <value>Слишком много операций</value>
+  </data>
+  <data name="Reboot" xml:space="preserve">
+    <value>Перезапустить</value>
+  </data>
+  <data name="RegisterDontUseHere" xml:space="preserve">
+    <value>Регистр '{0}' не может использоватся здесь.</value>
+  </data>
+  <data name="RegisterNotFound" xml:space="preserve">
+    <value>Регистр '{0}' не существует</value>
+  </data>
+  <data name="RegisterNotFoundOrDontUse" xml:space="preserve">
+    <value>Регистр '{0}' не существует или не может использоваться здесь</value>
+  </data>
+  <data name="Registres" xml:space="preserve">
+    <value>Регистры</value>
+  </data>
+  <data name="ResrtToDefault" xml:space="preserve">
+    <value>Востановить стандартные настройки</value>
+  </data>
+  <data name="RuntimeException" xml:space="preserve">
+    <value>Не обрабатываемая ошибка при выполнении инструкции {0}</value>
+  </data>
+  <data name="RuntimeExceptionMemory" xml:space="preserve">
+    <value>Не возможно выполнить инструкцию, эта память не для инструкций</value>
+  </data>
+  <data name="RuntimeExceptionRow" xml:space="preserve">
+    <value>Строка {0}: {1}</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="SaveAll" xml:space="preserve">
+    <value>Сохранить все</value>
+  </data>
+  <data name="SaveAs" xml:space="preserve">
+    <value>Сохранить как</value>
+  </data>
+  <data name="Windows" xml:space="preserve">
+    <value>Окна</value>
+  </data>
+  <data name="SaveQuery" xml:space="preserve">
+    <value>Сохранить изменения?</value>
+  </data>
 </root>

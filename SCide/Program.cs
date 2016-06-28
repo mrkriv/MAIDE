@@ -28,6 +28,9 @@ namespace ASM
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            UI.LocForm.Resource = Language.ResourceManager;
+            Language.ResourceManager.IgnoreCase = true;
+
             if (!Debug)
             {
                 Application.ThreadException += (s, e) => FatalException(e.Exception);

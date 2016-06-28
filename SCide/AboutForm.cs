@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ASM.Utilit;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -20,6 +21,12 @@ namespace ASM
             this.labelCopyright.Text = AssemblyCopyright;
             this.labelCompanyName.Text = AssemblyCompany;
             this.description.Text = AssemblyDescription;
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            this.SetLanguage(Language.ResourceManager);
         }
 
         #region Методы доступа к атрибутам сборки

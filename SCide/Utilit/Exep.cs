@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Linq;
 using System.Xml;
+using System.Windows.Forms;
+using System.Resources;
 
 namespace ASM.Utilit
 {
@@ -146,6 +148,44 @@ namespace ASM.Utilit
         {
             PropertyDescriptor prop = TypeDescriptor.GetProperties(self).Find(propertyName, true);
             prop.AddValueChanged(self, (s, e) => { callback(); });
+        }
+
+        public static void SetLanguage(this Control self, ResourceManager res)
+        {
+            foreach (Control c in self.Controls)
+            {
+                if (c is ToolStrip)
+                    ((ToolStrip)c).SetLanguage(res);
+                else
+                    c.SetLanguage(res);
+            }
+
+            string text = res.GetString(self.Text);
+            if (text != null)
+                self.Text = text;
+        }
+
+        public static void SetLanguage(this ToolStrip self, ResourceManager res)
+        {
+            foreach (ToolStripItem c in self.Items)
+                c.SetLanguage(res);
+
+            string text = res.GetString(self.Text);
+            if (text != null)
+                self.Text = text;
+        }
+
+        public static void SetLanguage(this ToolStripItem self, ResourceManager res)
+        {
+            if (self is ToolStripDropDownButton)
+            {
+                foreach (ToolStripItem c in ((ToolStripDropDownButton)self).DropDownItems)
+                    c.SetLanguage(res);
+            }
+
+            string text = res.GetString(self.Text);
+            if (text != null)
+                self.Text = text;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Reflection;
+using ASM;
 
 namespace ASM.VM
 {
@@ -19,7 +20,7 @@ namespace ASM.VM
             return (T)ActiveCore.GetRegister(name);
         }
 
-        [Descriptor( Type.Action, "Выводит на консоль '{0}'-й байт из регистра 'a'")]
+        [Descriptor(Type.Action, "Выводит на консоль '{0}'-й байт из регистра 'a'")]
         public static void wd(int n)
         {
             n %= 4;
@@ -33,13 +34,13 @@ namespace ASM.VM
             reg<Register32>("a").Value = Console.ReadKey();
         }
 
-        [Descriptor(Type.Action, "Загружает в регистр '{0}' 4 байта из памяти по адрессу '{1}'")]
+        [Descriptor(Type.Action, "Загружает в регистр '{0}' 4 байта из памяти по адресу '{1}'")]
         public static void ldb(Register32 reg, Link index)
         {
             reg.Value = ActiveCore.GetWord(index.GetValue());
         }
 
-        [Descriptor(Type.Jump, "Безусловный переход, в стек помещается текущий адресс")]
+        [Descriptor(Type.Jump, "Безусловный переход, в стек помещается текущий адрес")]
         public static void call(Link index)
         {
             ActiveCore.Stack.Push(ActiveCore.ActiveIndex);
@@ -166,7 +167,7 @@ namespace ASM.VM
             ActiveCore.ActiveIndex = index.Line - 1;
         }
 
-        [Descriptor(Type.Condition, "Переход на заданую метку, если операнды равны")]
+        [Descriptor(Type.Condition, "Переход на заданную метку, если операнды равны")]
         public static void jeq(Link index)
         {
             RegisterFlag reg = reg<RegisterFlag>("flag");
@@ -174,7 +175,7 @@ namespace ASM.VM
                 ActiveCore.ActiveIndex = index.Line - 1;
         }
 
-        [Descriptor(Type.Condition, "Переход на заданую метку, если первый операнд больше нуля")]
+        [Descriptor(Type.Condition, "Переход на заданную метку, если первый операнд больше нуля")]
         public static void jgt(Link index)
         {
             RegisterFlag reg = reg<RegisterFlag>("flag");
@@ -182,7 +183,7 @@ namespace ASM.VM
                 ActiveCore.ActiveIndex = index.Line - 1;
         }
 
-        [Descriptor(Type.Condition, "Переход на заданую метку, если первый операнд меньше второго")]
+        [Descriptor(Type.Condition, "Переход на заданную метку, если первый операнд меньше второго")]
         public static void jlt(Link index)
         {
             RegisterFlag reg = reg<RegisterFlag>("flag");
@@ -190,7 +191,7 @@ namespace ASM.VM
                 ActiveCore.ActiveIndex = index.Line - 1;
         }
 
-        [Descriptor(Type.Condition, "Переход на заданую метку, если первый операнд больше второго")]
+        [Descriptor(Type.Condition, "Переход на заданную метку, если первый операнд больше второго")]
         public static void jge(Link index)
         {
             Register32 a = reg<Register32>("a");
@@ -199,7 +200,7 @@ namespace ASM.VM
                 ActiveCore.ActiveIndex = index.Line - 1;
         }
 
-        [Descriptor(Type.Condition, "Переход на заданую метку, если первый операнд больше второго")]
+        [Descriptor(Type.Condition, "Переход на заданную метку, если первый операнд больше второго")]
         public static void jпе(Link index)
         {
             RegisterFlag reg = reg<RegisterFlag>("flag");
@@ -207,14 +208,14 @@ namespace ASM.VM
                 ActiveCore.ActiveIndex = index.Line - 1;
         }
 
-        [Descriptor(Type.Condition, "Инкремент рагистра {0}")]
+        [Descriptor(Type.Condition, "Инкремент регистра {0}")]
         public static void inc(Register32 a)
         {
             a.Value++;
             _comp(a.Value - a.Value);
         }
 
-        [Descriptor(Type.Condition, "Инкремент рагистра {0} и сравнение результата с регистром {1}")]
+        [Descriptor(Type.Condition, "Инкремент регистра {0} и сравнение результата с регистром {1}")]
         public static void incr(Register32 a, Register32 b)
         {
             a.Value++;

@@ -43,7 +43,7 @@
             this.close.Name = "close";
             this.close.Size = new System.Drawing.Size(128, 23);
             this.close.TabIndex = 0;
-            this.close.Text = "Закрыть";
+            this.close.Text = "Close";
             this.close.UseVisualStyleBackColor = true;
             this.close.Click += new System.EventHandler(this.close_Click);
             // 
@@ -54,7 +54,7 @@
             this.restart.Name = "restart";
             this.restart.Size = new System.Drawing.Size(128, 23);
             this.restart.TabIndex = 1;
-            this.restart.Text = "Перезапустить";
+            this.restart.Text = "Reboot";
             this.restart.UseVisualStyleBackColor = true;
             this.restart.Click += new System.EventHandler(this.restart_Click);
             // 
@@ -65,7 +65,7 @@
             this.ignore.Name = "ignore";
             this.ignore.Size = new System.Drawing.Size(128, 23);
             this.ignore.TabIndex = 2;
-            this.ignore.Text = "Продолжить";
+            this.ignore.Text = "Contine";
             this.ignore.UseVisualStyleBackColor = true;
             this.ignore.Click += new System.EventHandler(this.ignore_Click);
             // 
@@ -93,9 +93,9 @@
             this.hendel.ForeColor = System.Drawing.Color.Gainsboro;
             this.hendel.Location = new System.Drawing.Point(12, 3);
             this.hendel.Name = "hendel";
-            this.hendel.Size = new System.Drawing.Size(310, 47);
+            this.hendel.Size = new System.Drawing.Size(156, 47);
             this.hendel.TabIndex = 4;
-            this.hendel.Text = "Возникла проблемка";
+            this.hendel.Text = "ErrorTitle";
             // 
             // label1
             // 
@@ -104,9 +104,9 @@
             this.label1.ForeColor = System.Drawing.Color.Silver;
             this.label1.Location = new System.Drawing.Point(42, 264);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(361, 13);
+            this.label1.Size = new System.Drawing.Size(89, 13);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Если продолжить работу программы все может полететь в обливион";
+            this.label1.Text = "IfContineWarning";
             // 
             // ExceptionForm
             // 

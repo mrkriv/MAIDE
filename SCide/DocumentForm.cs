@@ -42,8 +42,7 @@ namespace ASM
         {
             if (map.Modified)
             {
-                string message = string.Format("Сохранить изменения?");
-                DialogResult dr = MessageBox.Show(this, message, "ASM", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
+                DialogResult dr = MessageBox.Show(this, Language.SaveQuery, "ASM", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
                 if (dr == DialogResult.Cancel)
                 {
                     e.Cancel = true;

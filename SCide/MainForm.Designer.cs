@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.MainMenu = new System.Windows.Forms.ToolStrip();
             this.toolStripSplitFile = new System.Windows.Forms.ToolStripDropDownButton();
@@ -51,10 +50,10 @@
             this.BuildMenuStop = new System.Windows.Forms.ToolStripButton();
             this.BuildMenuPause = new System.Windows.Forms.ToolStripButton();
             this.BuildMenuResume = new System.Windows.Forms.ToolStripButton();
+            this.BuildMenuResumeOne = new System.Windows.Forms.ToolStripButton();
             this.BuildMenuRestart = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.status = new System.Windows.Forms.ToolStripStatusLabel();
-            this.BuildMenuResumeOne = new System.Windows.Forms.ToolStripButton();
             this.MainMenu.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -90,19 +89,18 @@
             this.MianMenuSaveAs,
             this.MianMenuAll,
             this.MianMenuExit});
-            this.toolStripSplitFile.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitFile.Image")));
             this.toolStripSplitFile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitFile.Name = "toolStripSplitFile";
             this.toolStripSplitFile.ShowDropDownArrow = false;
-            this.toolStripSplitFile.Size = new System.Drawing.Size(40, 22);
-            this.toolStripSplitFile.Text = "Файл";
+            this.toolStripSplitFile.Size = new System.Drawing.Size(29, 22);
+            this.toolStripSplitFile.Text = "File";
             // 
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.newToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
-            this.newToolStripMenuItem.Text = "Создать новый";
+            this.newToolStripMenuItem.Text = "CreateNew";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // MianMenuOpen
@@ -111,7 +109,7 @@
             this.MianMenuOpen.ShortcutKeyDisplayString = "";
             this.MianMenuOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.MianMenuOpen.Size = new System.Drawing.Size(225, 22);
-            this.MianMenuOpen.Text = "Открыть";
+            this.MianMenuOpen.Text = "Open";
             this.MianMenuOpen.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
@@ -125,14 +123,14 @@
             this.MianMenuSave.Name = "MianMenuSave";
             this.MianMenuSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.MianMenuSave.Size = new System.Drawing.Size(225, 22);
-            this.MianMenuSave.Text = "Сохранить";
+            this.MianMenuSave.Text = "Save";
             this.MianMenuSave.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // MianMenuSaveAs
             // 
             this.MianMenuSaveAs.Name = "MianMenuSaveAs";
             this.MianMenuSaveAs.Size = new System.Drawing.Size(225, 22);
-            this.MianMenuSaveAs.Text = "Сохранить как";
+            this.MianMenuSaveAs.Text = "SaveAs";
             this.MianMenuSaveAs.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // MianMenuAll
@@ -141,26 +139,25 @@
             this.MianMenuAll.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
             this.MianMenuAll.Size = new System.Drawing.Size(225, 22);
-            this.MianMenuAll.Text = "Сохранить все";
+            this.MianMenuAll.Text = "SaveAll";
             this.MianMenuAll.Click += new System.EventHandler(this.saveAllStripMenuItem_Click);
             // 
             // MianMenuExit
             // 
             this.MianMenuExit.Name = "MianMenuExit";
             this.MianMenuExit.Size = new System.Drawing.Size(225, 22);
-            this.MianMenuExit.Text = "Выход";
+            this.MianMenuExit.Text = "Exit";
             this.MianMenuExit.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // ViewDropDown
             // 
             this.ViewDropDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.ViewDropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.ViewDropDown.Image = ((System.Drawing.Image)(resources.GetObject("ViewDropDown.Image")));
             this.ViewDropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ViewDropDown.Name = "ViewDropDown";
             this.ViewDropDown.ShowDropDownArrow = false;
-            this.ViewDropDown.Size = new System.Drawing.Size(39, 22);
-            this.ViewDropDown.Text = "Окна";
+            this.ViewDropDown.Size = new System.Drawing.Size(60, 22);
+            this.ViewDropDown.Text = "Windows";
             // 
             // toolStripButton1
             // 
@@ -177,18 +174,17 @@
             this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
-            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
             this.toolStripDropDownButton1.ShowDropDownArrow = false;
             this.toolStripDropDownButton1.Size = new System.Drawing.Size(57, 22);
-            this.toolStripDropDownButton1.Text = "Справка";
+            this.toolStripDropDownButton1.Text = "Help";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.aboutToolStripMenuItem.Text = "О программе";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Text = "about";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // dockPanel
@@ -279,6 +275,15 @@
             this.BuildMenuResume.Size = new System.Drawing.Size(36, 36);
             this.BuildMenuResume.MouseDown += new System.Windows.Forms.MouseEventHandler(this.resumeToolStripMenuItem_Click);
             // 
+            // BuildMenuResumeOne
+            // 
+            this.BuildMenuResumeOne.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BuildMenuResumeOne.Image = global::ASM.Properties.Resources.resumeOne;
+            this.BuildMenuResumeOne.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BuildMenuResumeOne.Name = "BuildMenuResumeOne";
+            this.BuildMenuResumeOne.Size = new System.Drawing.Size(36, 36);
+            this.BuildMenuResumeOne.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BuildMenuResumeOne_MouseDown);
+            // 
             // BuildMenuRestart
             // 
             this.BuildMenuRestart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -303,15 +308,6 @@
             this.status.Name = "status";
             this.status.Size = new System.Drawing.Size(0, 17);
             // 
-            // BuildMenuResumeOne
-            // 
-            this.BuildMenuResumeOne.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.BuildMenuResumeOne.Image = global::ASM.Properties.Resources.resumeOne;
-            this.BuildMenuResumeOne.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.BuildMenuResumeOne.Name = "BuildMenuResumeOne";
-            this.BuildMenuResumeOne.Size = new System.Drawing.Size(36, 36);
-            this.BuildMenuResumeOne.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BuildMenuResumeOne_MouseDown);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -323,7 +319,6 @@
             this.Controls.Add(this.MainMenu);
             this.Controls.Add(this.dockPanel);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.Name = "MainForm";
             this.Text = "ASM";

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ASM.UI;
+using ASM.Utilit;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,7 +14,7 @@ using System.Windows.Forms;
 
 namespace ASM
 {
-    public partial class ExceptionForm : Form
+    public partial class ExceptionForm : LocForm
     {
         private Exception error;
 
@@ -24,6 +26,12 @@ namespace ASM
 
             log.Text = e.StackTrace;
             error = e;
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            this.SetLanguage(Language.ResourceManager);
         }
 
         private void close_Click(object sender, EventArgs e)

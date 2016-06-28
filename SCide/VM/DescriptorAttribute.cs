@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel;
+using System.Resources;
+using System.Diagnostics;
 
 namespace ASM.VM
 {
