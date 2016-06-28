@@ -174,18 +174,18 @@ namespace ASM
 
         private void ConsoleClosed(object sender, FormClosedEventArgs e)
         {
-            Core.Destroy();
+            Core.Stop();
             runThread.Abort();
         }
 
-        private void Core_StateChanged(object sender, EventArgs e)
+        private void Core_StateChanged(object sender, Core.StateChangedEventArgs e)
         {
             bool isDoc = ActiveDocument != null;
             bool runOrLau = Core.Status == Core.State.Pause || Core.Status == Core.State.Launched;
 
             BuildMenuRun.Visible = isDoc && !runOrLau;
             BuildMenuStop.Visible = runOrLau || Core.Status == Core.State.Finish;
-            BuildMenuRestart.Visible = BuildMenuStop.Visible;
+            BuildMenuRestart.Visible = runOrLau;
             BuildMenuPause.Visible = Core.Status == Core.State.Launched;
             BuildMenuResume.Visible = Core.Status == Core.State.Pause;
             BuildMenuBuild.Visible = BuildMenuRun.Visible;
@@ -268,9 +268,8 @@ namespace ASM
 
         private void BuildMenuRestart_Click(object sender, EventArgs e)
         {
-            Console.Clear();
-            if (runThread != null)
-                runThread.Abort();
+            Core.Stop();
+            runThread.Abort();
             runThread = new Thread(Core.Invoke);
             runThread.Start();
         }

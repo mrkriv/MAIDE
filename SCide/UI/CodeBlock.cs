@@ -71,7 +71,7 @@ namespace ASM.UI
 
         private void caption_DoubleClick(object sender, EventArgs e)
         {
-            new OverlayEditBox(sender as Control, "Text").ShowDialog();
+            OverlayEditBox.Show(sender as Control, "Text");
         }
 
         public XmlNode Save(XmlDocument doc)

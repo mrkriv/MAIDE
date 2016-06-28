@@ -1,4 +1,6 @@
-﻿namespace ASM.VM
+﻿using System;
+
+namespace ASM.VM
 {
     public abstract class Register
     {
@@ -15,11 +17,13 @@
         }
 
         public abstract void InString(string str);
+        public abstract byte[] GetByte();
+        public abstract void SetByte(byte[] buff);
     }
 
     public class Register32 : Register
     {
-        public int Value;
+        public int Value { get; set; }
 
         public Register32(string name) : base(name) { }
 
@@ -31,6 +35,16 @@
         public override void InString(string str)
         {
             Value = int.Parse(str);
+        }
+
+        public override byte[] GetByte()
+        {
+            return BitConverter.GetBytes(Value);
+        }
+
+        public override void SetByte(byte[] buff)
+        {
+            Value = BitConverter.ToInt32(buff, 0);
         }
     }
 
@@ -49,6 +63,16 @@
         {
             Value = short.Parse(str);
         }
+
+        public override byte[] GetByte()
+        {
+            return BitConverter.GetBytes(Value);
+        }
+
+        public override void SetByte(byte[] buff)
+        {
+            Value = BitConverter.ToInt16(buff, 0);
+        }
     }
 
     public class Register8 : Register
@@ -65,6 +89,16 @@
         public override void InString(string str)
         {
             Value = (char)int.Parse(str);
+        }
+
+        public override byte[] GetByte()
+        {
+            return BitConverter.GetBytes(Value);
+        }
+
+        public override void SetByte(byte[] buff)
+        {
+            Value = BitConverter.ToChar(buff, 0);
         }
     }
 
@@ -111,10 +145,19 @@
 
         public override string ToString()
         {
-            return "More...";
+            return "";
         }
 
         public override void InString(string str)
+        {
+        }
+
+        public override byte[] GetByte()
+        {
+            return new byte[0];
+        }
+
+        public override void SetByte(byte[] buff)
         {
         }
     }

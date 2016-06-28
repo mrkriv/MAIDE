@@ -23,6 +23,11 @@ namespace ASM.UI
             editor.Font = control.Font;
         }
 
+        public static DialogResult Show(Control control, string propName)
+        {
+            return new OverlayEditBox(control, propName).ShowDialog();
+        } 
+
         public OverlayEditBox(object Obj, string propName, Point position)
         {
             InitializeComponent();
@@ -37,15 +42,20 @@ namespace ASM.UI
         {
             if (e.KeyCode == Keys.Enter)
             {
-                Close();
+                DialogResult = DialogResult.OK;
                 Control c = obj as Control;
                 if (c != null)
                     c.Invoke((Action)(() => setValue()));
                 else
                     setValue();
+
+                Close();
             }
             else if (e.KeyCode == Keys.Escape)
+            {
+                DialogResult = DialogResult.Cancel;
                 Close();
+            }
         }
 
         private void setValue()

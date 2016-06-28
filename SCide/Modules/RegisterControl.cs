@@ -1,47 +1,126 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using ASM.Utilit;
+﻿using ASM.UI;
 using ASM.VM;
+using System;
+using System.Collections;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
 
 namespace ASM.Modules
 {
     public partial class RegisterControl : UserControl
     {
-        private readonly int bitSize;
-        public readonly System.Type RegType;
+        private BitArray data;
+        private const int Step = 7;
+        private const int BitWidth = 5;
+        private const int BitHeight = 10;
+        private Pen fontPen;
+        private Brush fontBrush;
+
+        public readonly Register Register;
 
         public RegisterControl(Register reg)
         {
             InitializeComponent();
 
-            l_name.Text = reg.Name;
+            int size = reg is Register32 ? 32 : reg is Register16 ? 16 : reg is Register8 ? 8 : 0;
+            data = new BitArray(size);
 
-            bitSize = reg is Register32 ? 32 : reg is Register16 ? 16 : reg is Register8 ? 8 : 0;
-            bitPanel.Controls.Clear();
+            Name = reg.Name;
+            Register = reg;
 
-            for (int i = 0; i < bitSize; i++)
-            {
-                Button btn = new Button();
-                btn.Size = new Size(5, bitPanel.Height);
-                btn.Text = "0";
-                btn.Click += Bit_Click;
-                bitPanel.Controls.Add(btn);
-            }
+            SetStyle(ControlStyles.UserPaint, true);
+            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
 
             Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            OnForeColorChanged(null);
+            UpdateRegData();
         }
 
-        private void Bit_Click(object _sender, EventArgs e)
+        public void UpdateRegData()
         {
-            Button sender = _sender as Button;
-            sender.Text = sender.Text == "0" ? "1" : "0";
+            byte[] bits = Register.GetByte();
+            number.Text = Register.ToString();
+            ascii.Text = Encoding.ASCII.GetString(bits);
+
+            data = new BitArray(bits);
+            Invalidate(false);
+        }
+
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+            UpdateRegData();
+        }
+
+        protected override void OnForeColorChanged(EventArgs e)
+        {
+            base.OnForeColorChanged(e);
+            fontPen = new Pen(ForeColor);
+            fontBrush = new SolidBrush(ForeColor);
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            int offestTop = Font.Height + 5;
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                int x = i * Step;
+                e.Graphics.FillRectangle(data[i] ? Brushes.Green : Brushes.Red, x, offestTop, BitWidth, BitHeight);
+                x += BitWidth / 2;
+                e.Graphics.DrawLine(fontPen, x, BitHeight + offestTop + (i % 8 == 0 ? 2 : 4), x, BitHeight + offestTop + 6);
+            }
+
+            int y = BitHeight + offestTop + 7;
+            e.Graphics.DrawLine(fontPen, BitWidth / 2, y, data.Length * Step - (BitWidth - BitWidth / 2), y);
+        }
+
+        protected override void OnMouseClick(MouseEventArgs e)
+        {
+            int offestTop = Font.Height + 5;
+            if (e.Y > offestTop && e.Y < offestTop + BitHeight)
+            {
+                int i = e.X / Step;
+                if (i < data.Length)
+                {
+                    data[i] = !data[i];
+
+                    byte[] buff = new byte[data.Count / 8];
+                    data.CopyTo(buff, 0);
+                    Register.SetByte(buff);
+
+                    UpdateRegData();
+                }
+            }
+        }
+
+        private void ascii_DoubleClick(object sender, EventArgs e)
+        {
+            if (OverlayEditBox.Show(sender as Control, "Text") == DialogResult.OK)
+            {
+                byte[] buff = new byte[4];
+                for (int i = 0; i < ascii.Text.Length; i++)
+                    buff[i] = (byte)ascii.Text[i];
+
+                data = new BitArray(buff);
+                Register.SetByte(buff);
+                Invalidate(false);
+            }
+        }
+
+        private void number_DoubleClick(object sender, EventArgs e)
+        {
+            if (OverlayEditBox.Show(sender as Control, "Text") == DialogResult.OK)
+            {
+                byte[] buff = BitConverter.GetBytes(int.Parse(number.Text));
+                data = new BitArray(buff);
+                Register.SetByte(buff);
+                Invalidate(false);
+            }
         }
     }
 }

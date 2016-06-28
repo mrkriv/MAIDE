@@ -15,7 +15,7 @@ namespace ASM.VM
     public class Core
     {
         public static readonly ObservableCollection<ErrorMessage> Errors = new ObservableCollection<ErrorMessage>();
-
+        
         public enum State
         {
             NoBuild,
@@ -26,10 +26,22 @@ namespace ASM.VM
             Error,
         }
 
+        public class StateChangedEventArgs : EventArgs
+        {
+            public State Old { get; set; }
+            public State New { get; set; }
+
+            public StateChangedEventArgs(State In, State To)
+            {
+                Old = In;
+                New = To;
+            }
+        }
+
         private List<Operation> source = new List<Operation>();
         private ManualResetEvent waitEvent;
         private CombineRows code;
-        private EventHandler stateChanged;
+        private EventHandler<StateChangedEventArgs> stateChanged;
         private int total;
         private State status;
         private int dataZoneOffest;
@@ -46,12 +58,16 @@ namespace ASM.VM
             get { return status; }
             private set
             {
-                status = value;
-                stateChanged.Invoke(this, null);
+                if (status != value)
+                {
+                    State old = status;
+                    status = value;
+                    stateChanged.Invoke(this, new StateChangedEventArgs(old, value));
+                }
             }
         }
 
-        public event EventHandler StateChanged
+        public event EventHandler<StateChangedEventArgs> StateChanged
         {
             add
             {
@@ -150,6 +166,8 @@ namespace ASM.VM
                 }
             }
 
+            Console.Clear();
+
             try
             {
                 while (ActiveIndex < source.Count && (status == State.Launched || status == State.Pause))
@@ -172,32 +190,32 @@ namespace ASM.VM
                     op.row.SetFlag(CodeEditBox.RowFlag.Run);
                     waitEvent.WaitOne();
 
-                    try
+                    if (status == State.Launched)
                     {
-                        op.method.Invoke(null, op.args);
-                    }
-                    catch (TargetInvocationException e)
-                    {
-                        if (e.InnerException is RuntimeException)
-                            throw e.InnerException;
-                        throw new RuntimeException(string.Format(Language.RuntimeException, op.method.Name), getCurrentRow());
-                    }
-                    finally
-                    {
-                        op.row.ResetFlag(CodeEditBox.RowFlag.Run);
-                    }
+                        try
+                        {
+                            op.method.Invoke(null, op.args);
+                        }
+                        catch (TargetInvocationException e)
+                        {
+                            if (e.InnerException is RuntimeException)
+                                throw e.InnerException;
+                            throw new RuntimeException(string.Format(Language.RuntimeException, op.method.Name), getCurrentRow());
+                        }
 
-                    if (ActiveIndex >= source.Count)
-                        throw new RuntimeException(Language.RuntimeExceptionMemory, op.row.Index + 1);
+                        if (ActiveIndex >= source.Count)
+                            throw new RuntimeException(Language.RuntimeExceptionMemory, op.row.Index + 1);
 
-                    if (needPause)
-                    {
-                        needPause = false;
-                        Pause();
+                        if (needPause)
+                        {
+                            needPause = false;
+                            Pause();
+                        }
+
+                        ActiveIndex++;
+                        total++;
                     }
-
-                    ActiveIndex++;
-                    total++;
+                    op.row.ResetFlag(CodeEditBox.RowFlag.Run);
                 }
                 Status = State.Finish;
             }
@@ -451,16 +469,14 @@ namespace ASM.VM
 
         public void Stop()
         {
-            if (status == State.Launched || status == State.Pause)
+            if (status == State.Launched || status == State.Pause || status == State.Finish)
             {
+                if (ActiveIndex < source.Count)
+                    source[ActiveIndex].row.ResetFlag(CodeEditBox.RowFlag.Run);
+
                 Status = State.Ready;
                 waitEvent.Set();
             }
-        }
-
-        public void Destroy()
-        {
-            Status = State.NoBuild;
         }
     }
 }
