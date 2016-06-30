@@ -99,7 +99,7 @@
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.newToolStripMenuItem.Text = "CreateNew";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
@@ -108,7 +108,7 @@
             this.MianMenuOpen.Name = "MianMenuOpen";
             this.MianMenuOpen.ShortcutKeyDisplayString = "";
             this.MianMenuOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.MianMenuOpen.Size = new System.Drawing.Size(225, 22);
+            this.MianMenuOpen.Size = new System.Drawing.Size(184, 22);
             this.MianMenuOpen.Text = "Open";
             this.MianMenuOpen.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -116,20 +116,20 @@
             // 
             this.toolStripSeparator1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(222, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(181, 6);
             // 
             // MianMenuSave
             // 
             this.MianMenuSave.Name = "MianMenuSave";
             this.MianMenuSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.MianMenuSave.Size = new System.Drawing.Size(225, 22);
+            this.MianMenuSave.Size = new System.Drawing.Size(184, 22);
             this.MianMenuSave.Text = "Save";
             this.MianMenuSave.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // MianMenuSaveAs
             // 
             this.MianMenuSaveAs.Name = "MianMenuSaveAs";
-            this.MianMenuSaveAs.Size = new System.Drawing.Size(225, 22);
+            this.MianMenuSaveAs.Size = new System.Drawing.Size(184, 22);
             this.MianMenuSaveAs.Text = "SaveAs";
             this.MianMenuSaveAs.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
@@ -138,14 +138,14 @@
             this.MianMenuAll.Name = "MianMenuAll";
             this.MianMenuAll.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
-            this.MianMenuAll.Size = new System.Drawing.Size(225, 22);
+            this.MianMenuAll.Size = new System.Drawing.Size(184, 22);
             this.MianMenuAll.Text = "SaveAll";
             this.MianMenuAll.Click += new System.EventHandler(this.saveAllStripMenuItem_Click);
             // 
             // MianMenuExit
             // 
             this.MianMenuExit.Name = "MianMenuExit";
-            this.MianMenuExit.Size = new System.Drawing.Size(225, 22);
+            this.MianMenuExit.Size = new System.Drawing.Size(184, 22);
             this.MianMenuExit.Text = "Exit";
             this.MianMenuExit.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -177,13 +177,13 @@
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
             this.toolStripDropDownButton1.ShowDropDownArrow = false;
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(57, 22);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(36, 22);
             this.toolStripDropDownButton1.Text = "Help";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
             this.aboutToolStripMenuItem.Text = "about";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 

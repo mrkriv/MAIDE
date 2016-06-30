@@ -6,4 +6,4 @@ MAIDE/bin/**/*
 !MAIDE/bin/**/*.exe
 !MAIDE/bin/**/*.dll
 
-SCide/obj
+MAIDE/obj
