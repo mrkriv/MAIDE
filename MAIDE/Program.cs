@@ -1,11 +1,9 @@
 using System;
-using System.Threading;
-using System.Reflection;
 using System.Security.Permissions;
 using System.Windows.Forms;
-using System.Diagnostics;
+using MAIDE.UI;
 
-namespace ASM
+namespace MAIDE
 {
     internal static class Program
     {
@@ -28,7 +26,7 @@ namespace ASM
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            UI.LocForm.Resource = Language.ResourceManager;
+            LocForm.Resource = Language.ResourceManager;
             Language.ResourceManager.IgnoreCase = true;
 
             if (!Debug)

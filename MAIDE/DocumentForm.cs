@@ -2,7 +2,7 @@
 using WeifenLuo.WinFormsUI.Docking;
 using System.IO;
 
-namespace ASM
+namespace MAIDE
 {
     internal sealed partial class DocumentForm : DockContent
     {
@@ -42,7 +42,7 @@ namespace ASM
         {
             if (map.Modified)
             {
-                DialogResult dr = MessageBox.Show(this, Language.SaveQuery, "ASM", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
+                DialogResult dr = MessageBox.Show(this, Language.SaveQuery, "MAIDE", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
                 if (dr == DialogResult.Cancel)
                 {
                     e.Cancel = true;

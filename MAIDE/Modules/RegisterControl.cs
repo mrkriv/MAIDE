@@ -1,12 +1,12 @@
-﻿using ASM.UI;
-using ASM.VM;
+﻿using MAIDE.UI;
+using MAIDE.VM;
 using System;
 using System.Collections;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace ASM.Modules
+namespace MAIDE.Modules
 {
     public partial class RegisterControl : UserControl
     {

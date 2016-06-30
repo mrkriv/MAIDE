@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ASM
+namespace MAIDE
 {
     public partial class Console : Form
     {

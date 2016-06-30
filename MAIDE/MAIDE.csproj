@@ -8,7 +8,7 @@
     <ProjectGuid>{FB3E07AB-E0FA-4122-BE64-BFFEF510201B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ASM</RootNamespace>
+    <RootNamespace>MAIDE</RootNamespace>
     <AssemblyName>MAIDE</AssemblyName>
     <SccProjectName>
     </SccProjectName>
@@ -26,7 +26,7 @@
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <ApplicationIcon>Resources\IconApplication.ico</ApplicationIcon>
-    <StartupObject>ASM.Program</StartupObject>
+    <StartupObject>MAIDE.Program</StartupObject>
     <PublishUrl>http://localhost/SCide/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -87,6 +87,7 @@
     </Compile>
     <Compile Include="CombineRows.cs" />
     <Compile Include="ErrorMessage.cs" />
+    <Compile Include="Modules\ModuleAtribute.cs" />
     <Compile Include="Modules\RegisterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -101,43 +102,8 @@
     <Compile Include="UI\CodeMap.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\LocForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\OverlayEditBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\OverlayEditBox.Designer.cs">
-      <DependentUpon>OverlayEditBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Utilit\Calculator\Calculator.cs" />
-    <Compile Include="Utilit\Calculator\Element.cs" />
-    <Compile Include="Utilit\Calculator\Operator.cs" />
-    <Compile Include="Utilit\InputHook\Events.cs" />
-    <Compile Include="Utilit\InputHook\InputHook.cs" />
-    <Compile Include="Utilit\InputHook\Structs.cs" />
-    <Compile Include="Utilit\InputHook\WinAPI.cs" />
-    <Compile Include="Utilit\PropertyJoin.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UI\CodeBlock.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\CodeEditBox\CodeEditBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\CodeEditBox\CodeEditBox.Designer.cs">
-      <DependentUpon>CodeEditBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\CodeEditBox\HistoryElement.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\CodeEditBox\Row.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\CodeEditBox\RowContainers.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\CodeEditBox\Symbol.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Console.cs">
@@ -152,32 +118,6 @@
     <Compile Include="Setting.Designer.cs">
       <DependentUpon>Setting.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\CodeEditBox\Word.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\DragDropPanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\DragDropPanel.Designer.cs">
-      <DependentUpon>DragDropPanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\EllipseControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\EllipseControl.Designer.cs">
-      <DependentUpon>EllipseControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\IconListControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\IconListControl.Designer.cs">
-      <DependentUpon>IconListControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\MGroupBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="VM\CodeBuilder.cs" />
-    <Compile Include="VM\Core.cs" />
     <Compile Include="DocumentForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -190,15 +130,12 @@
     <Compile Include="ExceptionForm.Designer.cs">
       <DependentUpon>ExceptionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\MenuStripRenderer.cs" />
-    <Compile Include="Utilit\Exep.cs" />
     <Compile Include="Modules\ErrorWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Modules\ErrorWindow.Designer.cs">
       <DependentUpon>ErrorWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utilit\ModuleAtribute.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -211,9 +148,6 @@
     <Compile Include="Modules\NavigationWindow.Designer.cs">
       <DependentUpon>NavigationWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="VM\Link.cs" />
-    <Compile Include="VM\DescriptorAttribute.cs" />
-    <Compile Include="VM\Operators.cs" />
     <Compile Include="Modules\OperatorsWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -222,14 +156,19 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VM\Refactor.cs" />
-    <Compile Include="VM\Register.cs" />
     <Compile Include="Modules\RegistersWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Modules\RegistersWindow.Designer.cs">
       <DependentUpon>RegistersWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="VM\CodeBuilder.cs" />
+    <Compile Include="VM\Core.cs" />
+    <Compile Include="VM\DescriptorAttribute.cs" />
+    <Compile Include="VM\Link.cs" />
+    <Compile Include="VM\Operators.cs" />
+    <Compile Include="VM\Refactor.cs" />
+    <Compile Include="VM\Register.cs" />
     <Compile Include="VM\RuntimeException.cs" />
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
@@ -243,9 +182,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\CodeBlock.resx">
       <DependentUpon>CodeBlock.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\CodeEditBox\CodeEditBox.resx">
-      <DependentUpon>CodeEditBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Console.resx">
       <DependentUpon>Console.cs</DependentUpon>
@@ -284,18 +220,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Setting.resx">
       <DependentUpon>Setting.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\DragDropPanel.resx">
-      <DependentUpon>DragDropPanel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\EllipseControl.resx">
-      <DependentUpon>EllipseControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\IconListControl.resx">
-      <DependentUpon>IconListControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\OverlayEditBox.resx">
-      <DependentUpon>OverlayEditBox.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
@@ -361,6 +285,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\rune.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GUI\GUI.csproj">
+      <Project>{0a78ddf3-6a58-4e11-acbf-a4ee77b7a4a5}</Project>
+      <Name>GUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilit\Utilit.csproj">
+      <Project>{9b32e0a5-bf22-4e2a-beea-f08153562602}</Project>
+      <Name>Utilit</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

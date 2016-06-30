@@ -1,11 +1,11 @@
-﻿using ASM.Utilit;
-using ASM.VM;
+﻿using MAIDE.Utilit;
+using MAIDE.VM;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace ASM.UI
+namespace MAIDE.UI
 {
     public class CodeMap : Control
     {

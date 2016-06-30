@@ -1,4 +1,4 @@
-﻿namespace ASM.Modules
+﻿namespace MAIDE.Modules
 {
     partial class RegisterControl
     {

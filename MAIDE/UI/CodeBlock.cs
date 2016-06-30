@@ -1,11 +1,11 @@
-﻿using ASM.Utilit;
+﻿using MAIDE.Utilit;
 using System;
 using System.Collections.Specialized;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace ASM.UI
+namespace MAIDE.UI
 {
     public class CodeBlock : DragDropPanel
     {
@@ -102,7 +102,7 @@ namespace ASM.UI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CodeBlock));
-            this.CodeEditBox = new ASM.UI.CodeEditBox();
+            this.CodeEditBox = new MAIDE.UI.CodeEditBox();
             this.fillSetButton = new System.Windows.Forms.Button();
             this.imgList = new System.Windows.Forms.ImageList(this.components);
             this.SuspendLayout();

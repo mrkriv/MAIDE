@@ -2,11 +2,11 @@
 using System.Runtime.InteropServices;
 using System.Resources;
 
-[assembly: AssemblyTitle("ASM")]
+[assembly: AssemblyTitle("MAIDE")]
 [assembly: AssemblyDescription("Assembler simple machine")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ASM")]
+[assembly: AssemblyProduct("MAIDE")]
 [assembly: AssemblyCopyright("Copyright 2016 MRKriv. All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

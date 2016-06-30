@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
-using ASM.VM;
-using ASM.Utilit;
+using MAIDE.VM;
+using MAIDE.Utilit;
 using System.Collections.Specialized;
 
-namespace ASM.Modules
+namespace MAIDE.Modules
 {
     [ModuleAtribute(dysplayName = "Регистры", defaultShow = false, dock = DockState.DockRightAutoHide)]
     public partial class RegistersWindow : DockContent

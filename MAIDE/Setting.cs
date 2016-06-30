@@ -3,10 +3,10 @@ using System.Windows.Forms;
 using System.Linq;
 using System.Reflection;
 using System.Collections.Specialized;
-using ASM.Utilit;
-using ASM.UI;
+using MAIDE.Utilit;
+using MAIDE.UI;
 
-namespace ASM
+namespace MAIDE
 {
     public partial class Setting : LocForm
     {

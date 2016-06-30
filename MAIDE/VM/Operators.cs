@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Reflection;
-using ASM;
+using MAIDE;
 
-namespace ASM.VM
+namespace MAIDE.VM
 {
     public static class Operators
     {

@@ -1,4 +1,4 @@
-﻿namespace ASM
+﻿namespace MAIDE
 {
     partial class DocumentForm
     {
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.map = new ASM.UI.CodeMap();
+            this.map = new MAIDE.UI.CodeMap();
             this.SuspendLayout();
             // 
             // saveFileDialog

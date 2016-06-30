@@ -1,4 +1,4 @@
-﻿namespace ASM
+﻿namespace MAIDE
 {
     partial class Console
     {

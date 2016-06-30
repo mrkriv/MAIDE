@@ -1,4 +1,4 @@
-﻿namespace ASM.Properties {
+﻿namespace MAIDE.Properties {
     
     
     // Этот класс позволяет обрабатывать определенные события в классе параметров:

@@ -1,4 +1,4 @@
-﻿namespace ASM
+﻿namespace MAIDE
 {
     partial class Setting
     {
@@ -32,10 +32,10 @@
             this.done = new System.Windows.Forms.Button();
             this.exit = new System.Windows.Forms.Button();
             this.reset = new System.Windows.Forms.Button();
-            this.mGroupBox1 = new ASM.UI.MGroupBox();
+            this.mGroupBox1 = new MAIDE.UI.MGroupBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.mGroupBox2 = new ASM.UI.MGroupBox();
+            this.mGroupBox2 = new MAIDE.UI.MGroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();

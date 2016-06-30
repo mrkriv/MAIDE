@@ -7,11 +7,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Text;
-using ASM.VM;
-using ASM.UI;
-using ASM.Utilit;
+using MAIDE.VM;
+using MAIDE.UI;
+using MAIDE.Utilit;
+using MAIDE.Modules;
 
-namespace ASM
+namespace MAIDE
 {
     internal sealed partial class MainForm : LocForm
     {
@@ -114,7 +115,7 @@ namespace ASM
 
         private void dockPanel_ActiveContentChanged(object sender, EventArgs e)
         {
-            Text = "ASM";
+            Text = "MAIDE";
 
             DocumentForm doc = dockPanel.ActiveContent as DocumentForm;
             if (doc != null)

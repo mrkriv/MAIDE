@@ -1,4 +1,4 @@
-﻿namespace ASM
+﻿namespace MAIDE
 {
     partial class AboutForm
     {
@@ -66,7 +66,7 @@
             // 
             // logoPictureBox
             // 
-            this.logoPictureBox.BackgroundImage = global::ASM.Properties.Resources.rune;
+            this.logoPictureBox.BackgroundImage = global::MAIDE.Properties.Resources.rune;
             this.logoPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.logoPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.logoPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;

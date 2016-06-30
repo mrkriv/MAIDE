@@ -1,4 +1,4 @@
-﻿namespace ASM
+﻿namespace MAIDE
 {
     partial class MainForm
     {
@@ -163,7 +163,7 @@
             // 
             this.toolStripButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::ASM.Properties.Resources.settings;
+            this.toolStripButton1.Image = global::MAIDE.Properties.Resources.settings;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
@@ -226,7 +226,7 @@
             // BuildMenuRun
             // 
             this.BuildMenuRun.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.BuildMenuRun.Image = global::ASM.Properties.Resources.resume;
+            this.BuildMenuRun.Image = global::MAIDE.Properties.Resources.resume;
             this.BuildMenuRun.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BuildMenuRun.Name = "BuildMenuRun";
             this.BuildMenuRun.Size = new System.Drawing.Size(36, 36);
@@ -236,7 +236,7 @@
             // 
             this.BuildMenuBuild.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.BuildMenuBuild.Enabled = false;
-            this.BuildMenuBuild.Image = global::ASM.Properties.Resources.build;
+            this.BuildMenuBuild.Image = global::MAIDE.Properties.Resources.build;
             this.BuildMenuBuild.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BuildMenuBuild.Name = "BuildMenuBuild";
             this.BuildMenuBuild.Size = new System.Drawing.Size(36, 36);
@@ -251,7 +251,7 @@
             // BuildMenuStop
             // 
             this.BuildMenuStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.BuildMenuStop.Image = global::ASM.Properties.Resources.cancel;
+            this.BuildMenuStop.Image = global::MAIDE.Properties.Resources.cancel;
             this.BuildMenuStop.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BuildMenuStop.Name = "BuildMenuStop";
             this.BuildMenuStop.Size = new System.Drawing.Size(36, 36);
@@ -260,7 +260,7 @@
             // BuildMenuPause
             // 
             this.BuildMenuPause.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.BuildMenuPause.Image = global::ASM.Properties.Resources.pause;
+            this.BuildMenuPause.Image = global::MAIDE.Properties.Resources.pause;
             this.BuildMenuPause.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BuildMenuPause.Name = "BuildMenuPause";
             this.BuildMenuPause.Size = new System.Drawing.Size(36, 36);
@@ -269,7 +269,7 @@
             // BuildMenuResume
             // 
             this.BuildMenuResume.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.BuildMenuResume.Image = global::ASM.Properties.Resources.resume;
+            this.BuildMenuResume.Image = global::MAIDE.Properties.Resources.resume;
             this.BuildMenuResume.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BuildMenuResume.Name = "BuildMenuResume";
             this.BuildMenuResume.Size = new System.Drawing.Size(36, 36);
@@ -278,7 +278,7 @@
             // BuildMenuResumeOne
             // 
             this.BuildMenuResumeOne.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.BuildMenuResumeOne.Image = global::ASM.Properties.Resources.resumeOne;
+            this.BuildMenuResumeOne.Image = global::MAIDE.Properties.Resources.resumeOne;
             this.BuildMenuResumeOne.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BuildMenuResumeOne.Name = "BuildMenuResumeOne";
             this.BuildMenuResumeOne.Size = new System.Drawing.Size(36, 36);
@@ -287,7 +287,7 @@
             // BuildMenuRestart
             // 
             this.BuildMenuRestart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.BuildMenuRestart.Image = global::ASM.Properties.Resources.refresh;
+            this.BuildMenuRestart.Image = global::MAIDE.Properties.Resources.refresh;
             this.BuildMenuRestart.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BuildMenuRestart.Name = "BuildMenuRestart";
             this.BuildMenuRestart.Size = new System.Drawing.Size(36, 36);
@@ -321,7 +321,7 @@
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.IsMdiContainer = true;
             this.Name = "MainForm";
-            this.Text = "ASM";
+            this.Text = "MAIDE";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();

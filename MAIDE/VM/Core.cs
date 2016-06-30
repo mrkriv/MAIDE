@@ -4,13 +4,13 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using System.Threading;
-using ASM.UI;
-using ASM.Utilit;
+using MAIDE.UI;
+using MAIDE.Utilit;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 
-namespace ASM.VM
+namespace MAIDE.VM
 {
     public class Core
     {

@@ -2,10 +2,10 @@
 using System.Windows.Forms;
 using System.Linq;
 using WeifenLuo.WinFormsUI.Docking;
-using ASM.Utilit;
+using MAIDE.Utilit;
 using System.Collections.Generic;
 
-namespace ASM
+namespace MAIDE.Modules
 {
     [ModuleAtribute(dysplayName = "Ошибки компиляции", defaultShow = true, dock = DockState.DockBottom)]
     public partial class ErrorWindow : DockContent

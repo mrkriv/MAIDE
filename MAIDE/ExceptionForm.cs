@@ -1,5 +1,5 @@
-﻿using ASM.UI;
-using ASM.Utilit;
+﻿using MAIDE.UI;
+using MAIDE.Utilit;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ASM
+namespace MAIDE
 {
     public partial class ExceptionForm : LocForm
     {

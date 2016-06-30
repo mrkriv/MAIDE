@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ASM.VM
+namespace MAIDE.VM
 {
     public abstract class Register
     {

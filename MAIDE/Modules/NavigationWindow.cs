@@ -6,10 +6,10 @@ using WeifenLuo.WinFormsUI.Docking;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using ASM.UI;
-using ASM.Utilit;
+using MAIDE.UI;
+using MAIDE.Utilit;
 
-namespace ASM
+namespace MAIDE.Modules
 {
     [ModuleAtribute(dysplayName = "Навигация", defaultShow = false, dock = DockState.DockLeft)]
     public partial class NavigationWindow : DockContent

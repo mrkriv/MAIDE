@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Threading;
 using System.IO;
 
-namespace ASM.VM
+namespace MAIDE.VM
 {
     public class CodeBuilder
     {

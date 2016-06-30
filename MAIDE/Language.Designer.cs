@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ASM {
+namespace MAIDE {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ASM {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ASM.Language", typeof(Language).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MAIDE.Language", typeof(Language).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

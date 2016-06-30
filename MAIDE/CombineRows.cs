@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ASM.UI;
+using MAIDE.UI;
 
-namespace ASM
+namespace MAIDE
 {
     public class CombineRows
     {

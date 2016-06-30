@@ -1,4 +1,4 @@
-﻿namespace ASM
+﻿namespace MAIDE.Modules
 {
     partial class ErrorWindow
     {

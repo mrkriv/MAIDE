@@ -5,10 +5,10 @@ using System.ComponentModel;
 using WeifenLuo.WinFormsUI.Docking;
 using System;
 using System.Drawing;
-using ASM.VM;
-using ASM.Utilit;
+using MAIDE.VM;
+using MAIDE.Utilit;
 
-namespace ASM
+namespace MAIDE.Modules
 {
     [ModuleAtribute(dysplayName = "Операторы", defaultShow = false, dock = DockState.DockRight)]
     public partial class OperatorsWindow : DockContent

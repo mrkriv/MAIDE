@@ -2,7 +2,7 @@
 using System.Resources;
 using System.Diagnostics;
 
-namespace ASM.VM
+namespace MAIDE.VM
 {
     public enum Type
     {
