@@ -27,6 +27,7 @@ namespace MAIDE.Modules
             data = new BitArray(size);
 
             Name = reg.Name;
+            title.Text = reg.Name;
             Register = reg;
 
             SetStyle(ControlStyles.UserPaint, true);
