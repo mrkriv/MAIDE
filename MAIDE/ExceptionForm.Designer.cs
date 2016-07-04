@@ -32,13 +32,31 @@
             this.restart = new System.Windows.Forms.Button();
             this.ignore = new System.Windows.Forms.Button();
             this.log = new System.Windows.Forms.TextBox();
-            this.hendel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
+            // 
+            // BtnClose
+            // 
+            this.BtnClose.Location = new System.Drawing.Point(782, 1);
+            // 
+            // BtnMax
+            // 
+            this.BtnMax.Location = new System.Drawing.Point(281, -36);
+            this.BtnMax.Visible = false;
+            // 
+            // BtnMin
+            // 
+            this.BtnMin.Location = new System.Drawing.Point(321, -36);
+            this.BtnMin.Visible = false;
+            // 
+            // BtnRestore
+            // 
+            this.BtnRestore.Location = new System.Drawing.Point(746, 1);
             // 
             // close
             // 
             this.close.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.close.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.close.Location = new System.Drawing.Point(678, 259);
             this.close.Name = "close";
             this.close.Size = new System.Drawing.Size(128, 23);
@@ -50,6 +68,7 @@
             // restart
             // 
             this.restart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.restart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.restart.Location = new System.Drawing.Point(544, 259);
             this.restart.Name = "restart";
             this.restart.Size = new System.Drawing.Size(128, 23);
@@ -61,6 +80,7 @@
             // ignore
             // 
             this.ignore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ignore.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.ignore.Location = new System.Drawing.Point(410, 259);
             this.ignore.Name = "ignore";
             this.ignore.Size = new System.Drawing.Size(128, 23);
@@ -86,21 +106,11 @@
             this.log.Size = new System.Drawing.Size(794, 206);
             this.log.TabIndex = 3;
             // 
-            // hendel
-            // 
-            this.hendel.AutoSize = true;
-            this.hendel.Font = new System.Drawing.Font("Segoe Print", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.hendel.ForeColor = System.Drawing.Color.Gainsboro;
-            this.hendel.Location = new System.Drawing.Point(12, 3);
-            this.hendel.Name = "hendel";
-            this.hendel.Size = new System.Drawing.Size(156, 47);
-            this.hendel.TabIndex = 4;
-            this.hendel.Text = "ErrorTitle";
-            // 
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.label1.ForeColor = System.Drawing.Color.Silver;
             this.label1.Location = new System.Drawing.Point(42, 264);
             this.label1.Name = "label1";
@@ -110,8 +120,7 @@
             // 
             // ExceptionForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.ClientSize = new System.Drawing.Size(818, 294);
             this.ControlBox = false;
@@ -120,16 +129,30 @@
             this.Controls.Add(this.restart);
             this.Controls.Add(this.close);
             this.Controls.Add(this.log);
-            this.Controls.Add(this.hendel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.Font = new System.Drawing.Font("Segoe Print", 20.25F, System.Drawing.FontStyle.Bold);
+            this.ForeColor = System.Drawing.Color.Gainsboro;
+            this.MaxButton = null;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(195, 39);
             this.Name = "ExceptionForm";
-            this.ShowIcon = false;
+            this.ResizeEnable = false;
+            this.RestoreButton = null;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "ErrorTitle";
+            this.TitleIconTransform = new System.Drawing.Rectangle(-15, 15, 24, 24);
             this.TopMost = true;
+            this.Controls.SetChildIndex(this.log, 0);
+            this.Controls.SetChildIndex(this.close, 0);
+            this.Controls.SetChildIndex(this.restart, 0);
+            this.Controls.SetChildIndex(this.ignore, 0);
+            this.Controls.SetChildIndex(this.label1, 0);
+            this.Controls.SetChildIndex(this.BtnClose, 0);
+            this.Controls.SetChildIndex(this.BtnMax, 0);
+            this.Controls.SetChildIndex(this.BtnMin, 0);
+            this.Controls.SetChildIndex(this.BtnRestore, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -141,7 +164,6 @@
         private System.Windows.Forms.Button restart;
         private System.Windows.Forms.Button ignore;
         private System.Windows.Forms.TextBox log;
-        private System.Windows.Forms.Label hendel;
         private System.Windows.Forms.Label label1;
     }
 }

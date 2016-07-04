@@ -81,9 +81,6 @@
     <Compile Include="EllipseControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="EllipseControl.Designer.cs">
-      <DependentUpon>EllipseControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="IconListControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -106,7 +103,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MenuStripRenderer.cs" />
-    <Compile Include="MGroupBox.cs">
+    <Compile Include="GroupBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="OverlayEditBox.cs">
@@ -121,14 +118,8 @@
     <EmbeddedResource Include="CodeEditBox\CodeEditBox.resx">
       <DependentUpon>CodeEditBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DefaultForm.resx">
-      <DependentUpon>DefaultForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="DragDropPanel.resx">
       <DependentUpon>DragDropPanel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EllipseControl.resx">
-      <DependentUpon>EllipseControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IconListControl.resx">
       <DependentUpon>IconListControl.cs</DependentUpon>

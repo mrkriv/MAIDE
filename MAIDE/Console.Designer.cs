@@ -33,11 +33,11 @@
             // 
             // viewport
             // 
-            this.viewport.BackColor = System.Drawing.Color.Black;
+            this.viewport.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(36)))), ((int)(((byte)(86)))));
             this.viewport.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.viewport.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.viewport.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.viewport.ForeColor = System.Drawing.Color.White;
+            this.viewport.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.viewport.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(237)))), ((int)(((byte)(240)))));
             this.viewport.Location = new System.Drawing.Point(0, 0);
             this.viewport.Multiline = true;
             this.viewport.Name = "viewport";

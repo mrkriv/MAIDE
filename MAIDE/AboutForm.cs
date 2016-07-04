@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace MAIDE
 {
-    partial class AboutForm : LocForm
+    partial class AboutForm : DefaultForm
     {
         public AboutForm()
         {

@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace MAIDE
 {
-    public partial class ExceptionForm : LocForm
+    public partial class ExceptionForm : DefaultForm
     {
         private Exception error;
 

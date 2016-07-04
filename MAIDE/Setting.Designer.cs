@@ -31,10 +31,10 @@
             this.done = new System.Windows.Forms.Button();
             this.exit = new System.Windows.Forms.Button();
             this.reset = new System.Windows.Forms.Button();
-            this.mGroupBox1 = new MAIDE.UI.MGroupBox();
+            this.mGroupBox1 = new MAIDE.UI.GroupBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.mGroupBox2 = new MAIDE.UI.MGroupBox();
+            this.mGroupBox2 = new MAIDE.UI.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -48,21 +48,23 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
-            // btnClose
+            // BtnClose
             // 
             this.BtnClose.Location = new System.Drawing.Point(658, 1);
             // 
-            // btnMax
+            // BtnMax
             // 
-            this.BtnMax.Location = new System.Drawing.Point(625, 1);
+            this.BtnMax.Location = new System.Drawing.Point(522, -31);
+            this.BtnMax.Visible = false;
             // 
-            // btnMin
+            // BtnMin
             // 
-            this.BtnMin.Location = new System.Drawing.Point(590, 1);
+            this.BtnMin.Location = new System.Drawing.Point(622, 1);
             // 
-            // btnRestore
+            // BtnRestore
             // 
-            this.BtnRestore.Location = new System.Drawing.Point(624, 1);
+            this.BtnRestore.Location = new System.Drawing.Point(552, -31);
+            this.BtnRestore.Visible = false;
             // 
             // done
             // 
@@ -120,10 +122,11 @@
             // 
             // textBox4
             // 
+            this.textBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(32)))));
             this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox4.ForeColor = System.Drawing.Color.Gainsboro;
-            this.textBox4.Location = new System.Drawing.Point(523, 62);
+            this.textBox4.Location = new System.Drawing.Point(579, 60);
             this.textBox4.MaxLength = 1;
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(85, 20);
@@ -287,7 +290,9 @@
             this.Controls.Add(this.exit);
             this.Controls.Add(this.done);
             this.ForeColor = System.Drawing.Color.Gainsboro;
+            this.MaxButton = null;
             this.Name = "Setting";
+            this.RestoreButton = null;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Настройки";
             this.TitleIcon = global::MAIDE.Properties.Resources.settings;
@@ -314,10 +319,10 @@
         private System.Windows.Forms.Button done;
         private System.Windows.Forms.Button exit;
         private System.Windows.Forms.Button reset;
-        private UI.MGroupBox mGroupBox1;
+        private UI.GroupBox mGroupBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private UI.MGroupBox mGroupBox2;
+        private UI.GroupBox mGroupBox2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label3;

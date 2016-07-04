@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MAIDE.UI
 {
-    public class MGroupBox : GroupBox
+    public class GroupBox : System.Windows.Forms.GroupBox
     {
         private Color borderColor;
-        
+
         [Category("Appearance")]
         public Color BorderColor
         {
@@ -27,7 +24,7 @@ namespace MAIDE.UI
             }
         }
 
-        public MGroupBox()
+        public GroupBox()
         {
             borderColor = Color.Black;
         }
@@ -38,15 +35,10 @@ namespace MAIDE.UI
 
             Size tSize = TextRenderer.MeasureText(Text + " ", Font);
 
-            Rectangle borderRect = e.ClipRectangle;
-            borderRect.Y += tSize.Height / 2;
-            borderRect.Height -= tSize.Height / 2;
+            Rectangle borderRect = new Rectangle(0, tSize.Height / 2, Width, Height - tSize.Height / 2);
             ControlPaint.DrawBorder(e.Graphics, borderRect, borderColor, ButtonBorderStyle.Solid);
 
-            Rectangle textRect = e.ClipRectangle;
-            textRect.X += 6;
-            textRect.Width = tSize.Width;
-            textRect.Height = tSize.Height;
+            Rectangle textRect = new Rectangle(6, 0, tSize.Width, tSize.Height);
             e.Graphics.FillRectangle(new SolidBrush(BackColor), textRect);
             e.Graphics.DrawString(Text, Font, new SolidBrush(ForeColor), textRect);
         }

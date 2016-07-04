@@ -53,11 +53,27 @@
             this.BuildMenuRestart = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.status = new System.Windows.Forms.ToolStripStatusLabel();
-            this.button1 = new MAIDE.UI.Button();
+            this.BtnSetting = new MAIDE.UI.Button();
             this.MainMenu.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // BtnClose
+            // 
+            this.BtnClose.Location = new System.Drawing.Point(825, 1);
+            // 
+            // BtnMax
+            // 
+            this.BtnMax.Location = new System.Drawing.Point(791, 1);
+            // 
+            // BtnMin
+            // 
+            this.BtnMin.Location = new System.Drawing.Point(757, 1);
+            // 
+            // BtnRestore
+            // 
+            this.BtnRestore.Location = new System.Drawing.Point(791, 1);
             // 
             // openFileDialog
             // 
@@ -293,7 +309,6 @@
             this.statusStrip.Location = new System.Drawing.Point(2, 475);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(856, 22);
-            this.statusStrip.SizingGrip = false;
             this.statusStrip.TabIndex = 32;
             // 
             // status
@@ -302,46 +317,49 @@
             this.status.Name = "status";
             this.status.Size = new System.Drawing.Size(0, 17);
             // 
-            // button1
+            // BtnSetting
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.button1.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            this.button1.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.button1.ColorNormal = System.Drawing.Color.Empty;
-            this.button1.ImageDown = global::MAIDE.Properties.Resources.settings;
-            this.button1.ImageHover = global::MAIDE.Properties.Resources.settings;
-            this.button1.ImageNormal = global::MAIDE.Properties.Resources.settings;
-            this.button1.Location = new System.Drawing.Point(711, 1);
-            this.button1.Margin = new System.Windows.Forms.Padding(0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(34, 26);
-            this.button1.TabIndex = 40;
-            this.button1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.BtnSetting.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnSetting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.BtnSetting.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.BtnSetting.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.BtnSetting.ColorNormal = System.Drawing.Color.Empty;
+            this.BtnSetting.ImageDown = global::MAIDE.Properties.Resources.settings;
+            this.BtnSetting.ImageHover = global::MAIDE.Properties.Resources.settings;
+            this.BtnSetting.ImageNormal = global::MAIDE.Properties.Resources.settings;
+            this.BtnSetting.Location = new System.Drawing.Point(711, 1);
+            this.BtnSetting.Margin = new System.Windows.Forms.Padding(0);
+            this.BtnSetting.Name = "BtnSetting";
+            this.BtnSetting.Size = new System.Drawing.Size(34, 26);
+            this.BtnSetting.TabIndex = 40;
+            this.BtnSetting.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.Border = new System.Windows.Forms.Padding(1);
-            this.BorderActiveColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            this.BorderDisableColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.ClientSize = new System.Drawing.Size(860, 499);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.BtnSetting);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.MainMenu);
             this.Controls.Add(this.dockPanel);
-            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(156)))));
             this.Name = "MainForm";
-            this.Padding = new System.Windows.Forms.Padding(2, 32, 2, 2);
             this.Shadow = new System.Windows.Forms.Padding(5);
             this.Text = "MAIDE";
             this.TitleIcon = global::MAIDE.Properties.Resources.Icon;
-            this.TitleIconTransform = new System.Drawing.Rectangle(12, 5, 24, 24);
             this.TransparencyKey = System.Drawing.Color.Maroon;
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Controls.SetChildIndex(this.BtnRestore, 0);
+            this.Controls.SetChildIndex(this.dockPanel, 0);
+            this.Controls.SetChildIndex(this.MainMenu, 0);
+            this.Controls.SetChildIndex(this.toolStrip1, 0);
+            this.Controls.SetChildIndex(this.statusStrip, 0);
+            this.Controls.SetChildIndex(this.BtnSetting, 0);
+            this.Controls.SetChildIndex(this.BtnClose, 0);
+            this.Controls.SetChildIndex(this.BtnMax, 0);
+            this.Controls.SetChildIndex(this.BtnMin, 0);
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
@@ -378,6 +396,6 @@
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton BuildMenuResumeOne;
-        private UI.Button button1;
+        private UI.Button BtnSetting;
     }
 }
