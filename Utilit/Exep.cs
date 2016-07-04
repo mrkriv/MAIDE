@@ -11,9 +11,6 @@ namespace MAIDE.Utilit
 {
     public static class Exep
     {
-        public delegate void ChangedProperty<T>(T value);
-        public delegate void Clallback();
-
         public static Point Add(this Point a, Point b)
         {
             return new Point(a.X + b.X, a.Y + b.Y);
@@ -49,9 +46,39 @@ namespace MAIDE.Utilit
             return new Point(self.Left + self.Width / 2, self.Bottom);
         }
 
+        public static Point CenterLeft(this Rectangle self)
+        {
+            return new Point(self.Left, self.Top + self.Height / 2);
+        }
+
+        public static Point CenterRight(this Rectangle self)
+        {
+            return new Point(self.Right, self.Top + self.Height / 2);
+        }
+
         public static PointF Center(this RectangleF self)
         {
             return new PointF(self.Left + self.Width / 2.0f, self.Top + self.Height / 2.0f);
+        }
+        
+        public static Size Add(this Size a, Size b)
+        {
+            return new Size(a.Width + b.Width, a.Height + b.Height);
+        }
+
+        public static Size Add(this Size a, int w, int h)
+        {
+            return new Size(a.Width + w, a.Height + h);
+        }
+
+        public static Size Substract(this Size a, int w, int h)
+        {
+            return new Size(a.Width - w, a.Height - h);
+        }
+
+        public static Size Substract(this Size a, Size b)
+        {
+            return new Size(a.Width - b.Width, a.Height - b.Height);
         }
 
         public static void DrawTriangle(this Graphics self, Brush brush, int x, int y, int w, int h)
@@ -136,56 +163,6 @@ namespace MAIDE.Utilit
                     return node;
             }
             return null;
-        }
-
-        public static void ChangedPropertyEvent<T>(this object self, string propertyName, ChangedProperty<T> callback) where T : class
-        {
-            PropertyDescriptor prop = TypeDescriptor.GetProperties(self).Find(propertyName, true);
-            prop.AddValueChanged(self, (s, e) => { callback(prop.GetValue(self) as T); });
-        }
-
-        public static void ChangedPropertyEvent(this object self, string propertyName, Clallback callback)
-        {
-            PropertyDescriptor prop = TypeDescriptor.GetProperties(self).Find(propertyName, true);
-            prop.AddValueChanged(self, (s, e) => { callback(); });
-        }
-
-        public static void SetLanguage(this Control self, ResourceManager res)
-        {
-            foreach (Control c in self.Controls)
-            {
-                if (c is ToolStrip)
-                    ((ToolStrip)c).SetLanguage(res);
-                else
-                    c.SetLanguage(res);
-            }
-
-            string text = res.GetString(self.Text);
-            if (text != null)
-                self.Text = text;
-        }
-
-        public static void SetLanguage(this ToolStrip self, ResourceManager res)
-        {
-            foreach (ToolStripItem c in self.Items)
-                c.SetLanguage(res);
-
-            string text = res.GetString(self.Text);
-            if (text != null)
-                self.Text = text;
-        }
-
-        public static void SetLanguage(this ToolStripItem self, ResourceManager res)
-        {
-            if (self is ToolStripDropDownButton)
-            {
-                foreach (ToolStripItem c in ((ToolStripDropDownButton)self).DropDownItems)
-                    c.SetLanguage(res);
-            }
-
-            string text = res.GetString(self.Text);
-            if (text != null)
-                self.Text = text;
         }
     }
 }

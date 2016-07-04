@@ -50,6 +50,10 @@
     <Compile Include="InputHook\WinAPI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyJoin.cs" />
+    <Compile Include="WinAPI\Consts.cs" />
+    <Compile Include="WinAPI\Enums.cs" />
+    <Compile Include="WinAPI\Methods.cs" />
+    <Compile Include="WinAPI\Structs.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

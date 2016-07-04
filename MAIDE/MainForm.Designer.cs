@@ -39,7 +39,6 @@
             this.MianMenuAll = new System.Windows.Forms.ToolStripMenuItem();
             this.MianMenuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewDropDown = new System.Windows.Forms.ToolStripDropDownButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
@@ -54,6 +53,7 @@
             this.BuildMenuRestart = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.status = new System.Windows.Forms.ToolStripStatusLabel();
+            this.button1 = new MAIDE.UI.Button();
             this.MainMenu.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -65,21 +65,20 @@
             // 
             // MainMenu
             // 
-            this.MainMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.MainMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.MainMenu.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSplitFile,
             this.ViewDropDown,
-            this.toolStripButton1,
             this.toolStripDropDownButton1});
-            this.MainMenu.Location = new System.Drawing.Point(0, 0);
+            this.MainMenu.Location = new System.Drawing.Point(2, 32);
             this.MainMenu.Name = "MainMenu";
-            this.MainMenu.Size = new System.Drawing.Size(840, 25);
+            this.MainMenu.Size = new System.Drawing.Size(856, 25);
             this.MainMenu.TabIndex = 25;
             // 
             // toolStripSplitFile
             // 
-            this.toolStripSplitFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.toolStripSplitFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.toolStripSplitFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripSplitFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolStripMenuItem,
@@ -89,6 +88,7 @@
             this.MianMenuSaveAs,
             this.MianMenuAll,
             this.MianMenuExit});
+            this.toolStripSplitFile.ForeColor = System.Drawing.Color.Gainsboro;
             this.toolStripSplitFile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitFile.Name = "toolStripSplitFile";
             this.toolStripSplitFile.ShowDropDownArrow = false;
@@ -151,29 +151,21 @@
             // 
             // ViewDropDown
             // 
-            this.ViewDropDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.ViewDropDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.ViewDropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.ViewDropDown.ForeColor = System.Drawing.Color.Gainsboro;
             this.ViewDropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ViewDropDown.Name = "ViewDropDown";
             this.ViewDropDown.ShowDropDownArrow = false;
             this.ViewDropDown.Size = new System.Drawing.Size(60, 22);
             this.ViewDropDown.Text = "Windows";
             // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::MAIDE.Properties.Resources.settings;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
-            // 
             // toolStripDropDownButton1
             // 
             this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
+            this.toolStripDropDownButton1.ForeColor = System.Drawing.Color.Gainsboro;
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
             this.toolStripDropDownButton1.ShowDropDownArrow = false;
@@ -194,18 +186,19 @@
             this.dockPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dockPanel.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingWindow;
             this.dockPanel.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.dockPanel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
-            this.dockPanel.Location = new System.Drawing.Point(0, 66);
+            this.dockPanel.Location = new System.Drawing.Point(2, 96);
             this.dockPanel.Margin = new System.Windows.Forms.Padding(2);
             this.dockPanel.Name = "dockPanel";
-            this.dockPanel.Size = new System.Drawing.Size(840, 379);
+            this.dockPanel.Size = new System.Drawing.Size(856, 379);
             this.dockPanel.TabIndex = 26;
             this.dockPanel.ActiveContentChanged += new System.EventHandler(this.dockPanel_ActiveContentChanged);
             // 
             // toolStrip1
             // 
-            this.toolStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.toolStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -217,9 +210,9 @@
             this.BuildMenuResume,
             this.BuildMenuResumeOne,
             this.BuildMenuRestart});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 25);
+            this.toolStrip1.Location = new System.Drawing.Point(2, 57);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(840, 39);
+            this.toolStrip1.Size = new System.Drawing.Size(856, 39);
             this.toolStrip1.TabIndex = 29;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -297,31 +290,57 @@
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.status});
-            this.statusStrip.Location = new System.Drawing.Point(0, 447);
+            this.statusStrip.Location = new System.Drawing.Point(2, 475);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(840, 22);
+            this.statusStrip.Size = new System.Drawing.Size(856, 22);
             this.statusStrip.SizingGrip = false;
             this.statusStrip.TabIndex = 32;
             // 
             // status
             // 
+            this.status.ForeColor = System.Drawing.Color.Gainsboro;
             this.status.Name = "status";
             this.status.Size = new System.Drawing.Size(0, 17);
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.button1.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.button1.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.button1.ColorNormal = System.Drawing.Color.Empty;
+            this.button1.ImageDown = global::MAIDE.Properties.Resources.settings;
+            this.button1.ImageHover = global::MAIDE.Properties.Resources.settings;
+            this.button1.ImageNormal = global::MAIDE.Properties.Resources.settings;
+            this.button1.Location = new System.Drawing.Point(711, 1);
+            this.button1.Margin = new System.Windows.Forms.Padding(0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(34, 26);
+            this.button1.TabIndex = 40;
+            this.button1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.ClientSize = new System.Drawing.Size(840, 469);
+            this.Border = new System.Windows.Forms.Padding(1);
+            this.BorderActiveColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.BorderDisableColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
+            this.ClientSize = new System.Drawing.Size(860, 499);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.MainMenu);
             this.Controls.Add(this.dockPanel);
-            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
-            this.IsMdiContainer = true;
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(156)))));
             this.Name = "MainForm";
+            this.Padding = new System.Windows.Forms.Padding(2, 32, 2, 2);
+            this.Shadow = new System.Windows.Forms.Padding(5);
             this.Text = "MAIDE";
+            this.TitleIcon = global::MAIDE.Properties.Resources.Icon;
+            this.TitleIconTransform = new System.Drawing.Rectangle(12, 5, 24, 24);
+            this.TransparencyKey = System.Drawing.Color.Maroon;
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
@@ -352,7 +371,6 @@
         private System.Windows.Forms.ToolStripDropDownButton ViewDropDown;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton BuildMenuRun;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton BuildMenuBuild;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.StatusStrip statusStrip;
@@ -360,5 +378,6 @@
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton BuildMenuResumeOne;
+        private UI.Button button1;
     }
 }

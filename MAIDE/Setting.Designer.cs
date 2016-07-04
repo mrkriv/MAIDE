@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Setting));
             this.done = new System.Windows.Forms.Button();
             this.exit = new System.Windows.Forms.Button();
             this.reset = new System.Windows.Forms.Button();
@@ -49,11 +48,27 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
+            // btnClose
+            // 
+            this.BtnClose.Location = new System.Drawing.Point(658, 1);
+            // 
+            // btnMax
+            // 
+            this.BtnMax.Location = new System.Drawing.Point(625, 1);
+            // 
+            // btnMin
+            // 
+            this.BtnMin.Location = new System.Drawing.Point(590, 1);
+            // 
+            // btnRestore
+            // 
+            this.BtnRestore.Location = new System.Drawing.Point(624, 1);
+            // 
             // done
             // 
             this.done.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.done.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.done.Location = new System.Drawing.Point(535, 403);
+            this.done.Location = new System.Drawing.Point(591, 431);
             this.done.Name = "done";
             this.done.Size = new System.Drawing.Size(91, 23);
             this.done.TabIndex = 0;
@@ -65,7 +80,7 @@
             // 
             this.exit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.exit.Location = new System.Drawing.Point(438, 403);
+            this.exit.Location = new System.Drawing.Point(494, 431);
             this.exit.Name = "exit";
             this.exit.Size = new System.Drawing.Size(91, 23);
             this.exit.TabIndex = 1;
@@ -77,7 +92,7 @@
             // 
             this.reset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.reset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.reset.Location = new System.Drawing.Point(12, 403);
+            this.reset.Location = new System.Drawing.Point(12, 431);
             this.reset.Name = "reset";
             this.reset.Size = new System.Drawing.Size(270, 23);
             this.reset.TabIndex = 2;
@@ -96,9 +111,9 @@
             this.mGroupBox1.Controls.Add(this.mGroupBox2);
             this.mGroupBox1.Controls.Add(this.label1);
             this.mGroupBox1.Controls.Add(this.numericUpDown1);
-            this.mGroupBox1.Location = new System.Drawing.Point(12, 12);
+            this.mGroupBox1.Location = new System.Drawing.Point(12, 35);
             this.mGroupBox1.Name = "mGroupBox1";
-            this.mGroupBox1.Size = new System.Drawing.Size(614, 385);
+            this.mGroupBox1.Size = new System.Drawing.Size(670, 390);
             this.mGroupBox1.TabIndex = 5;
             this.mGroupBox1.TabStop = false;
             this.mGroupBox1.Text = "BaseSetting";
@@ -137,7 +152,7 @@
             this.mGroupBox2.Controls.Add(this.textBox1);
             this.mGroupBox2.Location = new System.Drawing.Point(12, 88);
             this.mGroupBox2.Name = "mGroupBox2";
-            this.mGroupBox2.Size = new System.Drawing.Size(596, 186);
+            this.mGroupBox2.Size = new System.Drawing.Size(652, 186);
             this.mGroupBox2.TabIndex = 9;
             this.mGroupBox2.TabStop = false;
             this.mGroupBox2.Text = "Registres";
@@ -164,7 +179,7 @@
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
             this.textBox3.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox3.Size = new System.Drawing.Size(185, 148);
+            this.textBox3.Size = new System.Drawing.Size(241, 148);
             this.textBox3.TabIndex = 13;
             this.textBox3.Tag = "Register8";
             this.textBox3.WordWrap = false;
@@ -240,7 +255,7 @@
             0,
             0,
             0});
-            this.numericUpDown1.Location = new System.Drawing.Point(523, 30);
+            this.numericUpDown1.Location = new System.Drawing.Point(579, 30);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             -727379968,
             232,
@@ -265,17 +280,26 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.ClientSize = new System.Drawing.Size(638, 438);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
+            this.ClientSize = new System.Drawing.Size(694, 466);
             this.Controls.Add(this.mGroupBox1);
             this.Controls.Add(this.reset);
             this.Controls.Add(this.exit);
             this.Controls.Add(this.done);
             this.ForeColor = System.Drawing.Color.Gainsboro;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Setting";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Настройки";
+            this.TitleIcon = global::MAIDE.Properties.Resources.settings;
+            this.TitleIconTransform = new System.Drawing.Rectangle(12, 5, 36, 24);
+            this.Controls.SetChildIndex(this.BtnClose, 0);
+            this.Controls.SetChildIndex(this.BtnMax, 0);
+            this.Controls.SetChildIndex(this.BtnMin, 0);
+            this.Controls.SetChildIndex(this.BtnRestore, 0);
+            this.Controls.SetChildIndex(this.done, 0);
+            this.Controls.SetChildIndex(this.exit, 0);
+            this.Controls.SetChildIndex(this.reset, 0);
+            this.Controls.SetChildIndex(this.mGroupBox1, 0);
             this.mGroupBox1.ResumeLayout(false);
             this.mGroupBox1.PerformLayout();
             this.mGroupBox2.ResumeLayout(false);

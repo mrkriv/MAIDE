@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Linq;
 using System.ComponentModel;
 
 namespace MAIDE.Utilit
 {
     public class PropertyJoin
     {
+        public delegate void ChangedProperty<T>(T value);
+        public delegate void Clallback();
+
         private object obj1, obj2;
         private PropertyDescriptor prop1, prop2;
 
@@ -53,6 +57,27 @@ namespace MAIDE.Utilit
                 prop1.SetValue(obj1, prop1.Converter.ConvertFrom(value));
             else
                 prop1.SetValue(obj1, value);
+        }
+
+        public static void ChangedPropertyEvent<T>(object obj, string property, ChangedProperty<T> callback) where T : class
+        {
+            PropertyDescriptor prop = TypeDescriptor.GetProperties(obj).Find(property, true);
+            prop.AddValueChanged(obj, (s, e) => { callback(prop.GetValue(obj) as T); });
+        }
+
+        public static void ChangedPropertyEvent(object obj, string property, Clallback callback)
+        {
+            PropertyDescriptor prop = TypeDescriptor.GetProperties(obj).Find(property, true);
+            prop.AddValueChanged(obj, (s, e) => { callback(); });
+        }
+
+        public static void ChangedPropertyEvent(object obj, string[] propertes, Clallback callback)
+        {
+            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(obj))
+            {
+                if (propertes.Contains(prop.Name))
+                    prop.AddValueChanged(obj, (s, e) => { callback(); });
+            }
         }
     }
 }

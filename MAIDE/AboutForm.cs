@@ -1,4 +1,5 @@
-﻿using MAIDE.Utilit;
+﻿using MAIDE.UI;
+using MAIDE.Utilit;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,7 +11,7 @@ using System.Windows.Forms;
 
 namespace MAIDE
 {
-    partial class AboutForm : Form
+    partial class AboutForm : LocForm
     {
         public AboutForm()
         {
@@ -21,12 +22,6 @@ namespace MAIDE
             this.labelCopyright.Text = AssemblyCopyright;
             this.labelCompanyName.Text = AssemblyCompany;
             this.description.Text = AssemblyDescription;
-        }
-
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-            this.SetLanguage(Language.ResourceManager);
         }
 
         #region Методы доступа к атрибутам сборки

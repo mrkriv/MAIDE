@@ -8,7 +8,7 @@ using MAIDE.UI;
 
 namespace MAIDE
 {
-    public partial class Setting : LocForm
+    public partial class Setting : DefaultForm
     {
         public Setting()
         {
@@ -91,12 +91,6 @@ namespace MAIDE
                 else
                     InitializeInclude(c);
             }
-        }
-
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-            this.SetLanguage(Language.ResourceManager);
         }
 
         private void exit_Click(object sender, EventArgs e)

@@ -28,12 +28,6 @@ namespace MAIDE
             error = e;
         }
 
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-            this.SetLanguage(Language.ResourceManager);
-        }
-
         private void close_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Abort;

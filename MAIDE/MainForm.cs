@@ -14,7 +14,7 @@ using MAIDE.Modules;
 
 namespace MAIDE
 {
-    internal sealed partial class MainForm : LocForm
+    internal sealed partial class MainForm : DefaultForm
     {
         private const string newDocumentName = "NewProgram";
         private int newDocumentCount = 0;
@@ -23,6 +23,7 @@ namespace MAIDE
         public static MainForm Instance { get; private set; }
         public DocumentForm ActiveDocument;
         public Core Core { get; private set; }
+        private Setting setting;
 
         public MainForm(string[] args)
         {
@@ -100,7 +101,7 @@ namespace MAIDE
             doc.LoadFile(filePath);
             doc.Show(dockPanel);
             Core_StateChanged(Core, null);
-
+            
             return doc;
         }
 
@@ -259,7 +260,13 @@ namespace MAIDE
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            new Setting().Show();
+            if (setting == null)
+            {
+                setting = new Setting();
+                setting.Show();
+            }
+            else
+                setting.BringToFront();
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)

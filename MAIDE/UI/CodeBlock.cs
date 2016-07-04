@@ -10,7 +10,7 @@ namespace MAIDE.UI
     public class CodeBlock : DragDropPanel
     {
         private bool fill;
-        private Button fillSetButton;
+        private System.Windows.Forms.Button fillSetButton;
         public CodeEditBox CodeEditBox;
         public CodeBlock ExtTrue;
         private ImageList imgList;

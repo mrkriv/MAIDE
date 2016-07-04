@@ -17,9 +17,7 @@ namespace MAIDE.Modules
             InitializeComponent();
             Instance = this;
 
-            MainForm.Instance.Core.ChangedPropertyEvent("RegNames32", regsCreate);
-            MainForm.Instance.Core.ChangedPropertyEvent("RegNames16", regsCreate);
-            MainForm.Instance.Core.ChangedPropertyEvent("RegNames8", regsCreate);
+            PropertyJoin.ChangedPropertyEvent(MainForm.Instance.Core, new string[] { "RegNames32", "RegNames16", "RegNames8" }, regsCreate);
             MainForm.Instance.Core.StateChanged += Core_StateChanged;
 
             regsCreate();
