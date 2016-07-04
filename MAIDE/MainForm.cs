@@ -281,10 +281,5 @@ namespace MAIDE
             runThread = new Thread(Core.Invoke);
             runThread.Start();
         }
-
-        private void button2_MouseDown(object sender, MouseEventArgs e)
-        {
-            new ExceptionForm(new Exception()).Show();
-        }
     }
 }

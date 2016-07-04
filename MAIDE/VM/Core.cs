@@ -15,7 +15,8 @@ namespace MAIDE.VM
     public class Core
     {
         public static readonly ObservableCollection<ErrorMessage> Errors = new ObservableCollection<ErrorMessage>();
-        
+        public static readonly string[] Letters = new string[] { "byte", "word", "ds", "dw", "db", "equ" };
+
         public enum State
         {
             NoBuild,
@@ -284,14 +285,15 @@ namespace MAIDE.VM
 
                 if (text.Length != 0)
                 {
-                    if (text[0] == "byte" || text[0] == "word")
+                    string lw = text[0].ToLower();
+                    if (lw == "byte" || lw == "word" || lw == "dw" || lw == "db" || lw == "ds")
                     {
                         dataZone.Add(Links.Last().Key, dataList.Count);
                         string[] values = text[1].Split(',');
                         foreach (string val in values)
                         {
                             string v = val.Trim(' ');
-                            if (text[0] == "byte")
+                            if (lw == "byte" || lw == "db")
                             {
                                 if (v[0] == '\'' || v[0] == '"')
                                     dataList.AddRange(v.Substring(1, v.Length - 2).Select(c => (byte)c));
@@ -299,11 +301,23 @@ namespace MAIDE.VM
                                     dataList.Add((byte)int.Parse(v));
                             }
                             else
-                                dataList.AddRange(BitConverter.GetBytes(int.Parse(v)));
+                            {
+                                int b;
+                                if (int.TryParse(v, out b))
+                                    dataList.AddRange(BitConverter.GetBytes(b));
+                                else
+                                    addError(new ErrorMessage(string.Format(Language.NotNumber, v), code[i].Index, code[i].Owner));
+                            }
                         }
                     }
-                    else if (text[0] == "equ")
-                        Links[Links.Keys.Last()] = int.Parse(text[1]);
+                    else if (lw == "equ")
+                    {
+                        int index;
+                        if (int.TryParse(text[1], out index))
+                            Links[Links.Keys.Last()] = index;
+                        else
+                            addError(new ErrorMessage(string.Format(Language.NotNumber, text[1]), code[i].Index, code[i].Owner));
+                    }
                     else
                         result.Add(code[i], text);
                 }
@@ -327,7 +341,7 @@ namespace MAIDE.VM
 
             foreach (MethodInfo method in Operators.OperationsList)
             {
-                if (method.Name == op.operation)
+                if (method.Name.Equals(op.operation, StringComparison.OrdinalIgnoreCase))
                 {
                     string[] args;
                     if (text.Length > 1)

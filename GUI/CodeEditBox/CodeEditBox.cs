@@ -36,9 +36,7 @@ namespace MAIDE.UI
         private float lineHeight;
         private float offestX;
         private float zoom;
-        private char commentChar;
         private bool caretVisible;
-        private bool syntaxHighlighter;
         private bool leftMouseDown;
         private bool recordHystory;
         private Point selectStart = new Point();
@@ -66,39 +64,27 @@ namespace MAIDE.UI
         
         [DefaultValue(true)]
         [Category("Appearance")]
-        public bool SyntaxHighlighter
-        {
-            get
-            {
-                return syntaxHighlighter;
-            }
-            set
-            {
-                if (value != syntaxHighlighter)
-                {
-                    syntaxHighlighter = value;
-                    UpdateSyntax();
-                }
-            }
-        }
+        public bool SyntaxHighlighter { get; set; }
 
         [DefaultValue(';')]
         [Category("Appearance")]
-        public char CommentChar
-        {
-            get
-            {
-                return commentChar;
-            }
-            set
-            {
-                if (value != commentChar)
-                {
-                    commentChar = value;
-                    UpdateSyntax();
-                }
-            }
-        }
+        public char CommentChar { get; set; }
+
+        [DefaultValue(':')]
+        [Category("Appearance")]
+        public char PrefixChar { get; set; }
+
+        [Category("Appearance")]
+        [DefaultValue(typeof(Color), "145, 145, 145")]
+        public Color PrefixColor { get; set; }
+
+        [Category("Appearance")]
+        [DefaultValue(typeof(Color), "87, 166, 74")]
+        public Color CommentColor { get; set; }
+
+        [Category("Appearance")]
+        [DefaultValue(typeof(Color), "214, 157, 133")]
+        public Color NumberColor { get; set; }
 
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public Point SelectStart
@@ -281,11 +267,16 @@ namespace MAIDE.UI
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
 
             this.LoadDefaultProperties();
+            PropertyJoin.ChangedPropertyEvent(this, new string[] {
+                "SyntaxHighlighter",
+                "CommentChar",
+                "PrefixChar"
+            }, UpdateSyntax);
 
             contextMenu.Renderer = new MenuStripRenderer();
             foreach (ToolStripItem item in contextMenu.Items)
                 MenuStripRenderer.SetStyle(item);
-            
+
             AddRow(new Row(this));
             ClearHistory();
         }
@@ -352,14 +343,17 @@ namespace MAIDE.UI
             Modified = true;
             updateSizes();
 
-            if (syntaxHighlighter)
+            if (SyntaxHighlighter)
             {
                 int commentIndex = int.MaxValue;
+                int prefixIndex = int.MinValue;
                 for (int i = 0; i < e.Row.Length; i++)
                 {
-                    if (e.Row[i] == commentChar)
+                    if (e.Row[i] == PrefixChar)
+                        prefixIndex = i;
+                    else if (e.Row[i] == CommentChar)
                     {
-                        e.Row[i].Color = Color.FromArgb(87, 166, 74);
+                        e.Row[i].Color = CommentColor;
                         commentIndex = i;
                         break;
                     }
@@ -368,13 +362,22 @@ namespace MAIDE.UI
                 foreach (Word word in e.Row.GetWords(e.Start, e.Start + e.Count))
                 {
                     Color color = ForeColor;
+                    string str = word.ToString();
 
-                    if (commentIndex <= word.Offest)
-                        color = Color.FromArgb(87, 166, 74);
+                    if (prefixIndex >= word.Offest)
+                        color = PrefixColor;
+                    else if (commentIndex <= word.Offest)
+                        color = CommentColor;
                     else if (word[0] == '#')
-                        color = Color.FromArgb(214, 157, 133);
-                    else if (syntax.ContainsKey(word))
-                        color = syntaxColors[syntax[word]];
+                        color = NumberColor;
+                    else if (str.All(c => char.IsNumber(c)))
+                        color = NumberColor;
+                    else
+                    {
+                        var pair = syntax.FirstOrDefault(k => k.Key.Equals(str, StringComparison.OrdinalIgnoreCase));
+                        if (pair.Key != null)
+                            color = syntaxColors[pair.Value];
+                    }
 
                     word.SetColor(color);
                 }
@@ -383,7 +386,7 @@ namespace MAIDE.UI
 
         public void UpdateSyntax()
         {
-            if (syntaxHighlighter)
+            if (SyntaxHighlighter)
             {
                 foreach (Row r in rows)
                     textChanged(this, new TextChangedEventArgs(r));

@@ -44,11 +44,15 @@ namespace MAIDE.UI
             Fill = false;
 
             CodeEditBox.SetSyntaxColor(0, Color.FromArgb(86, 156, 214), null);
+            CodeEditBox.SetSyntaxColor(1, Color.FromArgb(144, 105, 162), null);
             CodeEditBox.SetSyntaxColor(2, Color.FromArgb(78, 201, 176), null);
             CodeEditBox.SetSyntaxIcons(imgList);
 
             foreach (var op in VM.Operators.OperationsList)
                 CodeEditBox.AddSyntaxPhrase(op.Name, 0);
+
+            foreach (var lt in VM.Core.Letters)
+                CodeEditBox.AddSyntaxPhrase(lt, 1);
 
             addSyntaxByRegLS(Properties.Settings.Default.Register32);
             addSyntaxByRegLS(Properties.Settings.Default.Register16);
