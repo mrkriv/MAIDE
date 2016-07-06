@@ -127,6 +127,19 @@ namespace MAIDE.Utilit
             }
         }
 
+        /// <summary>
+        /// Устанавливает значения всем статическим свойствам с атрибутом DefaultValue
+        /// </summary>
+        public static void LoadDefaultProperties(Type type)
+        {
+            foreach (var inf in type.GetProperties(BindingFlags.Public | BindingFlags.Static))
+            {
+                var atrs = inf.GetCustomAttributes(typeof(DefaultValueAttribute), true);
+                if (atrs.Length != 0)
+                    inf.SetValue(null, ((DefaultValueAttribute)atrs.First()).Value, BindingFlags.SetProperty, null, null, null);
+            }
+        }
+
         public static XmlAttribute AddAttribute(this XmlDocument self, string name, string value)
         {
             XmlAttribute atrib = self.CreateAttribute(name);

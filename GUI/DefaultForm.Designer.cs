@@ -32,15 +32,17 @@
             this.BtnMax = new MAIDE.UI.Button();
             this.BtnMin = new MAIDE.UI.Button();
             this.BtnRestore = new MAIDE.UI.Button();
+            this.Palette = new MAIDE.UI.Palette();
             this.SuspendLayout();
             // 
             // BtnClose
             // 
             this.BtnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.BtnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.BtnClose.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
             this.BtnClose.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
             this.BtnClose.ColorNormal = System.Drawing.Color.Empty;
+            this.BtnClose.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.BtnClose.ImageDown = global::MAIDE.UI.Resource.BtnClose_Normal;
             this.BtnClose.ImageHover = global::MAIDE.UI.Resource.BtnClose_Normal;
             this.BtnClose.ImageNormal = global::MAIDE.UI.Resource.BtnClose_Normal;
@@ -52,10 +54,11 @@
             // BtnMax
             // 
             this.BtnMax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnMax.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.BtnMax.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.BtnMax.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
             this.BtnMax.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
             this.BtnMax.ColorNormal = System.Drawing.Color.Empty;
+            this.BtnMax.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.BtnMax.ImageDown = global::MAIDE.UI.Resource.BtnMax_Normal;
             this.BtnMax.ImageHover = global::MAIDE.UI.Resource.BtnMax_Normal;
             this.BtnMax.ImageNormal = global::MAIDE.UI.Resource.BtnMax_Normal;
@@ -67,10 +70,11 @@
             // BtnMin
             // 
             this.BtnMin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnMin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.BtnMin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.BtnMin.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
             this.BtnMin.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
             this.BtnMin.ColorNormal = System.Drawing.Color.Empty;
+            this.BtnMin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.BtnMin.ImageDown = global::MAIDE.UI.Resource.BtnMin_Normal;
             this.BtnMin.ImageHover = global::MAIDE.UI.Resource.BtnMin_Normal;
             this.BtnMin.ImageNormal = global::MAIDE.UI.Resource.BtnMin_Normal;
@@ -82,10 +86,11 @@
             // BtnRestore
             // 
             this.BtnRestore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnRestore.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.BtnRestore.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.BtnRestore.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
             this.BtnRestore.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
             this.BtnRestore.ColorNormal = System.Drawing.Color.Empty;
+            this.BtnRestore.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.BtnRestore.ImageDown = global::MAIDE.UI.Resource.BtnR_Normal;
             this.BtnRestore.ImageHover = global::MAIDE.UI.Resource.BtnR_Normal;
             this.BtnRestore.ImageNormal = global::MAIDE.UI.Resource.BtnR_Normal;
@@ -93,6 +98,10 @@
             this.BtnRestore.Name = "BtnRestore";
             this.BtnRestore.Size = new System.Drawing.Size(34, 26);
             this.BtnRestore.TabIndex = 38;
+            // 
+            // Palette
+            // 
+            this.Palette.Owner = this;
             // 
             // DefaultForm
             // 
@@ -108,7 +117,7 @@
             this.Controls.Add(this.BtnMin);
             this.Controls.Add(this.BtnMax);
             this.Controls.Add(this.BtnClose);
-            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(156)))));
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(111)))), ((int)(((byte)(112)))));
             this.MaxButton = this.BtnMax;
             this.MinButton = this.BtnMin;
             this.MinimumSize = new System.Drawing.Size(195, 35);
@@ -123,9 +132,10 @@
 
         #endregion
 
-        public UI.Button BtnClose;
-        public UI.Button BtnMax;
-        public UI.Button BtnMin;
-        public UI.Button BtnRestore;
+        protected Button BtnClose;
+        protected Button BtnMax;
+        protected Button BtnMin;
+        protected Button BtnRestore;
+        protected Palette Palette;
     }
 }

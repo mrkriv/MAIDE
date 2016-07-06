@@ -127,7 +127,7 @@ namespace MAIDE.Utilit
             if (s_MouseHookHandle == 0)
             {
                 s_MouseDelegate = MouseHookProc;
-                s_MouseHookHandle = SetWindowsHookEx(WH_MOUSE_LL, s_MouseDelegate, Marshal.GetHINSTANCE(Assembly.GetExecutingAssembly().GetModules()[0]), 0);
+                s_MouseHookHandle = SetWindowsHookEx(WH_MOUSE_LL, s_MouseDelegate, (IntPtr)0, 0);
                 if (s_MouseHookHandle == 0)
                 {
                     int errorCode = Marshal.GetLastWin32Error();
@@ -223,7 +223,7 @@ namespace MAIDE.Utilit
             if (s_KeyboardHookHandle == 0)
             {
                 s_KeyboardDelegate = KeyboardHookProc;
-                s_KeyboardHookHandle = SetWindowsHookEx(WH_KEYBOARD_LL, s_KeyboardDelegate, Marshal.GetHINSTANCE(Assembly.GetExecutingAssembly().GetModules()[0]), 0);
+                s_KeyboardHookHandle = SetWindowsHookEx(WH_KEYBOARD_LL, s_KeyboardDelegate, (IntPtr)0, 0);
                 if (s_KeyboardHookHandle == 0)
                 {
                     int errorCode = Marshal.GetLastWin32Error();

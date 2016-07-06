@@ -9,23 +9,11 @@ using MAIDE.Utilit;
 
 namespace MAIDE.UI
 {
-    public class MenuStripRenderer : ToolStripProfessionalRenderer
+    public class MenuPaletteRenderer : ToolStripProfessionalRenderer
     {
-        public MenuStripRenderer() : base(new MenuStripColorTable())
+        public MenuPaletteRenderer() : base(new MenuStripColorTable())
         {
             RoundedEdges = false;
-        }
-
-        public static void SetStyle(ToolStripItem item)
-        {
-            item.BackColor = Color.FromArgb(27, 27, 28);
-
-            if (item is ToolStripSeparator)
-                item.ForeColor = Color.FromArgb(50, 50, 54);
-            else
-                item.ForeColor = Color.FromArgb(241, 241, 241);
-
-            item.Height = 22;
         }
 
         protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
@@ -55,7 +43,10 @@ namespace MAIDE.UI
         protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
         {
             if (e.ToolStrip.IsDropDown)
-                e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(27, 27, 28)), 0, 0, 2, (int)e.Graphics.ClipBounds.Bottom);
+            {
+                e.Graphics.DrawLine(new Pen(Palette.MenuBorder), 0, 0, 0, (int)e.Graphics.ClipBounds.Bottom);
+                e.Graphics.DrawLine(new Pen(Palette.MenuPressed), 1, 0, 1, (int)e.Graphics.ClipBounds.Bottom);
+            }
         }
     }
     
@@ -63,47 +54,43 @@ namespace MAIDE.UI
     {
         public override Color MenuItemSelected
         {
-            get { return Color.FromArgb(51, 51, 52); }
+            get { return Palette.MenuSelected; }
         }
         public override Color MenuItemPressedGradientEnd
         {
-            get { return Color.FromArgb(27, 27, 28); }
+            get { return Palette.MenuPressed; }
         }
         public override Color MenuItemPressedGradientBegin
         {
-            get { return Color.FromArgb(27, 27, 28); }
+            get { return Palette.MenuPressed; }
         }
         public override Color ButtonSelectedHighlight
         {
-            get { return Color.FromArgb(51, 51, 52); }
+            get { return Palette.MenuSelected; }
         }
         public override Color MenuItemSelectedGradientBegin
         {
-            get { return Color.FromArgb(51, 51, 52); }
+            get { return Palette.MenuSelected; }
         }
         public override Color MenuItemSelectedGradientEnd
         {
-            get { return Color.FromArgb(51, 51, 52); }
+            get { return Palette.MenuSelected; }
         }
         public override Color ToolStripDropDownBackground
         {
-            get { return Color.FromArgb(27, 27, 28); }
+            get { return Palette.MenuPressed; }
         }
         public override Color ToolStripBorder
         {
-            get { return Color.FromArgb(27, 27, 28); }
+            get { return Palette.MenuBorder; }
         }
         public override Color ButtonSelectedBorder
         {
             get { return Color.Transparent; }
         }
-        public override Color ButtonSelectedGradientBegin
-        {
-            get { return Color.FromArgb(62, 62, 64); }
-        }
         public override Color MenuBorder
         {
-            get { return Color.FromArgb(51, 51, 55); }
+            get { return Palette.MenuBorder; }
         }
         public override Color MenuItemBorder
         {
@@ -111,19 +98,23 @@ namespace MAIDE.UI
         }
         public override Color StatusStripGradientBegin
         {
-            get { return Color.FromArgb(45, 45, 48); }
+            get { return Palette.Background; }
         }
         public override Color StatusStripGradientEnd
         {
-            get { return Color.FromArgb(45, 45, 48); }
+            get { return Palette.Background; }
         }
         public override Color ButtonSelectedGradientEnd
         {
-            get { return Color.FromArgb(51, 51, 52); }
+            get { return Palette.MenuSelected; }
         }
         public override Color ButtonSelectedGradientMiddle
         {
-            get { return Color.FromArgb(51, 51, 52); }
+            get { return Palette.MenuSelected; }
+        }
+        public override Color ButtonSelectedGradientBegin
+        {
+            get { return Palette.MenuSelected; }
         }
     }
 }

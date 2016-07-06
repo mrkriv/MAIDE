@@ -72,6 +72,9 @@
     <Compile Include="DefaultForm.Designer.cs">
       <DependentUpon>DefaultForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DockContentProxy.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="DragDropPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -87,7 +90,9 @@
     <Compile Include="IconListControl.Designer.cs">
       <DependentUpon>IconListControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Palette.cs" />
+    <Compile Include="Palette.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -102,7 +107,7 @@
     <Compile Include="LocForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MenuStripRenderer.cs" />
+    <Compile Include="MenuPaletteRenderer.cs" />
     <Compile Include="GroupBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -118,6 +123,9 @@
     <EmbeddedResource Include="CodeEditBox\CodeEditBox.resx">
       <DependentUpon>CodeEditBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DefaultForm.resx">
+      <DependentUpon>DefaultForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DragDropPanel.resx">
       <DependentUpon>DragDropPanel.cs</DependentUpon>
     </EmbeddedResource>
@@ -130,6 +138,9 @@
     <EmbeddedResource Include="Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StyleForm.resx">
+      <DependentUpon>StyleForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

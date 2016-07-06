@@ -38,28 +38,9 @@ namespace MAIDE
             Core.StateChanged += Core_StateChanged;
         }
 
-        void setStyle(Control c, ToolStripRenderer render)
-        {
-            if (c is ToolStrip)
-                ((ToolStrip)c).Renderer = render;
-
-            foreach (Control ch in c.Controls)
-                setStyle(ch, render);
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
+        protected override void OnLoad(EventArgs e)
         {
             ModuleAtribute.Init(dockPanel, ViewDropDown);
-            setStyle(this, new MenuStripRenderer());
-
-            foreach (ToolStripItem menu in MainMenu.Items)
-            {
-                if (menu is ToolStripDropDownButton)
-                {
-                    foreach (ToolStripItem item in ((ToolStripDropDownButton)menu).DropDownItems)
-                        MenuStripRenderer.SetStyle(item);
-                }
-            }
 
             if (startArgs != null && startArgs.Length != 0)
             {
@@ -73,6 +54,7 @@ namespace MAIDE
                 NewDocument();
 
             status.Text = Language.Done;
+            base.OnLoad(e);
         }
 
         private void OpenFile()
@@ -121,13 +103,12 @@ namespace MAIDE
             DocumentForm doc = dockPanel.ActiveContent as DocumentForm;
             if (doc != null)
                 ActiveDocument = doc;
-            else if (!ActiveDocument.Created)
+            else if (ActiveDocument != null && !ActiveDocument.Created)
                 ActiveDocument = null;
 
             if (ActiveDocument != null)
-            {
                 Text += " - " + ActiveDocument.Text;
-            }
+
             Core_StateChanged(Core, null);
         }
         

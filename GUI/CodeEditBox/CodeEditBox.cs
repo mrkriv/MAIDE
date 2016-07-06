@@ -111,7 +111,7 @@ namespace MAIDE.UI
             }
         }
 
-        [DefaultValue(1)]
+
         [Category("Appearance")]
         public float Zoom
         {
@@ -252,6 +252,7 @@ namespace MAIDE.UI
 
         public CodeEditBox()
         {
+            this.LoadDefaultProperties();
             InitializeComponent();
 
             textChanged = new EventHandler<TextChangedEventArgs>(OnTextChanged);
@@ -265,20 +266,16 @@ namespace MAIDE.UI
             SetStyle(ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-
-            this.LoadDefaultProperties();
+            
             PropertyJoin.ChangedPropertyEvent(this, new string[] {
                 "SyntaxHighlighter",
                 "CommentChar",
                 "PrefixChar"
             }, UpdateSyntax);
 
-            contextMenu.Renderer = new MenuStripRenderer();
-            foreach (ToolStripItem item in contextMenu.Items)
-                MenuStripRenderer.SetStyle(item);
-
             AddRow(new Row(this));
             ClearHistory();
+            Zoom = 1;
         }
 
         public void SetSyntaxIcons(ImageList imgs)
@@ -315,6 +312,12 @@ namespace MAIDE.UI
         {
             undoStack.Clear();
             redoStack.Clear();
+        }
+
+        protected override void OnBackColorChanged(EventArgs e)
+        {
+            base.OnBackColorChanged(e);
+            UpdateSyntax();
         }
 
         private void AutoCompiler_MouseDown(object sender, MouseEventArgs e)
@@ -627,9 +630,6 @@ namespace MAIDE.UI
                         leftMouseDown = true;
                     }
                     Invalidate(false);
-                    break;
-                case MouseButtons.Right:
-                    contextMenu.Show(PointToScreen(new Point(e.X, e.Y)));
                     break;
             }
             base.OnMouseDown(e);

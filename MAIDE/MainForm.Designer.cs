@@ -82,6 +82,7 @@
             // MainMenu
             // 
             this.MainMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
+            this.MainMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.MainMenu.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSplitFile,
@@ -104,7 +105,7 @@
             this.MianMenuSaveAs,
             this.MianMenuAll,
             this.MianMenuExit});
-            this.toolStripSplitFile.ForeColor = System.Drawing.Color.Gainsboro;
+            this.toolStripSplitFile.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.toolStripSplitFile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitFile.Name = "toolStripSplitFile";
             this.toolStripSplitFile.ShowDropDownArrow = false;
@@ -113,6 +114,8 @@
             // 
             // newToolStripMenuItem
             // 
+            this.newToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(27)))), ((int)(((byte)(28)))));
+            this.newToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.newToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
@@ -121,6 +124,8 @@
             // 
             // MianMenuOpen
             // 
+            this.MianMenuOpen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(27)))), ((int)(((byte)(28)))));
+            this.MianMenuOpen.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.MianMenuOpen.Name = "MianMenuOpen";
             this.MianMenuOpen.ShortcutKeyDisplayString = "";
             this.MianMenuOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
@@ -130,12 +135,15 @@
             // 
             // toolStripSeparator1
             // 
-            this.toolStripSeparator1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.toolStripSeparator1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(27)))), ((int)(((byte)(28)))));
+            this.toolStripSeparator1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(181, 6);
             // 
             // MianMenuSave
             // 
+            this.MianMenuSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(27)))), ((int)(((byte)(28)))));
+            this.MianMenuSave.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.MianMenuSave.Name = "MianMenuSave";
             this.MianMenuSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.MianMenuSave.Size = new System.Drawing.Size(184, 22);
@@ -144,6 +152,8 @@
             // 
             // MianMenuSaveAs
             // 
+            this.MianMenuSaveAs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(27)))), ((int)(((byte)(28)))));
+            this.MianMenuSaveAs.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.MianMenuSaveAs.Name = "MianMenuSaveAs";
             this.MianMenuSaveAs.Size = new System.Drawing.Size(184, 22);
             this.MianMenuSaveAs.Text = "SaveAs";
@@ -151,6 +161,8 @@
             // 
             // MianMenuAll
             // 
+            this.MianMenuAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(27)))), ((int)(((byte)(28)))));
+            this.MianMenuAll.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.MianMenuAll.Name = "MianMenuAll";
             this.MianMenuAll.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
@@ -160,6 +172,8 @@
             // 
             // MianMenuExit
             // 
+            this.MianMenuExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(27)))), ((int)(((byte)(28)))));
+            this.MianMenuExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.MianMenuExit.Name = "MianMenuExit";
             this.MianMenuExit.Size = new System.Drawing.Size(184, 22);
             this.MianMenuExit.Text = "Exit";
@@ -169,7 +183,7 @@
             // 
             this.ViewDropDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.ViewDropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.ViewDropDown.ForeColor = System.Drawing.Color.Gainsboro;
+            this.ViewDropDown.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.ViewDropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ViewDropDown.Name = "ViewDropDown";
             this.ViewDropDown.ShowDropDownArrow = false;
@@ -178,10 +192,11 @@
             // 
             // toolStripDropDownButton1
             // 
+            this.toolStripDropDownButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
-            this.toolStripDropDownButton1.ForeColor = System.Drawing.Color.Gainsboro;
+            this.toolStripDropDownButton1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
             this.toolStripDropDownButton1.ShowDropDownArrow = false;
@@ -190,6 +205,8 @@
             // 
             // aboutToolStripMenuItem
             // 
+            this.aboutToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(27)))), ((int)(((byte)(28)))));
+            this.aboutToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
             this.aboutToolStripMenuItem.Text = "about";
@@ -202,6 +219,7 @@
             this.dockPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dockPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.dockPanel.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingWindow;
             this.dockPanel.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.dockPanel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
@@ -215,6 +233,7 @@
             // toolStrip1
             // 
             this.toolStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
+            this.toolStrip1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -234,7 +253,9 @@
             // 
             // BuildMenuRun
             // 
+            this.BuildMenuRun.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.BuildMenuRun.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BuildMenuRun.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.BuildMenuRun.Image = global::MAIDE.Properties.Resources.resume;
             this.BuildMenuRun.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BuildMenuRun.Name = "BuildMenuRun";
@@ -243,8 +264,10 @@
             // 
             // BuildMenuBuild
             // 
+            this.BuildMenuBuild.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.BuildMenuBuild.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.BuildMenuBuild.Enabled = false;
+            this.BuildMenuBuild.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.BuildMenuBuild.Image = global::MAIDE.Properties.Resources.build;
             this.BuildMenuBuild.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BuildMenuBuild.Name = "BuildMenuBuild";
@@ -253,13 +276,16 @@
             // 
             // toolStripSeparator2
             // 
-            this.toolStripSeparator2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.toolStripSeparator2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
+            this.toolStripSeparator2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 39);
             // 
             // BuildMenuStop
             // 
+            this.BuildMenuStop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.BuildMenuStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BuildMenuStop.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.BuildMenuStop.Image = global::MAIDE.Properties.Resources.cancel;
             this.BuildMenuStop.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BuildMenuStop.Name = "BuildMenuStop";
@@ -268,7 +294,9 @@
             // 
             // BuildMenuPause
             // 
+            this.BuildMenuPause.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.BuildMenuPause.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BuildMenuPause.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.BuildMenuPause.Image = global::MAIDE.Properties.Resources.pause;
             this.BuildMenuPause.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BuildMenuPause.Name = "BuildMenuPause";
@@ -277,7 +305,9 @@
             // 
             // BuildMenuResume
             // 
+            this.BuildMenuResume.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.BuildMenuResume.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BuildMenuResume.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.BuildMenuResume.Image = global::MAIDE.Properties.Resources.resume;
             this.BuildMenuResume.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BuildMenuResume.Name = "BuildMenuResume";
@@ -286,7 +316,9 @@
             // 
             // BuildMenuResumeOne
             // 
+            this.BuildMenuResumeOne.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.BuildMenuResumeOne.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BuildMenuResumeOne.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.BuildMenuResumeOne.Image = global::MAIDE.Properties.Resources.resumeOne;
             this.BuildMenuResumeOne.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BuildMenuResumeOne.Name = "BuildMenuResumeOne";
@@ -295,7 +327,9 @@
             // 
             // BuildMenuRestart
             // 
+            this.BuildMenuRestart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.BuildMenuRestart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.BuildMenuRestart.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.BuildMenuRestart.Image = global::MAIDE.Properties.Resources.refresh;
             this.BuildMenuRestart.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BuildMenuRestart.Name = "BuildMenuRestart";
@@ -304,6 +338,8 @@
             // 
             // statusStrip
             // 
+            this.statusStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
+            this.statusStrip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.status});
             this.statusStrip.Location = new System.Drawing.Point(2, 475);
@@ -313,17 +349,19 @@
             // 
             // status
             // 
-            this.status.ForeColor = System.Drawing.Color.Gainsboro;
+            this.status.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
+            this.status.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.status.Name = "status";
             this.status.Size = new System.Drawing.Size(0, 17);
             // 
             // BtnSetting
             // 
             this.BtnSetting.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnSetting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.BtnSetting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.BtnSetting.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
             this.BtnSetting.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
             this.BtnSetting.ColorNormal = System.Drawing.Color.Empty;
+            this.BtnSetting.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.BtnSetting.ImageDown = global::MAIDE.Properties.Resources.settings;
             this.BtnSetting.ImageHover = global::MAIDE.Properties.Resources.settings;
             this.BtnSetting.ImageNormal = global::MAIDE.Properties.Resources.settings;
@@ -350,7 +388,6 @@
             this.Text = "MAIDE";
             this.TitleIcon = global::MAIDE.Properties.Resources.Icon;
             this.TransparencyKey = System.Drawing.Color.Maroon;
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.Controls.SetChildIndex(this.BtnRestore, 0);
             this.Controls.SetChildIndex(this.dockPanel, 0);
             this.Controls.SetChildIndex(this.MainMenu, 0);

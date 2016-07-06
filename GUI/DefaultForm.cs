@@ -1,4 +1,6 @@
-﻿namespace MAIDE.UI
+﻿using System;
+
+namespace MAIDE.UI
 {
     public partial class DefaultForm : StyleForm
     {

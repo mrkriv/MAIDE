@@ -1,10 +1,11 @@
 ﻿using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using System.IO;
+using MAIDE.UI;
 
 namespace MAIDE
 {
-    internal sealed partial class DocumentForm : DockContent
+    internal sealed partial class DocumentForm : DockContentProxy
     {
         public string FileName { get; set; }
 

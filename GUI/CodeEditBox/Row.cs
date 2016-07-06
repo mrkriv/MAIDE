@@ -118,7 +118,10 @@ namespace MAIDE.UI
                 for (offest++; offest < end; offest++)
                 {
                     if (wordSplitSymbols.Contains(data[offest - 1]))
+                    {
+                        result.Add(GetWord(offest-1));
                         result.Add(GetWord(offest));
+                    }
                 }
                 return result;
             }
