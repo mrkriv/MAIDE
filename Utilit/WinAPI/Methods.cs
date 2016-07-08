@@ -66,7 +66,7 @@ namespace MAIDE.Utilit.WinAPI
         public static extern TBool DeleteObject(IntPtr hObject);
 
         [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
-        public static extern TBool UpdateLayeredWindow(IntPtr hwnd, IntPtr hdcDst, ref TPoint pptDst, ref TSize psize, IntPtr hdcSrc, ref TPoint pprSrc, Int32 crKey, ref BLENDFUNCTION pblend, Int32 dwFlags);
+        public static extern TBool UpdateLayeredWindow(IntPtr hwnd, IntPtr hdcDst, ref Point pptDst, ref Size psize, IntPtr hdcSrc, ref Point pprSrc, Int32 crKey, ref BLENDFUNCTION pblend, Int32 dwFlags);
 
         [DllImport("user32", CharSet = CharSet.Auto)]
         public extern static bool PostMessage(IntPtr hWnd, uint Msg, uint WParam, uint LParam);
@@ -79,5 +79,26 @@ namespace MAIDE.Utilit.WinAPI
 
         [DllImport("gdi32.dll", ExactSpelling = true, SetLastError = true)]
         public static extern TBool StretchBlt(IntPtr hDest, int DestX, int DestY, int DestW, int DestH, IntPtr hSrc, int SrcX, int SrcY, int SrcW, int SrcH, uint dwrOp);
+        
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        public static extern int CallNextHookEx(int idHook, int nCode, int wParam, IntPtr lParam);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
+        public static extern int UnhookWindowsHookEx(int idHook);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
+        public static extern int SetWindowsHookEx(int idHook, HookProc lpfn, IntPtr hMod, int dwThreadId);
+
+        [DllImport("user32")]
+        public static extern int ToAscii(int uVirtKey, int uScanCode, byte[] lpbKeyState, byte[] lpwTransKey, int fuState);
+
+        [DllImport("user32")]
+        public static extern int GetKeyboardState(byte[] pbKeyState);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        public static extern short GetKeyState(int vKey);
+
+        [DllImport("user32")]
+        public static extern int GetDoubleClickTime();
     }
 }

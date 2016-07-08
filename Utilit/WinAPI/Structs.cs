@@ -3,6 +3,8 @@ using System.Runtime.InteropServices;
 
 namespace MAIDE.Utilit.WinAPI
 {
+    public delegate int HookProc(int nCode, int wParam, IntPtr lParam);
+
     [StructLayout(LayoutKind.Sequential)]
     public struct LVITEM
     {
@@ -24,24 +26,52 @@ namespace MAIDE.Utilit.WinAPI
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct TPoint
+    public struct NMHDR
+    {
+        public IntPtr HWND;
+        public uint idFrom;
+        public int code;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MouseLLHookStruct
+    {
+        public Point Point;
+        public int MouseData;
+        public int Flags;
+        public int Time;
+        public int ExtraInfo;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct KeyboardHookStruct
+    {
+        public int VirtualKeyCode;
+        public int ScanCode;
+        public int Flags;
+        public int Time;
+        public int ExtraInfo;
+    }
+    
+    [StructLayout(LayoutKind.Sequential)]
+    public struct Point
     {
         public int X;
         public int Y;
 
-        public TPoint(int X, int Y)
+        public Point(int X, int Y)
         {
             this.X = X; this.Y = Y;
         }
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct TSize
+    public struct Size
     {
         public int Width;
         public int Height;
 
-        public TSize(int Width, int Height)
+        public Size(int Width, int Height)
         {
             this.Width = Width; this.Height = Height;
         }

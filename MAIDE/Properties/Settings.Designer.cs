@@ -99,5 +99,209 @@ namespace MAIDE.Properties {
                 this["CommentChar"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("45, 45, 48")]
+        public global::System.Drawing.Color Background {
+            get {
+                return ((global::System.Drawing.Color)(this["Background"]));
+            }
+            set {
+                this["Background"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1, 122, 204")]
+        public global::System.Drawing.Color WindowFrameActive {
+            get {
+                return ((global::System.Drawing.Color)(this["WindowFrameActive"]));
+            }
+            set {
+                this["WindowFrameActive"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("66, 66, 66")]
+        public global::System.Drawing.Color WindowFrameDisable {
+            get {
+                return ((global::System.Drawing.Color)(this["WindowFrameDisable"]));
+            }
+            set {
+                this["WindowFrameDisable"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("111, 111, 112")]
+        public global::System.Drawing.Color FontTitle {
+            get {
+                return ((global::System.Drawing.Color)(this["FontTitle"]));
+            }
+            set {
+                this["FontTitle"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("241, 241, 241")]
+        public global::System.Drawing.Color FontMain {
+            get {
+                return ((global::System.Drawing.Color)(this["FontMain"]));
+            }
+            set {
+                this["FontMain"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("27, 27, 28")]
+        public global::System.Drawing.Color MenuPressed {
+            get {
+                return ((global::System.Drawing.Color)(this["MenuPressed"]));
+            }
+            set {
+                this["MenuPressed"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("62, 62, 64")]
+        public global::System.Drawing.Color MenuSelected {
+            get {
+                return ((global::System.Drawing.Color)(this["MenuSelected"]));
+            }
+            set {
+                this["MenuSelected"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("51, 51, 55")]
+        public global::System.Drawing.Color MenuBorder {
+            get {
+                return ((global::System.Drawing.Color)(this["MenuBorder"]));
+            }
+            set {
+                this["MenuBorder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("51, 51, 55")]
+        public global::System.Drawing.Color MenuSeparator {
+            get {
+                return ((global::System.Drawing.Color)(this["MenuSeparator"]));
+            }
+            set {
+                this["MenuSeparator"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30, 30, 30")]
+        public global::System.Drawing.Color TextEditorBackground {
+            get {
+                return ((global::System.Drawing.Color)(this["TextEditorBackground"]));
+            }
+            set {
+                this["TextEditorBackground"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("150, 150, 150")]
+        public global::System.Drawing.Color GroupBorder {
+            get {
+                return ((global::System.Drawing.Color)(this["GroupBorder"]));
+            }
+            set {
+                this["GroupBorder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("107, 140, 209, 255")]
+        public global::System.Drawing.Color TextEditorSelected {
+            get {
+                return ((global::System.Drawing.Color)(this["TextEditorSelected"]));
+            }
+            set {
+                this["TextEditorSelected"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("51, 51, 51")]
+        public global::System.Drawing.Color TextEditorRowId {
+            get {
+                return ((global::System.Drawing.Color)(this["TextEditorRowId"]));
+            }
+            set {
+                this["TextEditorRowId"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("15, 15, 15")]
+        public global::System.Drawing.Color TextEditorSelectLine {
+            get {
+                return ((global::System.Drawing.Color)(this["TextEditorSelectLine"]));
+            }
+            set {
+                this["TextEditorSelectLine"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("15, 50, 15")]
+        public global::System.Drawing.Color TextEditorRunLine {
+            get {
+                return ((global::System.Drawing.Color)(this["TextEditorRunLine"]));
+            }
+            set {
+                this["TextEditorRunLine"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1, 122, 204")]
+        public global::System.Drawing.Color DockingTabActive {
+            get {
+                return ((global::System.Drawing.Color)(this["DockingTabActive"]));
+            }
+            set {
+                this["DockingTabActive"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("45, 45, 48")]
+        public global::System.Drawing.Color DockingTabDisable {
+            get {
+                return ((global::System.Drawing.Color)(this["DockingTabDisable"]));
+            }
+            set {
+                this["DockingTabDisable"] = value;
+            }
+        }
     }
 }

@@ -255,4 +255,64 @@
   <data name="SaveQuery" xml:space="preserve">
     <value>Сохранить изменения?</value>
   </data>
+  <data name="ColorSetting" xml:space="preserve">
+    <value>Внешний вид</value>
+  </data>
+  <data name="Background" xml:space="preserve">
+    <value>Фон</value>
+  </data>
+  <data name="FontMain" xml:space="preserve">
+    <value>Основной цвет текста</value>
+  </data>
+  <data name="FontTitle" xml:space="preserve">
+    <value>Текст заголовка</value>
+  </data>
+  <data name="MenuBorder" xml:space="preserve">
+    <value>Рамка</value>
+  </data>
+  <data name="MenuPressed" xml:space="preserve">
+    <value>Открытая вкладка</value>
+  </data>
+  <data name="MenuSelected" xml:space="preserve">
+    <value>Выделение</value>
+  </data>
+  <data name="MenuSeparator" xml:space="preserve">
+    <value>Разделитель</value>
+  </data>
+  <data name="TextEditorBackground" xml:space="preserve">
+    <value>Фон текстового редактора</value>
+  </data>
+  <data name="WindowFrameActive" xml:space="preserve">
+    <value>Рамка активного окна</value>
+  </data>
+  <data name="WindowFrameDisable" xml:space="preserve">
+    <value>Рамка не активного окна</value>
+  </data>
+  <data name="ContextMenu" xml:space="preserve">
+    <value>Меню</value>
+  </data>
+  <data name="GroupBorder" xml:space="preserve">
+    <value>Рамки групп</value>
+  </data>
+  <data name="TextEditor" xml:space="preserve">
+    <value>Текстовые радакторы</value>
+  </data>
+  <data name="TextEditorRowId" xml:space="preserve">
+    <value>Фон панели нумирации</value>
+  </data>
+  <data name="TextEditorRunLine" xml:space="preserve">
+    <value>Исполняемая строка</value>
+  </data>
+  <data name="TextEditorSelected" xml:space="preserve">
+    <value>Выделение</value>
+  </data>
+  <data name="TextEditorSelectLine" xml:space="preserve">
+    <value>Текущая строка</value>
+  </data>
+  <data name="DockingTabActive" xml:space="preserve">
+    <value>Активная вкладка</value>
+  </data>
+  <data name="DockingTabDisable" xml:space="preserve">
+    <value>Не активная вкладка</value>
+  </data>
 </root>

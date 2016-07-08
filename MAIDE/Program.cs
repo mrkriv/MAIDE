@@ -28,6 +28,7 @@ namespace MAIDE
 
             LocForm.Resource = Language.ResourceManager;
             Language.ResourceManager.IgnoreCase = true;
+            Palette.JoinToObject(Properties.Settings.Default);
 
             if (!Debug)
             {
@@ -51,7 +52,7 @@ namespace MAIDE
             MainForm.Instance.Hide();
             var result = new ExceptionForm(e).ShowDialog();
 
-            switch(result)
+            switch (result)
             {
                 case DialogResult.Ignore:
                     MainForm.Instance.Show();
@@ -60,7 +61,7 @@ namespace MAIDE
                     MainForm.Instance.Close();
                     break;
                 case DialogResult.Retry:
-                    
+
                     break;
                 default:
                     MainForm.Instance.Close();

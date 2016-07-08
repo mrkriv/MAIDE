@@ -70,6 +70,15 @@ namespace MAIDE {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Фон.
+        /// </summary>
+        public static string Background {
+            get {
+                return ResourceManager.GetString("Background", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Основные параметры.
         /// </summary>
         public static string BaseSetting {
@@ -142,6 +151,15 @@ namespace MAIDE {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Внешний вид.
+        /// </summary>
+        public static string ColorSetting {
+            get {
+                return ResourceManager.GetString("ColorSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Символ коментария.
         /// </summary>
         public static string CommentSymbol {
@@ -160,6 +178,15 @@ namespace MAIDE {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Меню.
+        /// </summary>
+        public static string ContextMenu {
+            get {
+                return ResourceManager.GetString("ContextMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Продолжить.
         /// </summary>
         public static string Contine {
@@ -174,6 +201,24 @@ namespace MAIDE {
         public static string CreateNew {
             get {
                 return ResourceManager.GetString("CreateNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Активная вкладка.
+        /// </summary>
+        public static string DockingTabActive {
+            get {
+                return ResourceManager.GetString("DockingTabActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Не активная вкладка.
+        /// </summary>
+        public static string DockingTabDisable {
+            get {
+                return ResourceManager.GetString("DockingTabDisable", resourceCulture);
             }
         }
         
@@ -210,6 +255,33 @@ namespace MAIDE {
         public static string File {
             get {
                 return ResourceManager.GetString("File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Основной цвет текста.
+        /// </summary>
+        public static string FontMain {
+            get {
+                return ResourceManager.GetString("FontMain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Текст заголовка.
+        /// </summary>
+        public static string FontTitle {
+            get {
+                return ResourceManager.GetString("FontTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Рамки групп.
+        /// </summary>
+        public static string GroupBorder {
+            get {
+                return ResourceManager.GetString("GroupBorder", resourceCulture);
             }
         }
         
@@ -282,6 +354,42 @@ namespace MAIDE {
         public static string MarkerNotFound {
             get {
                 return ResourceManager.GetString("MarkerNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Рамка.
+        /// </summary>
+        public static string MenuBorder {
+            get {
+                return ResourceManager.GetString("MenuBorder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Открытая вкладка.
+        /// </summary>
+        public static string MenuPressed {
+            get {
+                return ResourceManager.GetString("MenuPressed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Выделение.
+        /// </summary>
+        public static string MenuSelected {
+            get {
+                return ResourceManager.GetString("MenuSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Разделитель.
+        /// </summary>
+        public static string MenuSeparator {
+            get {
+                return ResourceManager.GetString("MenuSeparator", resourceCulture);
             }
         }
         
@@ -462,6 +570,78 @@ namespace MAIDE {
         public static string SaveQuery {
             get {
                 return ResourceManager.GetString("SaveQuery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Текстовые радакторы.
+        /// </summary>
+        public static string TextEditor {
+            get {
+                return ResourceManager.GetString("TextEditor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Фон текстового редактора.
+        /// </summary>
+        public static string TextEditorBackground {
+            get {
+                return ResourceManager.GetString("TextEditorBackground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Фон панели нумирации.
+        /// </summary>
+        public static string TextEditorRowId {
+            get {
+                return ResourceManager.GetString("TextEditorRowId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Исполняемая строка.
+        /// </summary>
+        public static string TextEditorRunLine {
+            get {
+                return ResourceManager.GetString("TextEditorRunLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Выделение.
+        /// </summary>
+        public static string TextEditorSelected {
+            get {
+                return ResourceManager.GetString("TextEditorSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Текущая строка.
+        /// </summary>
+        public static string TextEditorSelectLine {
+            get {
+                return ResourceManager.GetString("TextEditorSelectLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Рамка активного окна.
+        /// </summary>
+        public static string WindowFrameActive {
+            get {
+                return ResourceManager.GetString("WindowFrameActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Рамка не активного окна.
+        /// </summary>
+        public static string WindowFrameDisable {
+            get {
+                return ResourceManager.GetString("WindowFrameDisable", resourceCulture);
             }
         }
         

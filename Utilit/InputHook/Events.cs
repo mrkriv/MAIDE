@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using MAIDE.Utilit.WinAPI;
 
 namespace MAIDE.Utilit
 {
@@ -115,7 +116,7 @@ namespace MAIDE.Utilit
                 {
                     s_DoubleClickTimer = new Timer
                     {
-                        Interval = GetDoubleClickTime(),
+                        Interval = API.GetDoubleClickTime(),
                         Enabled = false
                     };
                     s_DoubleClickTimer.Tick += DoubleClickTimeElapsed;

@@ -1,37 +1,9 @@
-﻿using System.Runtime.InteropServices;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace MAIDE.Utilit
 {
     public partial class InputHook
     {
-        [StructLayout(LayoutKind.Sequential)]
-        private struct Point
-        {
-            public int X;
-            public int Y;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct MouseLLHookStruct
-        {
-            public Point Point;
-            public int MouseData;
-            public int Flags;
-            public int Time;
-            public int ExtraInfo;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct KeyboardHookStruct
-        {
-            public int VirtualKeyCode;
-            public int ScanCode;
-            public int Flags;
-            public int Time;
-            public int ExtraInfo;
-        }
-
         public class MouseEventExtArgs : MouseEventArgs
         {
             private bool m_Handled;

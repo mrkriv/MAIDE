@@ -100,9 +100,31 @@ namespace MAIDE.Utilit
             return null;
         }
 
-        public static Color GetMultiplay(this Color self, float mul)
+        public static Color Multiplay(this Color self, float mul)
         {
-            return Color.FromArgb((int)(self.A * mul), (int)(self.R * mul), (int)(self.G * mul), (int)(self.B * mul));
+            return Color.FromArgb(
+                (int)(self.A * mul).Clamp(0, 255),
+                (int)(self.R * mul).Clamp(0, 255),
+                (int)(self.G * mul).Clamp(0, 255),
+                (int)(self.B * mul).Clamp(0, 255));
+        }
+
+        public static Color Add(this Color self, float k)
+        {
+            return Color.FromArgb(
+                (int)(self.A + k).Clamp(0, 255),
+                (int)(self.R + k).Clamp(0, 255),
+                (int)(self.G + k).Clamp(0, 255),
+                (int)(self.B + k).Clamp(0, 255));
+        }
+
+        public static Color Add(this Color self, Color b)
+        {
+            return Color.FromArgb(
+                (self.A + b.A).Clamp(0, 255),
+                (self.R + b.R).Clamp(0, 255),
+                (self.G + b.G).Clamp(0, 255),
+                (self.B + b.B).Clamp(0, 255));
         }
 
         public static T Clamp<T>(this T self, T min, T max) where T : IComparable<T>

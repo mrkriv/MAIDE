@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -75,6 +75,9 @@
     <Compile Include="DockContentProxy.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="DockingTheme.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DragDropPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -98,6 +101,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="ControlsJoin.cs" />
     <Compile Include="ShadowForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,6 +122,9 @@
       <DependentUpon>OverlayEditBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CodeEditBox\CodeEditBox.resx">

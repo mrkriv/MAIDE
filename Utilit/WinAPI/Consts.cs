@@ -21,6 +21,9 @@
         public const int WS_EX_TRANSPARENT = 0x20;
         public const int WS_EX_NOACTIVATE = 0x8000000;
 
+        public const int TCN_FIRST = 0 - 550;
+        public const int TCN_SELCHANGING = (TCN_FIRST - 2);
+
         public const int WM_ACTIVATE = 0x0006;
         public const int WM_ACTIVATEAPP = 0x001C;
         public const int WM_AFXFIRST = 0x0360;
@@ -234,10 +237,20 @@
         public const int WM_XBUTTONDBLCLK = 0x020D;
         public const int WM_XBUTTONDOWN = 0x020B;
         public const int WM_XBUTTONUP = 0x020C;
+        public const int WM_REFLECT = WM_USER + 0x1C00;
 
+        public const int WH_MOUSE_LL = 14;
+        public const int WH_KEYBOARD_LL = 13;
+        public const int WH_MOUSE = 7;
+        public const int WH_KEYBOARD = 2;
+        
         public const int ULW_COLORKEY = 0x00000001;
         public const int ULW_ALPHA = 0x00000002;
         public const int ULW_OPAQUE = 0x00000004;
+
+        public const byte VK_SHIFT = 0x10;
+        public const byte VK_CAPITAL = 0x14;
+        public const byte VK_NUMLOCK = 0x90;
 
         public const byte AC_SRC_OVER = 0x00;
         public const byte AC_SRC_ALPHA = 0x01;
