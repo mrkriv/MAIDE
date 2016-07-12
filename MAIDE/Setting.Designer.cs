@@ -394,7 +394,10 @@
             // button13
             // 
             this.button13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.button13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.button13.BorderColorDown = System.Drawing.SystemColors.HotTrack;
+            this.button13.BorderColorHover = System.Drawing.SystemColors.Highlight;
+            this.button13.BorderColorNormal = System.Drawing.Color.Gray;
+            this.button13.BorderWidth = 1;
             this.button13.ColorDown = System.Drawing.Color.Empty;
             this.button13.ColorHover = System.Drawing.Color.Empty;
             this.button13.ColorNormal = System.Drawing.Color.Empty;
@@ -419,7 +422,10 @@
             // button14
             // 
             this.button14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.button14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.button14.BorderColorDown = System.Drawing.SystemColors.HotTrack;
+            this.button14.BorderColorHover = System.Drawing.SystemColors.Highlight;
+            this.button14.BorderColorNormal = System.Drawing.Color.Gray;
+            this.button14.BorderWidth = 1;
             this.button14.ColorDown = System.Drawing.Color.Empty;
             this.button14.ColorHover = System.Drawing.Color.Empty;
             this.button14.ColorNormal = System.Drawing.Color.Empty;
@@ -467,7 +473,10 @@
             // 
             this.button11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.button11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.button11.BorderColorDown = System.Drawing.SystemColors.HotTrack;
+            this.button11.BorderColorHover = System.Drawing.SystemColors.Highlight;
+            this.button11.BorderColorNormal = System.Drawing.Color.Gray;
+            this.button11.BorderWidth = 1;
             this.button11.ColorDown = System.Drawing.Color.Empty;
             this.button11.ColorHover = System.Drawing.Color.Empty;
             this.button11.ColorNormal = System.Drawing.Color.Empty;
@@ -493,7 +502,10 @@
             // 
             this.button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.button10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.button10.BorderColorDown = System.Drawing.SystemColors.HotTrack;
+            this.button10.BorderColorHover = System.Drawing.SystemColors.Highlight;
+            this.button10.BorderColorNormal = System.Drawing.Color.Gray;
+            this.button10.BorderWidth = 1;
             this.button10.ColorDown = System.Drawing.Color.Empty;
             this.button10.ColorHover = System.Drawing.Color.Empty;
             this.button10.ColorNormal = System.Drawing.Color.Empty;
@@ -519,7 +531,10 @@
             // 
             this.button20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.button20.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.button20.BorderColorDown = System.Drawing.SystemColors.HotTrack;
+            this.button20.BorderColorHover = System.Drawing.SystemColors.Highlight;
+            this.button20.BorderColorNormal = System.Drawing.Color.Gray;
+            this.button20.BorderWidth = 1;
             this.button20.ColorDown = System.Drawing.Color.Empty;
             this.button20.ColorHover = System.Drawing.Color.Empty;
             this.button20.ColorNormal = System.Drawing.Color.Empty;
@@ -545,7 +560,10 @@
             // 
             this.button21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.button21.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.button21.BorderColorDown = System.Drawing.SystemColors.HotTrack;
+            this.button21.BorderColorHover = System.Drawing.SystemColors.Highlight;
+            this.button21.BorderColorNormal = System.Drawing.Color.Gray;
+            this.button21.BorderWidth = 1;
             this.button21.ColorDown = System.Drawing.Color.Empty;
             this.button21.ColorHover = System.Drawing.Color.Empty;
             this.button21.ColorNormal = System.Drawing.Color.Empty;
@@ -571,7 +589,10 @@
             // 
             this.button22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.button22.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.button22.BorderColorDown = System.Drawing.SystemColors.HotTrack;
+            this.button22.BorderColorHover = System.Drawing.SystemColors.Highlight;
+            this.button22.BorderColorNormal = System.Drawing.Color.Gray;
+            this.button22.BorderWidth = 1;
             this.button22.ColorDown = System.Drawing.Color.Empty;
             this.button22.ColorHover = System.Drawing.Color.Empty;
             this.button22.ColorNormal = System.Drawing.Color.Empty;
@@ -617,7 +638,10 @@
             // 
             this.button9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.button9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.button9.BorderColorDown = System.Drawing.SystemColors.HotTrack;
+            this.button9.BorderColorHover = System.Drawing.SystemColors.Highlight;
+            this.button9.BorderColorNormal = System.Drawing.Color.Gray;
+            this.button9.BorderWidth = 1;
             this.button9.ColorDown = System.Drawing.Color.Empty;
             this.button9.ColorHover = System.Drawing.Color.Empty;
             this.button9.ColorNormal = System.Drawing.Color.Empty;
@@ -643,7 +667,10 @@
             // 
             this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.button8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.button8.BorderColorDown = System.Drawing.SystemColors.HotTrack;
+            this.button8.BorderColorHover = System.Drawing.SystemColors.Highlight;
+            this.button8.BorderColorNormal = System.Drawing.Color.Gray;
+            this.button8.BorderWidth = 1;
             this.button8.ColorDown = System.Drawing.Color.Empty;
             this.button8.ColorHover = System.Drawing.Color.Empty;
             this.button8.ColorNormal = System.Drawing.Color.Empty;
@@ -669,7 +696,10 @@
             // 
             this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.button7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.button7.BorderColorDown = System.Drawing.SystemColors.HotTrack;
+            this.button7.BorderColorHover = System.Drawing.SystemColors.Highlight;
+            this.button7.BorderColorNormal = System.Drawing.Color.Gray;
+            this.button7.BorderWidth = 1;
             this.button7.ColorDown = System.Drawing.Color.Empty;
             this.button7.ColorHover = System.Drawing.Color.Empty;
             this.button7.ColorNormal = System.Drawing.Color.Empty;
@@ -695,7 +725,10 @@
             // 
             this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.button6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.button6.BorderColorDown = System.Drawing.SystemColors.HotTrack;
+            this.button6.BorderColorHover = System.Drawing.SystemColors.Highlight;
+            this.button6.BorderColorNormal = System.Drawing.Color.Gray;
+            this.button6.BorderWidth = 1;
             this.button6.ColorDown = System.Drawing.Color.Empty;
             this.button6.ColorHover = System.Drawing.Color.Empty;
             this.button6.ColorNormal = System.Drawing.Color.Empty;
@@ -720,7 +753,10 @@
             // button12
             // 
             this.button12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.button12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.button12.BorderColorDown = System.Drawing.SystemColors.HotTrack;
+            this.button12.BorderColorHover = System.Drawing.SystemColors.Highlight;
+            this.button12.BorderColorNormal = System.Drawing.Color.Gray;
+            this.button12.BorderWidth = 1;
             this.button12.ColorDown = System.Drawing.Color.Empty;
             this.button12.ColorHover = System.Drawing.Color.Empty;
             this.button12.ColorNormal = System.Drawing.Color.Empty;
@@ -745,7 +781,10 @@
             // button5
             // 
             this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.button5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.button5.BorderColorDown = System.Drawing.SystemColors.HotTrack;
+            this.button5.BorderColorHover = System.Drawing.SystemColors.Highlight;
+            this.button5.BorderColorNormal = System.Drawing.Color.Gray;
+            this.button5.BorderWidth = 1;
             this.button5.ColorDown = System.Drawing.Color.Empty;
             this.button5.ColorHover = System.Drawing.Color.Empty;
             this.button5.ColorNormal = System.Drawing.Color.Empty;
@@ -770,7 +809,10 @@
             // button4
             // 
             this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.button4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.button4.BorderColorDown = System.Drawing.SystemColors.HotTrack;
+            this.button4.BorderColorHover = System.Drawing.SystemColors.Highlight;
+            this.button4.BorderColorNormal = System.Drawing.Color.Gray;
+            this.button4.BorderWidth = 1;
             this.button4.ColorDown = System.Drawing.Color.Empty;
             this.button4.ColorHover = System.Drawing.Color.Empty;
             this.button4.ColorNormal = System.Drawing.Color.Empty;
@@ -795,7 +837,10 @@
             // button3
             // 
             this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.button3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.button3.BorderColorDown = System.Drawing.SystemColors.HotTrack;
+            this.button3.BorderColorHover = System.Drawing.SystemColors.Highlight;
+            this.button3.BorderColorNormal = System.Drawing.Color.Gray;
+            this.button3.BorderWidth = 1;
             this.button3.ColorDown = System.Drawing.Color.Empty;
             this.button3.ColorHover = System.Drawing.Color.Empty;
             this.button3.ColorNormal = System.Drawing.Color.Empty;
@@ -820,7 +865,10 @@
             // button2
             // 
             this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.button2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.button2.BorderColorDown = System.Drawing.SystemColors.HotTrack;
+            this.button2.BorderColorHover = System.Drawing.SystemColors.Highlight;
+            this.button2.BorderColorNormal = System.Drawing.Color.Gray;
+            this.button2.BorderWidth = 1;
             this.button2.ColorDown = System.Drawing.Color.Empty;
             this.button2.ColorHover = System.Drawing.Color.Empty;
             this.button2.ColorNormal = System.Drawing.Color.Empty;
@@ -845,7 +893,10 @@
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.button1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.button1.BorderColorDown = System.Drawing.SystemColors.HotTrack;
+            this.button1.BorderColorHover = System.Drawing.SystemColors.Highlight;
+            this.button1.BorderColorNormal = System.Drawing.Color.Gray;
+            this.button1.BorderWidth = 1;
             this.button1.ColorDown = System.Drawing.Color.Empty;
             this.button1.ColorHover = System.Drawing.Color.Empty;
             this.button1.ColorNormal = System.Drawing.Color.Empty;

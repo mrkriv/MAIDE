@@ -29,7 +29,7 @@ namespace MAIDE.UI
 
         public void Translate()
         {
-            if (needTranslate && !DesignMode)
+            if (needTranslate && !DesignMode && Resource != null)
                 Translate(this);
         }
 

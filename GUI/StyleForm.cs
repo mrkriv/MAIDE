@@ -56,6 +56,8 @@ namespace MAIDE.UI
             this.LoadDefaultProperties();
             SetStyle(ControlStyles.OptimizedDoubleBuffer, false);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            SetStyle(ControlStyles.StandardClick, true);
+            SetStyle(ControlStyles.StandardDoubleClick, true);
             SetStyle(ControlStyles.UserPaint, true);
 
             FormBorderStyle = FormBorderStyle.None;
@@ -74,7 +76,7 @@ namespace MAIDE.UI
                 "ShadowDisableColor"
             }, Invalidate);
         }
-
+        
         protected override void OnLoad(EventArgs e)
         {
             if (CloseButton != null)
