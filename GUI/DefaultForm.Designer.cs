@@ -122,7 +122,7 @@
             this.MinButton = this.BtnMin;
             this.MinimumSize = new System.Drawing.Size(195, 35);
             this.Name = "DefaultForm";
-            this.Padding = new System.Windows.Forms.Padding(2, 32, 2, 2);
+            this.Padding = new System.Windows.Forms.Padding(1, 32, 1, 1);
             this.RestoreButton = this.BtnRestore;
             this.Text = "Form";
             this.TitleIconTransform = new System.Drawing.Rectangle(12, 5, 24, 24);

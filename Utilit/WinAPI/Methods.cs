@@ -74,6 +74,12 @@ namespace MAIDE.Utilit.WinAPI
         [DllImport("user32", CharSet = CharSet.Auto)]
         public extern static bool ReleaseCapture();
 
+        [DllImport("user32.dll")]
+        public static extern IntPtr SetCapture(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetCapture();
+
         [DllImport("gdi32.dll", ExactSpelling = true, SetLastError = true)]
         public static extern TBool BitBlt(IntPtr hDest, int xDest, int yDest, int nWidth, int nHeight, IntPtr hSrc, int xSrc, int ySrc, uint dwrOp);
 

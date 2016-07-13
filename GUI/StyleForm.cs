@@ -10,6 +10,8 @@ namespace MAIDE.UI
     public class StyleForm : LocForm
     {
         private ShadowForm shadow;
+        private DateTime lastClickTime;
+        private static int doubleClickTime;
 
         [DefaultValue(null)]
         [Category("Appearance")]
@@ -56,12 +58,12 @@ namespace MAIDE.UI
             this.LoadDefaultProperties();
             SetStyle(ControlStyles.OptimizedDoubleBuffer, false);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            SetStyle(ControlStyles.StandardClick, true);
-            SetStyle(ControlStyles.StandardDoubleClick, true);
             SetStyle(ControlStyles.UserPaint, true);
-
+            
+            doubleClickTime = API.GetDoubleClickTime();
             FormBorderStyle = FormBorderStyle.None;
             MaximumSize = Screen.PrimaryScreen.WorkingArea.Size;
+            Capture = true;
             ShowIcon = false;
 
             PropertyJoin.ChangedPropertyEvent(this, new string[] {
@@ -76,7 +78,7 @@ namespace MAIDE.UI
                 "ShadowDisableColor"
             }, Invalidate);
         }
-        
+
         protected override void OnLoad(EventArgs e)
         {
             if (CloseButton != null)
@@ -149,6 +151,18 @@ namespace MAIDE.UI
             }
         }
 
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+            Invalidate(false);
+        }
+
+        protected override void OnDeactivate(EventArgs e)
+        {
+            base.OnDeactivate(e);
+            Invalidate(false);
+        }
+
         private bool isHitTitle(System.Drawing.Point location)
         {
             if (WindowState == FormWindowState.Normal)
@@ -203,7 +217,13 @@ namespace MAIDE.UI
                 HitTestValues hit = HitTestValues.HTNOWHERE;
 
                 if (isHitTitle(e.Location))
-                    hit = HitTestValues.HTCAPTION;
+                {
+                    if ((DateTime.Now - lastClickTime).TotalMilliseconds <= doubleClickTime)
+                        WindowState = WindowState == FormWindowState.Normal ? FormWindowState.Maximized : FormWindowState.Normal;
+                    else
+                        hit = HitTestValues.HTCAPTION;
+                    lastClickTime = DateTime.Now;
+                }
                 else if (ResizeEnable && WindowState == FormWindowState.Normal)
                 {
                     if (e.Location.X <= Border.Left)
@@ -236,16 +256,6 @@ namespace MAIDE.UI
                     API.SendMessage(Handle, Consts.WM_NCLBUTTONDOWN, (int)hit, 0);
                 }
             }
-
-            base.OnMouseDown(e);
-        }
-
-        protected override void OnMouseDoubleClick(MouseEventArgs e)
-        {
-            if (isHitTitle(e.Location))
-                WindowState = WindowState == FormWindowState.Normal ? FormWindowState.Maximized : FormWindowState.Normal;
-            else
-                base.OnMouseDoubleClick(e);
         }
 
         protected override void OnResize(EventArgs e)

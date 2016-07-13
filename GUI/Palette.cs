@@ -311,8 +311,12 @@ namespace MAIDE.UI
             foreach (ToolStripItem c in strip.Items)
                 set(c, mode);
 
+            if (strip is StatusStrip)
+                strip.BackColor = WindowFrameActive;
+            else
+                strip.BackColor = mode == 1 ? MenuPressed : Background;
+
             strip.ItemAdded += Strip_ItemAdded;
-            strip.BackColor = mode == 1 ? MenuPressed : Background;
             strip.ForeColor = FontMain;
             strip.Renderer = menuStripRenderer;
         }

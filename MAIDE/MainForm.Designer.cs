@@ -65,15 +65,15 @@
             // 
             // BtnMax
             // 
-            this.BtnMax.Location = new System.Drawing.Point(791, 1);
+            this.BtnMax.Location = new System.Drawing.Point(792, 1);
             // 
             // BtnMin
             // 
-            this.BtnMin.Location = new System.Drawing.Point(757, 1);
+            this.BtnMin.Location = new System.Drawing.Point(758, 1);
             // 
             // BtnRestore
             // 
-            this.BtnRestore.Location = new System.Drawing.Point(791, 1);
+            this.BtnRestore.Location = new System.Drawing.Point(792, 1);
             // 
             // openFileDialog
             // 
@@ -88,9 +88,9 @@
             this.toolStripSplitFile,
             this.ViewDropDown,
             this.toolStripDropDownButton1});
-            this.MainMenu.Location = new System.Drawing.Point(2, 32);
+            this.MainMenu.Location = new System.Drawing.Point(1, 32);
             this.MainMenu.Name = "MainMenu";
-            this.MainMenu.Size = new System.Drawing.Size(856, 25);
+            this.MainMenu.Size = new System.Drawing.Size(858, 25);
             this.MainMenu.TabIndex = 25;
             // 
             // toolStripSplitFile
@@ -222,10 +222,10 @@
             this.dockPanel.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingWindow;
             this.dockPanel.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.dockPanel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
-            this.dockPanel.Location = new System.Drawing.Point(2, 96);
+            this.dockPanel.Location = new System.Drawing.Point(1, 96);
             this.dockPanel.Margin = new System.Windows.Forms.Padding(2);
             this.dockPanel.Name = "dockPanel";
-            this.dockPanel.Size = new System.Drawing.Size(856, 379);
+            this.dockPanel.Size = new System.Drawing.Size(858, 380);
             this.dockPanel.TabIndex = 26;
             this.dockPanel.ActiveContentChanged += new System.EventHandler(this.dockPanel_ActiveContentChanged);
             // 
@@ -244,9 +244,9 @@
             this.BuildMenuResume,
             this.BuildMenuResumeOne,
             this.BuildMenuRestart});
-            this.toolStrip1.Location = new System.Drawing.Point(2, 57);
+            this.toolStrip1.Location = new System.Drawing.Point(1, 57);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(856, 39);
+            this.toolStrip1.Size = new System.Drawing.Size(858, 39);
             this.toolStrip1.TabIndex = 29;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -339,11 +339,12 @@
             // 
             this.statusStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.statusStrip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
+            this.statusStrip.GripMargin = new System.Windows.Forms.Padding(0);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.status});
-            this.statusStrip.Location = new System.Drawing.Point(2, 475);
+            this.statusStrip.Location = new System.Drawing.Point(1, 476);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(856, 22);
+            this.statusStrip.Size = new System.Drawing.Size(858, 22);
             this.statusStrip.TabIndex = 32;
             // 
             // status
@@ -364,7 +365,7 @@
             this.BtnSetting.ImageDown = global::MAIDE.Properties.Resources.settings;
             this.BtnSetting.ImageHover = global::MAIDE.Properties.Resources.settings;
             this.BtnSetting.ImageNormal = global::MAIDE.Properties.Resources.settings;
-            this.BtnSetting.Location = new System.Drawing.Point(711, 1);
+            this.BtnSetting.Location = new System.Drawing.Point(712, 1);
             this.BtnSetting.Margin = new System.Windows.Forms.Padding(0);
             this.BtnSetting.Name = "BtnSetting";
             this.BtnSetting.Size = new System.Drawing.Size(34, 26);
