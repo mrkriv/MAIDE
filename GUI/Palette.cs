@@ -14,6 +14,11 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace MAIDE.UI
 {
+    public interface IUsePalette
+    {
+        void AppyPalette();
+    }
+
     public class Palette : Component
     {
         private static event PropertyChangedEventHandler propertyChanged;
@@ -270,38 +275,15 @@ namespace MAIDE.UI
             if (control.ContextMenuStrip != null)
                 set(control.ContextMenuStrip, 1);
 
-            control.BackColor = Background;
 
-            if (control is Form)
-            {
-                if (control is StyleForm)
-                {
-                    ((StyleForm)control).BorderActiveColor = WindowFrameActive;
-                    ((StyleForm)control).BorderDisableColor = WindowFrameDisable;
-                }
-                control.ForeColor = FontTitle;
-            }
+            if (control is IUsePalette)
+                ((IUsePalette)control).AppyPalette();
             else
             {
-                if (control is CodeEditBox)
-                {
-                    ((CodeEditBox)control).BackColor = TextEditorBackground;
-                    ((CodeEditBox)control).LinesNumBrush = TextEditorRowId;
-                    ((CodeEditBox)control).RunLineBrush = TextEditorRunLine;
-                    ((CodeEditBox)control).SelectBrush = TextEditorSelected;
-                    ((CodeEditBox)control).SelectLineBrush = TextEditorSelectLine;
-                }
-                else if (control is TabControl)
-                {
-                    ((TabControl)control).TabDisableColor = DockingTabDisable;
-                    ((TabControl)control).TabActiveColor = DockingTabActive;
-                    ((TabControl)control).BorderColor = GroupBorder;
-                }
-                else if (control is GroupBox)
-                    ((GroupBox)control).BorderColor = GroupBorder;
-                else if (control is DockPanel)
+                if (control is DockPanel)
                     ((DockPanel)control).Theme = dockingTheme;
 
+                control.BackColor = Background;
                 control.ForeColor = FontMain;
             }
         }

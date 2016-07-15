@@ -6,7 +6,7 @@ using MAIDE.Utilit;
 
 namespace MAIDE.UI
 {
-    public class TabControl : System.Windows.Forms.TabControl
+    public class TabControl : System.Windows.Forms.TabControl, IUsePalette
     {
         private Color backColor = Color.Empty;
         private StringFormat titleFormat = new StringFormat()
@@ -107,6 +107,15 @@ namespace MAIDE.UI
                     SelectedTab.Bounds.Location.Add(-3, -2),
                     SelectedTab.Bounds.Location.Add(SelectedTab.Bounds.Width + 4, -2));
             }
+        }
+
+        public void AppyPalette()
+        {
+            BackColor = Palette.Background;
+            TabDisableColor = Palette.DockingTabDisable;
+            TabActiveColor = Palette.DockingTabActive;
+            BorderColor = Palette.GroupBorder;
+            ForeColor = Palette.FontMain;
         }
     }
 }

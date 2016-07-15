@@ -11,7 +11,7 @@ using MAIDE.Utilit;
 
 namespace MAIDE.UI
 {
-    public partial class CodeEditBox : UserControl
+    public partial class CodeEditBox : UserControl, IUsePalette
     {
         private readonly static char[] wordSplitSymbols = { ' ', '\t', '.', ';', ',', '%' };
         private readonly static string linesNumFormat = "{0,4:D1}";
@@ -1180,6 +1180,16 @@ namespace MAIDE.UI
         private void cmCopy_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(GetSelect());
+        }
+
+        public void AppyPalette()
+        { 
+            BackColor = Palette.TextEditorBackground;
+            LinesNumBrush = Palette.TextEditorRowId;
+            RunLineBrush = Palette.TextEditorRunLine;
+            SelectBrush = Palette.TextEditorSelected;
+            SelectLineBrush = Palette.TextEditorSelectLine;
+            ForeColor = Palette.FontMain;
         }
     }
 }

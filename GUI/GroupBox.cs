@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace MAIDE.UI
 {
-    public class GroupBox : System.Windows.Forms.GroupBox
+    public class GroupBox : System.Windows.Forms.GroupBox, IUsePalette
     {
         private Color borderColor;
 
@@ -45,6 +45,13 @@ namespace MAIDE.UI
 
         protected override void OnPaint(PaintEventArgs e)
         {
+        }
+
+        public void AppyPalette()
+        {
+            BackColor = Palette.Background;
+            ForeColor = Palette.FontMain;
+            BorderColor = Palette.GroupBorder;
         }
     }
 }

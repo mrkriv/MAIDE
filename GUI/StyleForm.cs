@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace MAIDE.UI
 {
-    public class StyleForm : LocForm
+    public class StyleForm : LocForm, IUsePalette
     {
         private ShadowForm shadow;
         private DateTime lastClickTime;
@@ -59,11 +59,10 @@ namespace MAIDE.UI
             SetStyle(ControlStyles.OptimizedDoubleBuffer, false);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             SetStyle(ControlStyles.UserPaint, true);
-            
+
             doubleClickTime = API.GetDoubleClickTime();
             FormBorderStyle = FormBorderStyle.None;
             MaximumSize = Screen.PrimaryScreen.WorkingArea.Size;
-            Capture = true;
             ShowIcon = false;
 
             PropertyJoin.ChangedPropertyEvent(this, new string[] {
@@ -89,7 +88,7 @@ namespace MAIDE.UI
                 MinButton.Click += (s, a) => { WindowState = FormWindowState.Minimized; };
             if (RestoreButton != null)
                 RestoreButton.Click += (s, a) => { WindowState = FormWindowState.Normal; };
-            
+
             updateShadow();
             base.OnLoad(e);
         }
@@ -140,7 +139,7 @@ namespace MAIDE.UI
 
             Color foreColor = isActive ? ForeColor : ForeColor.Multiplay(.75f);
             e.Graphics.DrawString(Text, Font, new SolidBrush(foreColor), TitleIconTransform.CenterRight().Add(10, Font.Height / -2));
-            
+
             if (WindowState == FormWindowState.Normal)
             {
                 Brush brush = new SolidBrush(isActive ? BorderActiveColor : BorderDisableColor);
@@ -271,6 +270,14 @@ namespace MAIDE.UI
             }
 
             Invalidate(false);
+        }
+
+        public void AppyPalette()
+        {
+            BackColor = Palette.Background;
+            BorderActiveColor = Palette.WindowFrameActive;
+            BorderDisableColor = Palette.WindowFrameDisable;
+            ForeColor = Palette.FontTitle;
         }
     }
 }
