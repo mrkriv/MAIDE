@@ -28,7 +28,7 @@ namespace MAIDE
 
             LocForm.Resource = Language.ResourceManager;
             Language.ResourceManager.IgnoreCase = true;
-            Palette.JoinToObject(Properties.Settings.Default);
+            Palette.JoinSetting(Properties.Settings.Default);
 
             if (!Debug)
             {

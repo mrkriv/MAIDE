@@ -16,3 +16,4 @@ C:\Users\admin\Documents\Visual Studio 2015\Projects\MAIDE\GUI\obj\Debug\MAIDE.U
 C:\Users\admin\Documents\Visual Studio 2015\Projects\MAIDE\GUI\obj\Debug\MAIDE.UI.StyleForm.resources
 C:\Users\admin\Documents\Visual Studio 2015\Projects\MAIDE\bin\Debug\GUI.dll
 C:\Users\admin\Documents\Visual Studio 2015\Projects\MAIDE\bin\Debug\GUI.pdb
+C:\Users\admin\Documents\Visual Studio 2015\Projects\MAIDE\GUI\obj\Debug\MAIDE.UI.DialogStringForm.resources

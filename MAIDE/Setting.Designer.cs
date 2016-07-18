@@ -223,6 +223,7 @@
             this.mGroupBox2.TabIndex = 14;
             this.mGroupBox2.TabStop = false;
             this.mGroupBox2.Text = "Registres";
+            this.mGroupBox2.UsePalette = false;
             // 
             // label4
             // 
@@ -398,15 +399,17 @@
             this.button13.BorderColorHover = System.Drawing.SystemColors.Highlight;
             this.button13.BorderColorNormal = System.Drawing.Color.Gray;
             this.button13.BorderWidth = 1;
-            this.button13.ColorDown = System.Drawing.Color.Empty;
-            this.button13.ColorHover = System.Drawing.Color.Empty;
-            this.button13.ColorNormal = System.Drawing.Color.Empty;
+            this.button13.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.button13.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.button13.ColorNormal = System.Drawing.Color.Transparent;
+            this.button13.DrawText = false;
             this.button13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.button13.Location = new System.Drawing.Point(198, 215);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(65, 23);
             this.button13.TabIndex = 44;
             this.button13.Tag = "DockingTabDisable";
+            this.button13.UsePalette = false;
             // 
             // label19
             // 
@@ -426,15 +429,17 @@
             this.button14.BorderColorHover = System.Drawing.SystemColors.Highlight;
             this.button14.BorderColorNormal = System.Drawing.Color.Gray;
             this.button14.BorderWidth = 1;
-            this.button14.ColorDown = System.Drawing.Color.Empty;
-            this.button14.ColorHover = System.Drawing.Color.Empty;
-            this.button14.ColorNormal = System.Drawing.Color.Empty;
+            this.button14.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.button14.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.button14.ColorNormal = System.Drawing.Color.Transparent;
+            this.button14.DrawText = false;
             this.button14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.button14.Location = new System.Drawing.Point(198, 186);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(65, 23);
             this.button14.TabIndex = 42;
             this.button14.Tag = "DockingTabActive";
+            this.button14.UsePalette = false;
             // 
             // groupBox2
             // 
@@ -457,6 +462,7 @@
             this.groupBox2.TabIndex = 41;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "TextEditor";
+            this.groupBox2.UsePalette = false;
             // 
             // label16
             // 
@@ -477,15 +483,17 @@
             this.button11.BorderColorHover = System.Drawing.SystemColors.Highlight;
             this.button11.BorderColorNormal = System.Drawing.Color.Gray;
             this.button11.BorderWidth = 1;
-            this.button11.ColorDown = System.Drawing.Color.Empty;
-            this.button11.ColorHover = System.Drawing.Color.Empty;
-            this.button11.ColorNormal = System.Drawing.Color.Empty;
+            this.button11.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.button11.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.button11.ColorNormal = System.Drawing.Color.Transparent;
+            this.button11.DrawText = false;
             this.button11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.button11.Location = new System.Drawing.Point(188, 135);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(65, 23);
             this.button11.TabIndex = 26;
             this.button11.Tag = "TextEditorRunLine";
+            this.button11.UsePalette = false;
             // 
             // label15
             // 
@@ -506,15 +514,17 @@
             this.button10.BorderColorHover = System.Drawing.SystemColors.Highlight;
             this.button10.BorderColorNormal = System.Drawing.Color.Gray;
             this.button10.BorderWidth = 1;
-            this.button10.ColorDown = System.Drawing.Color.Empty;
-            this.button10.ColorHover = System.Drawing.Color.Empty;
-            this.button10.ColorNormal = System.Drawing.Color.Empty;
+            this.button10.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.button10.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.button10.ColorNormal = System.Drawing.Color.Transparent;
+            this.button10.DrawText = false;
             this.button10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.button10.Location = new System.Drawing.Point(188, 106);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(65, 23);
             this.button10.TabIndex = 24;
             this.button10.Tag = "TextEditorSelectLine";
+            this.button10.UsePalette = false;
             // 
             // label25
             // 
@@ -535,15 +545,17 @@
             this.button20.BorderColorHover = System.Drawing.SystemColors.Highlight;
             this.button20.BorderColorNormal = System.Drawing.Color.Gray;
             this.button20.BorderWidth = 1;
-            this.button20.ColorDown = System.Drawing.Color.Empty;
-            this.button20.ColorHover = System.Drawing.Color.Empty;
-            this.button20.ColorNormal = System.Drawing.Color.Empty;
+            this.button20.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.button20.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.button20.ColorNormal = System.Drawing.Color.Transparent;
+            this.button20.DrawText = false;
             this.button20.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.button20.Location = new System.Drawing.Point(188, 77);
             this.button20.Name = "button20";
             this.button20.Size = new System.Drawing.Size(65, 23);
             this.button20.TabIndex = 22;
             this.button20.Tag = "TextEditorSelected";
+            this.button20.UsePalette = false;
             // 
             // label26
             // 
@@ -564,15 +576,17 @@
             this.button21.BorderColorHover = System.Drawing.SystemColors.Highlight;
             this.button21.BorderColorNormal = System.Drawing.Color.Gray;
             this.button21.BorderWidth = 1;
-            this.button21.ColorDown = System.Drawing.Color.Empty;
-            this.button21.ColorHover = System.Drawing.Color.Empty;
-            this.button21.ColorNormal = System.Drawing.Color.Empty;
+            this.button21.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.button21.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.button21.ColorNormal = System.Drawing.Color.Transparent;
+            this.button21.DrawText = false;
             this.button21.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.button21.Location = new System.Drawing.Point(188, 48);
             this.button21.Name = "button21";
             this.button21.Size = new System.Drawing.Size(65, 23);
             this.button21.TabIndex = 20;
             this.button21.Tag = "TextEditorRowId";
+            this.button21.UsePalette = false;
             // 
             // label27
             // 
@@ -593,15 +607,17 @@
             this.button22.BorderColorHover = System.Drawing.SystemColors.Highlight;
             this.button22.BorderColorNormal = System.Drawing.Color.Gray;
             this.button22.BorderWidth = 1;
-            this.button22.ColorDown = System.Drawing.Color.Empty;
-            this.button22.ColorHover = System.Drawing.Color.Empty;
-            this.button22.ColorNormal = System.Drawing.Color.Empty;
+            this.button22.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.button22.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.button22.ColorNormal = System.Drawing.Color.Transparent;
+            this.button22.DrawText = false;
             this.button22.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.button22.Location = new System.Drawing.Point(188, 19);
             this.button22.Name = "button22";
             this.button22.Size = new System.Drawing.Size(65, 23);
             this.button22.TabIndex = 18;
             this.button22.Tag = "TextEditorBackground";
+            this.button22.UsePalette = false;
             // 
             // groupBox1
             // 
@@ -622,6 +638,7 @@
             this.groupBox1.TabIndex = 40;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "ContextMenu";
+            this.groupBox1.UsePalette = false;
             // 
             // label14
             // 
@@ -642,15 +659,17 @@
             this.button9.BorderColorHover = System.Drawing.SystemColors.Highlight;
             this.button9.BorderColorNormal = System.Drawing.Color.Gray;
             this.button9.BorderWidth = 1;
-            this.button9.ColorDown = System.Drawing.Color.Empty;
-            this.button9.ColorHover = System.Drawing.Color.Empty;
-            this.button9.ColorNormal = System.Drawing.Color.Empty;
+            this.button9.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.button9.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.button9.ColorNormal = System.Drawing.Color.Transparent;
+            this.button9.DrawText = false;
             this.button9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.button9.Location = new System.Drawing.Point(188, 106);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(65, 23);
             this.button9.TabIndex = 24;
             this.button9.Tag = "MenuSeparator";
+            this.button9.UsePalette = false;
             // 
             // label13
             // 
@@ -671,15 +690,17 @@
             this.button8.BorderColorHover = System.Drawing.SystemColors.Highlight;
             this.button8.BorderColorNormal = System.Drawing.Color.Gray;
             this.button8.BorderWidth = 1;
-            this.button8.ColorDown = System.Drawing.Color.Empty;
-            this.button8.ColorHover = System.Drawing.Color.Empty;
-            this.button8.ColorNormal = System.Drawing.Color.Empty;
+            this.button8.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.button8.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.button8.ColorNormal = System.Drawing.Color.Transparent;
+            this.button8.DrawText = false;
             this.button8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.button8.Location = new System.Drawing.Point(188, 77);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(65, 23);
             this.button8.TabIndex = 22;
             this.button8.Tag = "MenuBorder";
+            this.button8.UsePalette = false;
             // 
             // label12
             // 
@@ -700,15 +721,17 @@
             this.button7.BorderColorHover = System.Drawing.SystemColors.Highlight;
             this.button7.BorderColorNormal = System.Drawing.Color.Gray;
             this.button7.BorderWidth = 1;
-            this.button7.ColorDown = System.Drawing.Color.Empty;
-            this.button7.ColorHover = System.Drawing.Color.Empty;
-            this.button7.ColorNormal = System.Drawing.Color.Empty;
+            this.button7.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.button7.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.button7.ColorNormal = System.Drawing.Color.Transparent;
+            this.button7.DrawText = false;
             this.button7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.button7.Location = new System.Drawing.Point(188, 48);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(65, 23);
             this.button7.TabIndex = 20;
             this.button7.Tag = "MenuSelected";
+            this.button7.UsePalette = false;
             // 
             // label11
             // 
@@ -729,15 +752,17 @@
             this.button6.BorderColorHover = System.Drawing.SystemColors.Highlight;
             this.button6.BorderColorNormal = System.Drawing.Color.Gray;
             this.button6.BorderWidth = 1;
-            this.button6.ColorDown = System.Drawing.Color.Empty;
-            this.button6.ColorHover = System.Drawing.Color.Empty;
-            this.button6.ColorNormal = System.Drawing.Color.Empty;
+            this.button6.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.button6.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.button6.ColorNormal = System.Drawing.Color.Transparent;
+            this.button6.DrawText = false;
             this.button6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.button6.Location = new System.Drawing.Point(188, 19);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(65, 23);
             this.button6.TabIndex = 18;
             this.button6.Tag = "MenuPressed";
+            this.button6.UsePalette = false;
             // 
             // label17
             // 
@@ -757,15 +782,17 @@
             this.button12.BorderColorHover = System.Drawing.SystemColors.Highlight;
             this.button12.BorderColorNormal = System.Drawing.Color.Gray;
             this.button12.BorderWidth = 1;
-            this.button12.ColorDown = System.Drawing.Color.Empty;
-            this.button12.ColorHover = System.Drawing.Color.Empty;
-            this.button12.ColorNormal = System.Drawing.Color.Empty;
+            this.button12.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.button12.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.button12.ColorNormal = System.Drawing.Color.Transparent;
+            this.button12.DrawText = false;
             this.button12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.button12.Location = new System.Drawing.Point(198, 157);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(65, 23);
             this.button12.TabIndex = 36;
             this.button12.Tag = "GroupBorder";
+            this.button12.UsePalette = false;
             // 
             // label10
             // 
@@ -785,15 +812,17 @@
             this.button5.BorderColorHover = System.Drawing.SystemColors.Highlight;
             this.button5.BorderColorNormal = System.Drawing.Color.Gray;
             this.button5.BorderWidth = 1;
-            this.button5.ColorDown = System.Drawing.Color.Empty;
-            this.button5.ColorHover = System.Drawing.Color.Empty;
-            this.button5.ColorNormal = System.Drawing.Color.Empty;
+            this.button5.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.button5.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.button5.ColorNormal = System.Drawing.Color.Transparent;
+            this.button5.DrawText = false;
             this.button5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.button5.Location = new System.Drawing.Point(198, 41);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(65, 23);
             this.button5.TabIndex = 8;
             this.button5.Tag = "FontMain";
+            this.button5.UsePalette = false;
             // 
             // label9
             // 
@@ -813,15 +842,17 @@
             this.button4.BorderColorHover = System.Drawing.SystemColors.Highlight;
             this.button4.BorderColorNormal = System.Drawing.Color.Gray;
             this.button4.BorderWidth = 1;
-            this.button4.ColorDown = System.Drawing.Color.Empty;
-            this.button4.ColorHover = System.Drawing.Color.Empty;
-            this.button4.ColorNormal = System.Drawing.Color.Empty;
+            this.button4.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.button4.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.button4.ColorNormal = System.Drawing.Color.Transparent;
+            this.button4.DrawText = false;
             this.button4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.button4.Location = new System.Drawing.Point(198, 70);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(65, 23);
             this.button4.TabIndex = 6;
             this.button4.Tag = "FontTitle";
+            this.button4.UsePalette = false;
             // 
             // label8
             // 
@@ -841,15 +872,17 @@
             this.button3.BorderColorHover = System.Drawing.SystemColors.Highlight;
             this.button3.BorderColorNormal = System.Drawing.Color.Gray;
             this.button3.BorderWidth = 1;
-            this.button3.ColorDown = System.Drawing.Color.Empty;
-            this.button3.ColorHover = System.Drawing.Color.Empty;
-            this.button3.ColorNormal = System.Drawing.Color.Empty;
+            this.button3.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.button3.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.button3.ColorNormal = System.Drawing.Color.Transparent;
+            this.button3.DrawText = false;
             this.button3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.button3.Location = new System.Drawing.Point(198, 128);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(65, 23);
             this.button3.TabIndex = 4;
             this.button3.Tag = "WindowFrameDisable";
+            this.button3.UsePalette = false;
             // 
             // label7
             // 
@@ -869,15 +902,17 @@
             this.button2.BorderColorHover = System.Drawing.SystemColors.Highlight;
             this.button2.BorderColorNormal = System.Drawing.Color.Gray;
             this.button2.BorderWidth = 1;
-            this.button2.ColorDown = System.Drawing.Color.Empty;
-            this.button2.ColorHover = System.Drawing.Color.Empty;
-            this.button2.ColorNormal = System.Drawing.Color.Empty;
+            this.button2.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.button2.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.button2.ColorNormal = System.Drawing.Color.Transparent;
+            this.button2.DrawText = false;
             this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.button2.Location = new System.Drawing.Point(198, 99);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(65, 23);
             this.button2.TabIndex = 2;
             this.button2.Tag = "WindowFrameActive";
+            this.button2.UsePalette = false;
             // 
             // label6
             // 
@@ -897,15 +932,17 @@
             this.button1.BorderColorHover = System.Drawing.SystemColors.Highlight;
             this.button1.BorderColorNormal = System.Drawing.Color.Gray;
             this.button1.BorderWidth = 1;
-            this.button1.ColorDown = System.Drawing.Color.Empty;
-            this.button1.ColorHover = System.Drawing.Color.Empty;
-            this.button1.ColorNormal = System.Drawing.Color.Empty;
+            this.button1.ColorDown = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.button1.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.button1.ColorNormal = System.Drawing.Color.Transparent;
+            this.button1.DrawText = false;
             this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.button1.Location = new System.Drawing.Point(198, 12);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(65, 23);
             this.button1.TabIndex = 0;
             this.button1.Tag = "Background";
+            this.button1.UsePalette = false;
             // 
             // Setting
             // 

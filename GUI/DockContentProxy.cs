@@ -9,9 +9,12 @@ namespace MAIDE.UI
 {
     public class DockContentProxy : DockContent
     {
+        protected Palette Palette;
+
         public DockContentProxy()
         {
-            new Palette() { Owner = this };
+            Palette = new Palette();
+            Palette.Owner = this;
         }
     }
 }

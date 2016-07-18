@@ -13,6 +13,10 @@ namespace MAIDE.UI
         private DateTime lastClickTime;
         private static int doubleClickTime;
 
+        [Category("Appearance")]
+        [DefaultValue(true)]
+        public bool UsePalette { get; set; }
+
         [DefaultValue(null)]
         [Category("Appearance")]
         public Image TitleIcon { get; set; }
@@ -274,10 +278,10 @@ namespace MAIDE.UI
 
         public void AppyPalette()
         {
-            BackColor = Palette.Background;
-            BorderActiveColor = Palette.WindowFrameActive;
-            BorderDisableColor = Palette.WindowFrameDisable;
-            ForeColor = Palette.FontTitle;
+            BackColor = Palette.GetColor("Background");
+            BorderActiveColor = Palette.GetColor("WindowFrameActive");
+            BorderDisableColor = Palette.GetColor("WindowFrameDisable");
+            ForeColor = Palette.GetColor("FontTitle");
         }
     }
 }

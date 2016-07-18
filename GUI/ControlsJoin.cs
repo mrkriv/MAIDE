@@ -59,7 +59,7 @@ namespace MAIDE.UI
                 property.SetValue(Object, control.Text.FirstOrDefault());
         }
 
-        public static void JoinToInt(NumericUpDown control, PropertyInfo property, object Object)
+        public static void JoinToInt32(NumericUpDown control, PropertyInfo property, object Object)
         {
             if (control == null)
                 return;
@@ -109,7 +109,7 @@ namespace MAIDE.UI
         {
             if (control == null)
                 return;
-
+            
             control.ColorNormal = (Color)property.GetValue(Object);
             control.ColorHover = control.ColorNormal.Multiplay(1.2f);
             control.ColorDown = control.ColorNormal.Multiplay(1.4f);
@@ -117,6 +117,7 @@ namespace MAIDE.UI
             control.Click += (s, e) =>
             {
                 ColorDialog dlg = new ColorDialog();
+                dlg.Color = control.ColorNormal;
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     property.SetValue(Object, dlg.Color);

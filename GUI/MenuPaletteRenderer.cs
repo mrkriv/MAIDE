@@ -44,45 +44,45 @@ namespace MAIDE.UI
         {
             if (e.ToolStrip.IsDropDown)
             {
-                e.Graphics.DrawLine(new Pen(Palette.MenuBorder), 0, 0, 0, (int)e.Graphics.ClipBounds.Bottom);
-                e.Graphics.DrawLine(new Pen(Palette.MenuPressed), 1, 0, 1, (int)e.Graphics.ClipBounds.Bottom);
+                e.Graphics.DrawLine(new Pen(Palette.GetColor("MenuBorder")), 0, 0, 0, (int)e.Graphics.ClipBounds.Bottom);
+                e.Graphics.DrawLine(new Pen(Palette.GetColor("MenuPressed")), 1, 0, 1, (int)e.Graphics.ClipBounds.Bottom);
             }
         }
     }
-    
+
     public class MenuStripColorTable : ProfessionalColorTable
     {
         public override Color MenuItemSelected
         {
-            get { return Palette.MenuSelected; }
+            get { return Palette.GetColor("MenuSelected"); }
         }
         public override Color MenuItemPressedGradientEnd
         {
-            get { return Palette.MenuPressed; }
+            get { return Palette.GetColor("MenuPressed"); }
         }
         public override Color MenuItemPressedGradientBegin
         {
-            get { return Palette.MenuPressed; }
+            get { return Palette.GetColor("MenuPressed"); }
         }
         public override Color ButtonSelectedHighlight
         {
-            get { return Palette.MenuSelected; }
+            get { return Palette.GetColor("MenuSelected"); }
         }
         public override Color MenuItemSelectedGradientBegin
         {
-            get { return Palette.MenuSelected; }
+            get { return Palette.GetColor("MenuSelected"); }
         }
         public override Color MenuItemSelectedGradientEnd
         {
-            get { return Palette.MenuSelected; }
+            get { return Palette.GetColor("MenuSelected"); }
         }
         public override Color ToolStripDropDownBackground
         {
-            get { return Palette.MenuPressed; }
+            get { return Palette.GetColor("MenuPressed"); }
         }
         public override Color ToolStripBorder
         {
-            get { return Palette.MenuBorder; }
+            get { return Palette.GetColor("MenuBorder"); }
         }
         public override Color ButtonSelectedBorder
         {
@@ -90,7 +90,7 @@ namespace MAIDE.UI
         }
         public override Color MenuBorder
         {
-            get { return Palette.MenuBorder; }
+            get { return Palette.GetColor("MenuBorder"); }
         }
         public override Color MenuItemBorder
         {
@@ -98,23 +98,23 @@ namespace MAIDE.UI
         }
         public override Color StatusStripGradientBegin
         {
-            get { return Palette.Background; }
+            get { return Palette.GetColor("Background"); }
         }
         public override Color StatusStripGradientEnd
         {
-            get { return Palette.Background; }
+            get { return Palette.GetColor("Background"); }
         }
         public override Color ButtonSelectedGradientEnd
         {
-            get { return Palette.MenuSelected; }
+            get { return Palette.GetColor("MenuSelected"); }
         }
         public override Color ButtonSelectedGradientMiddle
         {
-            get { return Palette.MenuSelected; }
+            get { return Palette.GetColor("MenuSelected"); }
         }
         public override Color ButtonSelectedGradientBegin
         {
-            get { return Palette.MenuSelected; }
+            get { return Palette.GetColor("MenuSelected"); }
         }
     }
 }

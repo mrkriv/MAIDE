@@ -72,6 +72,12 @@
     <Compile Include="DefaultForm.Designer.cs">
       <DependentUpon>DefaultForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DialogStringForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogStringForm.Designer.cs">
+      <DependentUpon>DialogStringForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="DockContentProxy.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -132,6 +138,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DefaultForm.resx">
       <DependentUpon>DefaultForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogStringForm.resx">
+      <DependentUpon>DialogStringForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DragDropPanel.resx">
       <DependentUpon>DragDropPanel.cs</DependentUpon>

@@ -11,6 +11,10 @@ namespace MAIDE.UI
         private Color borderColor;
 
         [Category("Appearance")]
+        [DefaultValue(true)]
+        public bool UsePalette { get; set; }
+
+        [Category("Appearance")]
         public Color BorderColor
         {
             get { return borderColor; }
@@ -49,9 +53,9 @@ namespace MAIDE.UI
 
         public void AppyPalette()
         {
-            BackColor = Palette.Background;
-            ForeColor = Palette.FontMain;
-            BorderColor = Palette.GroupBorder;
+            BackColor = Palette.GetColor("Background");
+            ForeColor = Palette.GetColor("FontMain");
+            BorderColor = Palette.GetColor("GroupBorder");
         }
     }
 }

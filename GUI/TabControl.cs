@@ -16,6 +16,10 @@ namespace MAIDE.UI
         };
 
         [Category("Appearance")]
+        [DefaultValue(true)]
+        public bool UsePalette { get; set; }
+
+        [Category("Appearance")]
         [DefaultValue(typeof(Color), "150, 150, 150")]
         public Color BorderColor { get; set; }
 
@@ -48,6 +52,8 @@ namespace MAIDE.UI
 
         public TabControl()
         {
+            this.LoadDefaultProperties();
+
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             SetStyle(ControlStyles.DoubleBuffer, true);
             SetStyle(ControlStyles.ResizeRedraw, true);
@@ -111,11 +117,11 @@ namespace MAIDE.UI
 
         public void AppyPalette()
         {
-            BackColor = Palette.Background;
-            TabDisableColor = Palette.DockingTabDisable;
-            TabActiveColor = Palette.DockingTabActive;
-            BorderColor = Palette.GroupBorder;
-            ForeColor = Palette.FontMain;
+            BackColor = Palette.GetColor("Background");
+            TabDisableColor = Palette.GetColor("DockingTabDisable");
+            TabActiveColor = Palette.GetColor("DockingTabActive");
+            BorderColor = Palette.GetColor("GroupBorder");
+            ForeColor = Palette.GetColor("FontMain");
         }
     }
 }

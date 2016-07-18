@@ -13,7 +13,7 @@ namespace MAIDE.UI
 {
     [DefaultEvent("Click")]
     [DefaultProperty("Text")]
-    public class Button : Control, IButtonControl
+    public class Button : Control, IButtonControl, IUsePalette
     {
         public enum State
         {
@@ -27,6 +27,10 @@ namespace MAIDE.UI
 
         [Browsable(false)]
         public State Status { get; private set; }
+
+        [Category("Appearance")]
+        [DefaultValue(true)]
+        public bool UsePalette { get; set; }
 
         [Category("Appearance")]
         [DefaultValue(0)]
@@ -187,6 +191,13 @@ namespace MAIDE.UI
         {
             if (CanSelect)
                 InvokeOnClick(this, EventArgs.Empty);
+        }
+
+        public void AppyPalette()
+        {
+            ColorNormal = Color.Transparent;
+            ColorHover = Palette.GetColor("TextEditorBackground");
+            ColorDown = Palette.GetColor("DockingTabActive");
         }
     }
 }

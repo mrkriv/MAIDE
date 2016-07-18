@@ -16,156 +16,36 @@ namespace MAIDE.UI
 {
     public interface IUsePalette
     {
+        bool UsePalette { get; set; }
+
         void AppyPalette();
     }
 
     public class Palette : Component
     {
-        private static event PropertyChangedEventHandler propertyChanged;
-        private static Color background;
-        private static Color windowFrameActive;
-        private static Color windowFrameDisable;
-        private static Color fontTitle;
-        private static Color fontMain;
-        private static Color menuPressed;
-        private static Color menuSelected;
-        private static Color menuBorder;
-        private static Color menuSeparator;
-        private static Color textEditorBackground;
-        private static Color textEditorSelected;
-        private static Color rextEditorRowId;
-        private static Color groupBorder;
-        private static Color textEditorSelectLine;
-        private static Color textEditorRunLine;
-        private static Color dockingTabActive;
-        private static Color dockingTabDisable;
+        private static event PropertyChangedEventHandler paletteChanged;
+        private static Dictionary<string, TableItem> table;
         private static MenuPaletteRenderer menuStripRenderer;
         private static ThemeBase dockingTheme;
+        private static object settingObject;
+        private static bool isLook;
         private Control owner;
-        
-        [DefaultValue(typeof(Color), "45, 45, 48")]
-        public static Color Background
+
+        private class TableItem
         {
-            get { return background; }
-            set { setProperty(ref background, value); }
+            public Color Color;
+            public PropertyDescriptor Descriptor;
+
+            public TableItem(Color color)
+            {
+                Color = color;
+            }
         }
 
-        [DefaultValue(typeof(Color), "1, 122, 204")]
-        public static Color WindowFrameActive
+        public static event PropertyChangedEventHandler PaletteChanged
         {
-            get { return windowFrameActive; }
-            set { setProperty(ref windowFrameActive, value); }
-        }
-
-        [DefaultValue(typeof(Color), "66, 66, 66")]
-        public static Color WindowFrameDisable
-        {
-            get { return windowFrameDisable; }
-            set { setProperty(ref windowFrameDisable, value); }
-        }
-
-        [DefaultValue(typeof(Color), "111, 111, 112")]
-        public static Color FontTitle
-        {
-            get { return fontTitle; }
-            set { setProperty(ref fontTitle, value); }
-        }
-
-        [DefaultValue(typeof(Color), "241, 241, 241")]
-        public static Color FontMain
-        {
-            get { return fontMain; }
-            set { setProperty(ref fontMain, value); }
-        }
-
-        [DefaultValue(typeof(Color), "27, 27, 28")]
-        public static Color MenuPressed
-        {
-            get { return menuPressed; }
-            set { setProperty(ref menuPressed, value); }
-        }
-
-        [DefaultValue(typeof(Color), "62, 62, 64")]
-        public static Color MenuSelected
-        {
-            get { return menuSelected; }
-            set { setProperty(ref menuSelected, value); }
-        }
-
-        [DefaultValue(typeof(Color), "51, 51, 55")]
-        public static Color MenuBorder
-        {
-            get { return menuBorder; }
-            set { setProperty(ref menuBorder, value); }
-        }
-
-        [DefaultValue(typeof(Color), "51, 51, 55")]
-        public static Color MenuSeparator
-        {
-            get { return menuSeparator; }
-            set { setProperty(ref menuSeparator, value); }
-        }
-
-        [DefaultValue(typeof(Color), "30, 30, 30")]
-        public static Color TextEditorBackground
-        {
-            get { return textEditorBackground; }
-            set { setProperty(ref textEditorBackground, value); }
-        }
-
-        [DefaultValue(typeof(Color), "107, 140, 209, 255")]
-        public static Color TextEditorSelected
-        {
-            get { return textEditorSelected; }
-            set { setProperty(ref textEditorSelected, value); }
-        }
-
-        [DefaultValue(typeof(Color), "51, 51, 51")]
-        public static Color TextEditorRowId
-        {
-            get { return rextEditorRowId; }
-            set { setProperty(ref rextEditorRowId, value); }
-        }
-
-        [DefaultValue(typeof(Color), "15, 15, 15")]
-        public static Color TextEditorSelectLine
-        {
-            get { return textEditorSelectLine; }
-            set { setProperty(ref textEditorSelectLine, value); }
-        }
-
-        [DefaultValue(typeof(Color), "15, 50, 15")]
-        public static Color TextEditorRunLine
-        {
-            get { return textEditorRunLine; }
-            set { setProperty(ref textEditorRunLine, value); }
-        }
-
-        [DefaultValue(typeof(Color), "150, 150, 150")]
-        public static Color GroupBorder
-        {
-            get { return groupBorder; }
-            set { setProperty(ref groupBorder, value); }
-        }
-
-        [DefaultValue(typeof(Color), "1, 122, 204")]
-        public static Color DockingTabActive
-        {
-            get { return dockingTabActive; }
-            set { setProperty(ref dockingTabActive, value); }
-        }
-
-        [DefaultValue(typeof(Color), "45, 45, 48")]
-        public static Color DockingTabDisable
-        {
-            get { return dockingTabDisable; }
-            set { setProperty(ref dockingTabDisable, value); }
-        }
-        
-        public static event PropertyChangedEventHandler PropertyChanged
-        {
-            add { propertyChanged += value; }
-            remove { propertyChanged -= value; }
+            add { paletteChanged += value; }
+            remove { paletteChanged -= value; }
         }
 
         [DefaultValue(true)]
@@ -180,6 +60,12 @@ namespace MAIDE.UI
                 if (Owner != null)
                     set(Owner);
             }
+        }
+
+        public Color this[string name]
+        {
+            get { return GetColor(name); }
+            set { SetColor(name, value); }
         }
 
         public Control Owner
@@ -212,6 +98,61 @@ namespace MAIDE.UI
             }
         }
 
+        static Palette()
+        {
+            Exep.LoadDefaultProperties(typeof(Palette));
+
+            table = new Dictionary<string, TableItem>();
+            table.Add("Background", new TableItem(Color.FromArgb(45, 45, 48)));
+            table.Add("WindowFrameActive", new TableItem(Color.FromArgb(1, 122, 204)));
+            table.Add("WindowFrameDisable", new TableItem(Color.FromArgb(66, 66, 66)));
+            table.Add("FontTitle", new TableItem(Color.FromArgb(111, 111, 112)));
+            table.Add("FontMain", new TableItem(Color.FromArgb(241, 241, 241)));
+            table.Add("MenuPressed", new TableItem(Color.FromArgb(27, 27, 28)));
+            table.Add("MenuSelected", new TableItem(Color.FromArgb(62, 62, 64)));
+            table.Add("MenuBorder", new TableItem(Color.FromArgb(51, 51, 55)));
+            table.Add("MenuSeparator", new TableItem(Color.FromArgb(51, 51, 55)));
+            table.Add("TextEditorBackground", new TableItem(Color.FromArgb(30, 30, 30)));
+            table.Add("TextEditorSelected", new TableItem(Color.FromArgb(107, 140, 209, 255)));
+            table.Add("TextEditorRowId", new TableItem(Color.FromArgb(51, 51, 51)));
+            table.Add("TextEditorSelectLine", new TableItem(Color.FromArgb(15, 15, 15)));
+            table.Add("TextEditorRunLine", new TableItem(Color.FromArgb(15, 50, 15)));
+            table.Add("GroupBorder", new TableItem(Color.FromArgb(150, 150, 150)));
+            table.Add("DockingTabActive", new TableItem(Color.FromArgb(1, 122, 204)));
+            table.Add("DockingTabDisable", new TableItem(Color.FromArgb(45, 45, 48)));
+
+            paletteChanged = new PropertyChangedEventHandler(onPaletteChange);
+            menuStripRenderer = new MenuPaletteRenderer();
+            dockingTheme = new DockingTheme();
+        }
+
+        public Palette()
+        {
+            Enable = true;
+            PaletteChanged += (s, e) => Set();
+        }
+
+        public static Color GetColor(string name)
+        {
+            if (table.ContainsKey(name))
+                return table[name].Color;
+            return Color.Empty;
+        }
+
+        public static void SetColor(string name, Color value)
+        {
+            if (table.ContainsKey(name))
+                table[name].Color = value;
+            else
+            {
+                table.Add(name, new TableItem(value));
+                if (settingObject != null)
+                    createSettingJoin(TypeDescriptor.GetProperties(settingObject).Find(name, false));
+            }
+
+            paletteChanged(null, new PropertyChangedEventArgs(name));
+        }
+
         private void Owner_ControlAdded(object sender, ControlEventArgs e)
         {
             e.Control.ControlAdded += Owner_ControlAdded;
@@ -230,36 +171,28 @@ namespace MAIDE.UI
             Set();
         }
 
-        static Palette()
-        {
-            propertyChanged = delegate { };
-            Exep.LoadDefaultProperties(typeof(Palette));
-            menuStripRenderer = new MenuPaletteRenderer();
-            dockingTheme = new DockingTheme();
-        }
-
-        public Palette()
-        {
-            Enable = true;
-            PropertyChanged += OnPaletteChange;
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void setProperty<T>(ref T field, T newValue)
         {
             field = newValue;
-            propertyChanged(null, null);
+            paletteChanged(null, null);
         }
 
-        private void OnPaletteChange(object sender, PropertyChangedEventArgs e)
+        private static void onPaletteChange(object sender, PropertyChangedEventArgs e)
         {
-            if (Enable && !DesignMode && Owner != null)
-                set(Owner);
+            isLook = true;
+            TableItem item = table[e.PropertyName];
+
+            if (settingObject != null && item.Descriptor != null)
+                item.Descriptor.SetValue(settingObject, item.Color);
+
+            isLook = false;
         }
 
         public void Set()
         {
-            OnPaletteChange(null, null);
+            if (Enable && !DesignMode && Owner != null)
+                set(Owner);
         }
 
         private static void set(Control control)
@@ -275,16 +208,20 @@ namespace MAIDE.UI
             if (control.ContextMenuStrip != null)
                 set(control.ContextMenuStrip, 1);
 
+            IUsePalette iControl = control as IUsePalette;
 
-            if (control is IUsePalette)
-                ((IUsePalette)control).AppyPalette();
+            if (iControl != null)
+            {
+                if (iControl.UsePalette)
+                    iControl.AppyPalette();
+            }
             else
             {
                 if (control is DockPanel)
                     ((DockPanel)control).Theme = dockingTheme;
 
-                control.BackColor = Background;
-                control.ForeColor = FontMain;
+                control.BackColor = GetColor("Background");
+                control.ForeColor = GetColor("FontMain");
             }
         }
 
@@ -294,12 +231,12 @@ namespace MAIDE.UI
                 set(c, mode);
 
             if (strip is StatusStrip)
-                strip.BackColor = WindowFrameActive;
+                strip.BackColor = GetColor("WindowFrameActive");
             else
-                strip.BackColor = mode == 1 ? MenuPressed : Background;
+                strip.BackColor = GetColor(mode == 1 ? "MenuPressed" : "Background");
 
             strip.ItemAdded += Strip_ItemAdded;
-            strip.ForeColor = FontMain;
+            strip.ForeColor = GetColor("FontMain");
             strip.Renderer = menuStripRenderer;
         }
 
@@ -317,35 +254,41 @@ namespace MAIDE.UI
             }
 
             if (item.OwnerItem != null || mode == 1)
-                item.BackColor = MenuPressed;
+                item.BackColor = GetColor("MenuPressed");
             else
-                item.BackColor = Background;
+                item.BackColor = GetColor("Background");
 
-            item.ForeColor = item is ToolStripSeparator ? MenuSeparator : FontMain;
+            item.ForeColor = GetColor(item is ToolStripSeparator ? "MenuSeparator" : "FontMain");
         }
 
-        protected override void Dispose(bool disposing)
+        public static void JoinSetting(object obj)
         {
-            if (disposing)
-                PropertyChanged -= OnPaletteChange;
-            base.Dispose(disposing);
-        }
+            if (obj == null)
+                throw new ArgumentNullException("obj");
+            
+            settingObject = obj;
 
-        public static void JoinToObject(object obj)
-        {
-            Type type = typeof(Palette);
-
-            foreach (PropertyInfo m in type.GetProperties(BindingFlags.Static | BindingFlags.Public))
+            foreach (PropertyDescriptor desc in TypeDescriptor.GetProperties(settingObject))
             {
-                if (m.PropertyType == typeof(Color))
+                if (desc.PropertyType == typeof(Color) && table.ContainsKey(desc.Name))
                 {
-                    try
-                    {
-                        PropertyJoin.Create(type, m.Name, obj, m.Name);
-                    }
-                    catch { }
+                    createSettingJoin(desc);
+                    table[desc.Name].Color = (Color)desc.GetValue(obj);
                 }
             }
+        }
+
+        private static void createSettingJoin(PropertyDescriptor desc)
+        {
+            if (desc.PropertyType != typeof(Color))
+                return;
+
+            table[desc.Name].Descriptor = desc;
+            desc.AddValueChanged(settingObject, (s, e) =>
+            {
+                if (!isLook)
+                    SetColor(desc.Name, (Color)desc.GetValue(settingObject));
+            });
         }
     }
 }

@@ -46,6 +46,10 @@ namespace MAIDE.UI
         private Word selectWord;
         private bool autoCompileNextSkip = true;
 
+        [Category("Appearance")]
+        [DefaultValue(true)]
+        public bool UsePalette { get; set; }
+
         [DefaultValue(false)]
         [Category("Behavior")]
         public bool Modified { get; set; }
@@ -1184,12 +1188,12 @@ namespace MAIDE.UI
 
         public void AppyPalette()
         { 
-            BackColor = Palette.TextEditorBackground;
-            LinesNumBrush = Palette.TextEditorRowId;
-            RunLineBrush = Palette.TextEditorRunLine;
-            SelectBrush = Palette.TextEditorSelected;
-            SelectLineBrush = Palette.TextEditorSelectLine;
-            ForeColor = Palette.FontMain;
+            BackColor = Palette.GetColor("TextEditorBackground");
+            LinesNumBrush = Palette.GetColor("TextEditorRowId");
+            RunLineBrush = Palette.GetColor("TextEditorRunLine");
+            SelectBrush = Palette.GetColor("TextEditorSelected");
+            SelectLineBrush = Palette.GetColor("TextEditorSelectLine");
+            ForeColor = Palette.GetColor("FontMain");
         }
     }
 }
