@@ -87,5 +87,14 @@
     <Setting Name="DockingTabDisable" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">45, 45, 48</Value>
     </Setting>
+    <Setting Name="ButtonNormal" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">45, 45, 48</Value>
+    </Setting>
+    <Setting Name="ButtonHover" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">62, 62, 64</Value>
+    </Setting>
+    <Setting Name="ButtonDown" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">51, 153, 255</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

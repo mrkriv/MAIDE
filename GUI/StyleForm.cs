@@ -222,7 +222,10 @@ namespace MAIDE.UI
                 if (isHitTitle(e.Location))
                 {
                     if ((DateTime.Now - lastClickTime).TotalMilliseconds <= doubleClickTime)
-                        WindowState = WindowState == FormWindowState.Normal ? FormWindowState.Maximized : FormWindowState.Normal;
+                    {
+                        if (MaxButton != null && RestoreButton != null)
+                            WindowState = WindowState == FormWindowState.Normal ? FormWindowState.Maximized : FormWindowState.Normal;
+                    }
                     else
                         hit = HitTestValues.HTCAPTION;
                     lastClickTime = DateTime.Now;

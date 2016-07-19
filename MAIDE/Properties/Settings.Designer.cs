@@ -303,5 +303,41 @@ namespace MAIDE.Properties {
                 this["DockingTabDisable"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("45, 45, 48")]
+        public global::System.Drawing.Color ButtonNormal {
+            get {
+                return ((global::System.Drawing.Color)(this["ButtonNormal"]));
+            }
+            set {
+                this["ButtonNormal"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("62, 62, 64")]
+        public global::System.Drawing.Color ButtonHover {
+            get {
+                return ((global::System.Drawing.Color)(this["ButtonHover"]));
+            }
+            set {
+                this["ButtonHover"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("51, 153, 255")]
+        public global::System.Drawing.Color ButtonDown {
+            get {
+                return ((global::System.Drawing.Color)(this["ButtonDown"]));
+            }
+            set {
+                this["ButtonDown"] = value;
+            }
+        }
     }
 }

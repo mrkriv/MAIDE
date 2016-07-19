@@ -133,6 +133,42 @@ namespace MAIDE {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Нажатая кнопка.
+        /// </summary>
+        public static string ButtonDown {
+            get {
+                return ResourceManager.GetString("ButtonDown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Кнопка под курсором.
+        /// </summary>
+        public static string ButtonHover {
+            get {
+                return ResourceManager.GetString("ButtonHover", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Стандартный цвет.
+        /// </summary>
+        public static string ButtonNormal {
+            get {
+                return ResourceManager.GetString("ButtonNormal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Кнопки.
+        /// </summary>
+        public static string Buttons {
+            get {
+                return ResourceManager.GetString("Buttons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Отмена.
         /// </summary>
         public static string Cancel {
@@ -336,6 +372,15 @@ namespace MAIDE {
         public static string loopIterationCount {
             get {
                 return ResourceManager.GetString("loopIterationCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Основное.
+        /// </summary>
+        public static string MainGroup {
+            get {
+                return ResourceManager.GetString("MainGroup", resourceCulture);
             }
         }
         

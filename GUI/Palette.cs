@@ -120,6 +120,9 @@ namespace MAIDE.UI
             table.Add("GroupBorder", new TableItem(Color.FromArgb(150, 150, 150)));
             table.Add("DockingTabActive", new TableItem(Color.FromArgb(1, 122, 204)));
             table.Add("DockingTabDisable", new TableItem(Color.FromArgb(45, 45, 48)));
+            table.Add("ButtonNormal", new TableItem(Color.FromArgb(45, 45, 48)));
+            table.Add("ButtonHover", new TableItem(Color.FromArgb(62, 62, 64)));
+            table.Add("ButtonDown", new TableItem(Color.FromArgb(51, 153, 255)));
 
             paletteChanged = new PropertyChangedEventHandler(onPaletteChange);
             menuStripRenderer = new MenuPaletteRenderer();

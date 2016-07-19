@@ -195,9 +195,9 @@ namespace MAIDE.UI
 
         public void AppyPalette()
         {
-            ColorNormal = Color.Transparent;
-            ColorHover = Palette.GetColor("TextEditorBackground");
-            ColorDown = Palette.GetColor("DockingTabActive");
+            ColorNormal = Palette.GetColor("ButtonNormal");
+            ColorHover = Palette.GetColor("ButtonHover");
+            ColorDown = Palette.GetColor("ButtonDown");
         }
     }
 }
