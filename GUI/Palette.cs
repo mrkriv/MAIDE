@@ -216,7 +216,10 @@ namespace MAIDE.UI
             if (iControl != null)
             {
                 if (iControl.UsePalette)
+                {
                     iControl.AppyPalette();
+                    control.Invalidate(false);
+                }
             }
             else
             {

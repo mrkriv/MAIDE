@@ -97,7 +97,7 @@ namespace MAIDE.UI
         public Button()
         {
             this.LoadDefaultProperties();
-            
+
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             SetStyle(ControlStyles.UserPaint, true);
@@ -109,12 +109,12 @@ namespace MAIDE.UI
                 "BorderWidth",
                 "BorderRounding",
                 "Text",
-                //"ColorHover" ,
-                //"ColorDown" ,
-                //"ImageHover" ,
-                //"ImageDown",
-                //"BorderColorDown",
-                //"BorderColorHover",
+                "ColorHover" ,
+                "ColorDown" ,
+                "ImageHover" ,
+                "ImageDown",
+                "BorderColorDown",
+                "BorderColorHover",
             }, Invalidate);
         }
 
@@ -195,6 +195,7 @@ namespace MAIDE.UI
 
         public void AppyPalette()
         {
+            ForeColor = Palette.GetColor("FontMain");
             ColorNormal = Palette.GetColor("ButtonNormal");
             ColorHover = Palette.GetColor("ButtonHover");
             ColorDown = Palette.GetColor("ButtonDown");

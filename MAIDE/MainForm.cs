@@ -31,7 +31,7 @@ namespace MAIDE
             Instance = this;
 
             InitializeComponent();
-            new DialogStringForm().ShowDialog();
+
             Icon = Properties.Resources.IconApplication;
 
             Core = new Core();
