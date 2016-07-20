@@ -271,7 +271,10 @@ namespace MAIDE.UI
         {
             if (obj == null)
                 throw new ArgumentNullException("obj");
-            
+
+            if (settingObject != null)
+                throw new InvalidOperationException();
+
             settingObject = obj;
 
             foreach (PropertyDescriptor desc in TypeDescriptor.GetProperties(settingObject))

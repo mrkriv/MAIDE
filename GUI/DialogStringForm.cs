@@ -12,7 +12,7 @@ namespace MAIDE.UI
 {
     public partial class DialogStringForm : DefaultForm
     {
-        public DialogStringForm()
+        private DialogStringForm()
         {
             InitializeComponent();
         }
