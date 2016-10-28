@@ -66,6 +66,7 @@
     <Compile Include="CodeEditBox\Word.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="CsvConverter.cs" />
     <Compile Include="DefaultForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +105,9 @@
     </Compile>
     <Compile Include="IconListControl.Designer.cs">
       <DependentUpon>IconListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OverlayPaintControl.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Palette.cs">
       <SubType>Component</SubType>

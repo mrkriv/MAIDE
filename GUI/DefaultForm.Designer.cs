@@ -118,6 +118,7 @@
             this.Controls.Add(this.BtnMax);
             this.Controls.Add(this.BtnClose);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(111)))), ((int)(((byte)(112)))));
+            this.FullModeButtonOffest = new System.Drawing.Point(-1, 1);
             this.MaxButton = this.BtnMax;
             this.MinButton = this.BtnMin;
             this.MinimumSize = new System.Drawing.Size(195, 35);

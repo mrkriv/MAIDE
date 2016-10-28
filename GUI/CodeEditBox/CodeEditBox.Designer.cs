@@ -41,6 +41,8 @@
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autoCompiler = new MAIDE.UI.IconListControl();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,17 +80,19 @@
             this.cmDelete,
             this.toolStripSeparator1,
             this.undoToolStripMenuItem,
-            this.redoToolStripMenuItem});
+            this.redoToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.selectAllToolStripMenuItem});
             this.contextMenu.Name = "ContextMenu";
             this.contextMenu.ShowImageMargin = false;
-            this.contextMenu.Size = new System.Drawing.Size(157, 142);
+            this.contextMenu.Size = new System.Drawing.Size(166, 192);
             this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenu_Opening);
             // 
             // cmCut
             // 
             this.cmCut.Name = "cmCut";
             this.cmCut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.cmCut.Size = new System.Drawing.Size(156, 22);
+            this.cmCut.Size = new System.Drawing.Size(165, 22);
             this.cmCut.Text = "Вырезать";
             this.cmCut.Click += new System.EventHandler(this.cmCut_Click);
             // 
@@ -96,7 +100,7 @@
             // 
             this.cmCopy.Name = "cmCopy";
             this.cmCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.cmCopy.Size = new System.Drawing.Size(156, 22);
+            this.cmCopy.Size = new System.Drawing.Size(165, 22);
             this.cmCopy.Text = "Копировать";
             this.cmCopy.Click += new System.EventHandler(this.cmCopy_Click);
             // 
@@ -104,7 +108,7 @@
             // 
             this.cmPaste.Name = "cmPaste";
             this.cmPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.cmPaste.Size = new System.Drawing.Size(156, 22);
+            this.cmPaste.Size = new System.Drawing.Size(165, 22);
             this.cmPaste.Text = "Вставить";
             this.cmPaste.Click += new System.EventHandler(this.cmPaste_Click);
             // 
@@ -112,20 +116,20 @@
             // 
             this.cmDelete.Name = "cmDelete";
             this.cmDelete.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.cmDelete.Size = new System.Drawing.Size(156, 22);
+            this.cmDelete.Size = new System.Drawing.Size(165, 22);
             this.cmDelete.Text = "Удалить";
             this.cmDelete.Click += new System.EventHandler(this.cmDelete_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(153, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(162, 6);
             // 
             // undoToolStripMenuItem
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.undoToolStripMenuItem.Text = "Undo";
             this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
@@ -133,7 +137,7 @@
             // 
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
             this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.redoToolStripMenuItem.Text = "Redo";
             this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
             // 
@@ -150,6 +154,19 @@
             this.autoCompiler.SelectItem = null;
             this.autoCompiler.Size = new System.Drawing.Size(252, 138);
             this.autoCompiler.TabIndex = 4;
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(162, 6);
+            // 
+            // selectAllToolStripMenuItem
+            // 
+            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
+            this.selectAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.selectAllToolStripMenuItem.Text = "Выделить все";
+            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
             // 
             // CodeEditBox
             // 
@@ -182,5 +199,7 @@
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
         private IconListControl autoCompiler;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
     }
 }

@@ -31,6 +31,31 @@ namespace MAIDE.Utilit
             return new Point(a.X - b.X, a.Y - b.Y);
         }
 
+        public static Point ReplaceX(this Point a, int x)
+        {
+            return new Point(x, a.Y);
+        }
+
+        public static Point ReplaceY(this Point a, int y)
+        {
+            return new Point(a.X, y);
+        }
+
+        public static Point Multiplay(this Point a, Point b)
+        {
+            return new Point(a.X * b.X, a.Y * b.Y);
+        }
+
+        public static Point Multiplay(this Point a, int x, int y)
+        {
+            return new Point(a.X * x, a.Y * y);
+        }
+
+        public static Point Multiplay(this Point a, int b)
+        {
+            return new Point(a.X * b, a.Y * b);
+        }
+
         public static Point Center(this Rectangle self)
         {
             return new Point(self.Left + self.Width / 2, self.Top + self.Height / 2);
@@ -60,7 +85,7 @@ namespace MAIDE.Utilit
         {
             return new PointF(self.Left + self.Width / 2.0f, self.Top + self.Height / 2.0f);
         }
-        
+
         public static Size Add(this Size a, Size b)
         {
             return new Size(a.Width + b.Width, a.Height + b.Height);
@@ -174,6 +199,9 @@ namespace MAIDE.Utilit
             return self.GetCustomAttributes<T>(false).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Возвращает значение DisplayNameAttribute установленного для типа (null - если атрибут отсутствует)
+        /// </summary>
         public static string GetDisplayName(this Type self)
         {
             DisplayNameAttribute atrib = self.GetCustomAttribute<DisplayNameAttribute>();

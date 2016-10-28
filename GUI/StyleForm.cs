@@ -4,14 +4,16 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using Point = System.Drawing.Point;
 
 namespace MAIDE.UI
 {
     public class StyleForm : LocForm, IUsePalette
     {
-        private ShadowForm shadow;
-        private DateTime lastClickTime;
         private static int doubleClickTime;
+        //private ShadowForm shadow;
+        private FormWindowState oldFormState;
+        private DateTime lastClickTime;
 
         [Category("Appearance")]
         [DefaultValue(true)]
@@ -57,6 +59,9 @@ namespace MAIDE.UI
         [Category("Appearance")]
         public Color ShadowDisableColor { get; set; }
 
+        [Category("Appearance")]
+        public Point FullModeButtonOffest { get; set; }
+
         public StyleForm()
         {
             this.LoadDefaultProperties();
@@ -67,6 +72,7 @@ namespace MAIDE.UI
             doubleClickTime = API.GetDoubleClickTime();
             FormBorderStyle = FormBorderStyle.None;
             MaximumSize = Screen.PrimaryScreen.WorkingArea.Size;
+            oldFormState = WindowState;
             ShowIcon = false;
 
             PropertyJoin.ChangedPropertyEvent(this, new string[] {
@@ -166,7 +172,7 @@ namespace MAIDE.UI
             Invalidate(false);
         }
 
-        private bool isHitTitle(System.Drawing.Point location)
+        private bool isHitTitle(Point location)
         {
             if (WindowState == FormWindowState.Normal)
                 return location.Y > Border.Top && location.Y <= Padding.Top;
@@ -270,10 +276,31 @@ namespace MAIDE.UI
 
             if (!DesignMode && Visible)
             {
-                if (MaxButton != null)
-                    MaxButton.Visible = WindowState == FormWindowState.Normal;
-                if (RestoreButton != null)
-                    RestoreButton.Visible = WindowState != FormWindowState.Normal;
+                if (oldFormState != WindowState)
+                {
+                    bool fullMode = WindowState == FormWindowState.Normal;
+                    Point delta = fullMode ? FullModeButtonOffest : FullModeButtonOffest.Multiplay(-1);
+
+                    if (CloseButton != null)
+                        CloseButton.Location = CloseButton.Location.Add(delta);
+
+                    if (MinButton != null)
+                        MinButton.Location = MinButton.Location.Add(delta);
+
+                    if (MaxButton != null)
+                    {
+                        MaxButton.Visible = fullMode;
+                        MaxButton.Location = MaxButton.Location.Add(delta);
+                    }
+
+                    if (RestoreButton != null)
+                    {
+                        RestoreButton.Visible = !fullMode;
+                        RestoreButton.Location = RestoreButton.Location.Add(delta);
+                    }
+
+                    oldFormState = WindowState;
+                }
             }
 
             Invalidate(false);

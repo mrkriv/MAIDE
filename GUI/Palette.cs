@@ -30,6 +30,7 @@ namespace MAIDE.UI
         private static object settingObject;
         private static bool isLook;
         private Control owner;
+        private List<string> ignoreList = new List<string>();
 
         private class TableItem
         {
@@ -47,6 +48,28 @@ namespace MAIDE.UI
             add { paletteChanged += value; }
             remove { paletteChanged -= value; }
         }
+
+        [Description("extra free-form attributes on this thing.")]
+        [Editor(@"System.Windows.Forms.Design.StringCollectionEditor," +
+        "System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(System.Drawing.Design.UITypeEditor))]
+        [TypeConverter(typeof(CsvConverter))]
+        public List<string> IgnoreList
+        {
+            get { return ignoreList; }
+        }
+        //public List<Control> IgnoreList
+        //{
+        //    get
+        //    {
+        //        if (owner != null)
+        //            return ignoreList.Select(n => owner.Controls.Find(n, true).First()).ToList();
+        //        return ignoreList.Select(n => new Control() { Name = n }).ToList();
+        //    }
+        //    set
+        //    {
+        //        ignoreList = value.Select(c => c.Name).ToList();
+        //    }
+        //}
 
         [DefaultValue(true)]
         public bool Enable { get; set; }
@@ -134,7 +157,7 @@ namespace MAIDE.UI
             Enable = true;
             PaletteChanged += (s, e) => Set();
         }
-
+        
         public static Color GetColor(string name)
         {
             if (table.ContainsKey(name))
@@ -198,8 +221,15 @@ namespace MAIDE.UI
                 set(Owner);
         }
 
-        private static void set(Control control)
+        private void set(Control control)
         {
+            if (ignoreList.Any(s => s == control.Name))
+                return;
+
+            string tag = control.Tag as string;
+            if (!string.IsNullOrEmpty(tag) && tag == "-ignore_style")
+                return;
+
             foreach (Control c in control.Controls)
             {
                 if (c is ToolStrip)
@@ -231,7 +261,7 @@ namespace MAIDE.UI
             }
         }
 
-        private static void set(ToolStrip strip, int mode)
+        private void set(ToolStrip strip, int mode)
         {
             foreach (ToolStripItem c in strip.Items)
                 set(c, mode);

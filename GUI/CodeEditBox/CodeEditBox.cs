@@ -772,6 +772,8 @@ namespace MAIDE.UI
             bool needUpdate = true;
             keyboardState.Add(e.KeyCode);
 
+            int pageH = (int)(Height / lineHeight);
+
             switch (e.KeyCode)
             {
                 case Keys.Up:
@@ -859,6 +861,20 @@ namespace MAIDE.UI
                         else
                             rows[SelectStart.Y].Remove(SelectStart.X);
                     }
+                    break;
+                case Keys.PageUp:
+                    SelectStart = SelectStart.ReplaceY(Math.Max(SelectStart.Y - pageH, 0));
+                    GoTo();
+                    break;
+                case Keys.PageDown:
+                    SelectStart = SelectStart.ReplaceY(Math.Min(SelectStart.Y + pageH, rows.Count - 1));
+                    GoTo();
+                    break;
+                case Keys.End:
+                    SelectStart = SelectStart.ReplaceX(rows[SelectStart.Y].Length);
+                    break;
+                case Keys.Home:
+                    SelectStart = SelectStart.ReplaceX(0);
                     break;
                 default:
                     needUpdate = false;
@@ -959,7 +975,7 @@ namespace MAIDE.UI
         {
             SelectStart = new Point();
             selectEnd.Y = rows.Count - 1;
-            selectEnd.X = rows[SelectEnd.Y].Length - 1;
+            selectEnd.X = rows[SelectEnd.Y].Length;
             Invalidate(true);
         }
 
@@ -975,15 +991,20 @@ namespace MAIDE.UI
             return true;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void GoTo(Point p)
         {
             ResetSelect();
             SelectStart = p;
+            GoTo();
+        }
 
-            int scroll = (int)lineHeight * p.Y - vScrollBar.Value;
+        public void GoTo()
+        {
+            int scroll = (int)lineHeight * SelectStart.Y - vScrollBar.Value;
             if (vScrollBar.Visible && (scroll > Height || scroll < 0))
             {
-                int newValue = (int)(lineHeight * p.Y - Height / 2);
+                int newValue = (int)(lineHeight * SelectStart.Y - Height / 2);
                 vScrollBar.Value = newValue.Clamp(vScrollBar.Minimum, vScrollBar.Maximum);
                 vScrollBar_Scroll(vScrollBar, new ScrollEventArgs(ScrollEventType.ThumbPosition, newValue));
             }
@@ -1162,6 +1183,11 @@ namespace MAIDE.UI
                 selectStart.X = r.Length;
                 selectEnd = selectStart;
             }
+        }
+
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SelectAll();
         }
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)

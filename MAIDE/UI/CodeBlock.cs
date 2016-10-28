@@ -23,6 +23,7 @@ namespace MAIDE.UI
             set
             {
                 Dock = value ? DockStyle.Fill : DockStyle.None;
+                BorderStyle = value ? BorderStyle.None : BorderStyle.FixedSingle;
                 DragDropEnable = !value;
                 fill = value;
                 if (fill)
