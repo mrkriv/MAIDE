@@ -84,7 +84,7 @@ namespace MAIDE.UI
         public IconListControl()
         {
             InitializeComponent();
-
+            
             ImageLib = new ImageList();
             DoubleBuffered = true;
             Filter = "";
@@ -130,12 +130,16 @@ namespace MAIDE.UI
 
             foreach (var i in items)
             {
-                if (isValid(i.Value))
-                {
-                    visiable_items.Add(i);
-                    if (i.Value == filter)
-                        selectItem = i;
-                }
+                if (i.Value.Length <= filter.Length)
+                    continue;
+
+                if (!isValid(i.Value))
+                    continue;
+
+                if (i.Value == filter)
+                    selectItem = i;
+
+                visiable_items.Add(i);
             }
 
             if (selectItem == null)

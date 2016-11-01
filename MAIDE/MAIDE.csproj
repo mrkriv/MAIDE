@@ -85,7 +85,6 @@
     <Compile Include="AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CombineRows.cs" />
     <Compile Include="ErrorMessage.cs" />
     <Compile Include="Modules\ModuleAtribute.cs" />
     <Compile Include="Modules\RegisterControl.cs">
@@ -99,13 +98,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Language.resx</DependentUpon>
     </Compile>
-    <Compile Include="UI\CodeMap.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Settings.cs" />
-    <Compile Include="UI\CodeBlock.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Console.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -179,9 +172,6 @@
     <EmbeddedResource Include="Language.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Language.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\CodeBlock.resx">
-      <DependentUpon>CodeBlock.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Console.resx">
       <DependentUpon>Console.cs</DependentUpon>

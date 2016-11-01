@@ -40,9 +40,9 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.autoCompiler = new MAIDE.UI.IconListControl();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.autoCompiler = new MAIDE.UI.IconListControl();
             this.contextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,7 +85,7 @@
             this.selectAllToolStripMenuItem});
             this.contextMenu.Name = "ContextMenu";
             this.contextMenu.ShowImageMargin = false;
-            this.contextMenu.Size = new System.Drawing.Size(166, 192);
+            this.contextMenu.Size = new System.Drawing.Size(166, 170);
             this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenu_Opening);
             // 
             // cmCut
@@ -141,6 +141,19 @@
             this.redoToolStripMenuItem.Text = "Redo";
             this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(162, 6);
+            // 
+            // selectAllToolStripMenuItem
+            // 
+            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
+            this.selectAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.selectAllToolStripMenuItem.Text = "Выделить все";
+            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
+            // 
             // autoCompiler
             // 
             this.autoCompiler.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
@@ -154,19 +167,6 @@
             this.autoCompiler.SelectItem = null;
             this.autoCompiler.Size = new System.Drawing.Size(252, 138);
             this.autoCompiler.TabIndex = 4;
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(162, 6);
-            // 
-            // selectAllToolStripMenuItem
-            // 
-            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
-            this.selectAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
-            this.selectAllToolStripMenuItem.Text = "Выделить все";
-            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
             // 
             // CodeEditBox
             // 

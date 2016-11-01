@@ -114,8 +114,7 @@ namespace MAIDE.UI
                 Invalidate(false);
             }
         }
-
-
+        
         [Category("Appearance")]
         public float Zoom
         {

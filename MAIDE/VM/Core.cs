@@ -41,7 +41,7 @@ namespace MAIDE.VM
 
         private List<Operation> source = new List<Operation>();
         private ManualResetEvent waitEvent;
-        private CombineRows code;
+        private CodeEditBox.RowReadonlyCollection code;
         private EventHandler<StateChangedEventArgs> stateChanged;
         private int total;
         private State status;
@@ -231,7 +231,7 @@ namespace MAIDE.VM
             Console.ReadKey();
         }
 
-        public bool Build(CombineRows rows)
+        public bool Build(CodeEditBox.RowReadonlyCollection rows)
         {
             Stop();
             source.Clear();
@@ -261,7 +261,7 @@ namespace MAIDE.VM
             Dictionary<string, int> dataZone = new Dictionary<string, int>();
             List<byte> dataList = new List<byte>();
 
-            for (int i = 0; i < code.Length; i++)
+            for (int i = 0; i < code.Count(); i++)
             {
                 string[] text = code[i].ToString().Replace('\t', ' ').Trim(' ').Split(Properties.Settings.Default.CommentChar)[0].Split(':');
 
