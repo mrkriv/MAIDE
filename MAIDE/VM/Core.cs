@@ -51,6 +51,7 @@ namespace MAIDE.VM
 
         public readonly Dictionary<string, int> Links = new Dictionary<string, int>();
         public readonly List<Register> Registers = new List<Register>();
+        public readonly RegisterFlag FlagReg = new RegisterFlag();
         public readonly Stack<int> Stack = new Stack<int>();
         public int ActiveIndex = 0;
 
@@ -131,7 +132,6 @@ namespace MAIDE.VM
             PropertyJoin.Create(this, "RegNames32", Properties.Settings.Default, "Register32");
             PropertyJoin.Create(this, "RegNames16", Properties.Settings.Default, "Register16");
             PropertyJoin.Create(this, "RegNames8", Properties.Settings.Default, "Register8");
-            Registers.Add(new RegisterFlag("flag"));
         }
 
         public Register GetRegister(string name)

@@ -2,6 +2,44 @@
 
 namespace MAIDE.VM
 {
+    public class RegisterFlag
+    {
+        /// <summary>Carry Flag</summary>
+        public bool CF = false;
+        /// <summary>Parity Flag</summary>
+        public bool PF = false;
+        /// <summary>Auxiliary Carry Flag</summary>
+        public bool AF = false;
+        /// <summary>Zero Flag</summary>
+        public bool ZF = false;
+        /// <summary>Sign Flag</summary>
+        public bool SF = false;
+        /// <summary>Trap Flag</summary>
+        public bool TF = false;
+        /// <summary>Interrupt Enable Flag</summary>
+        public bool IF = false;
+        /// <summary>Direction Flag</summary>
+        public bool DF = false;
+        /// <summary>Overflow Flag</summary>
+        public bool OF = false;
+        /// <summary>Privilege Level</summary>
+        public bool IOPL = false;
+        /// <summary>Nested Task</summary>
+        public bool NT = false;
+        /// <summary>Resume Flag</summary>
+        public bool RF = false;
+        /// <summary>Virtual-8086 Mode</summary>
+        public bool VM = false;
+        /// <summary>Alignment Check</summary>
+        public bool AC = false;
+        /// <summary>Virtual Interrupt Flag</summary>
+        public bool VIF = false;
+        /// <summary>Virtual Interrupt Pending</summary>
+        public bool VIP = false;
+        /// <summary>CPUID enable Flag</summary>
+        public bool ID = false;
+    }
+
     public abstract class Register
     {
         public string Name { get; private set; }
@@ -99,66 +137,6 @@ namespace MAIDE.VM
         public override void SetByte(byte[] buff)
         {
             Value = BitConverter.ToChar(buff, 0);
-        }
-    }
-
-    public class RegisterFlag : Register
-    {
-        /// <summary>Carry Flag</summary>
-        public bool CF = false;
-        /// <summary>Parity Flag</summary>
-        public bool PF = false;
-        /// <summary>Auxiliary Carry Flag</summary>
-        public bool AF = false;
-        /// <summary>Zero Flag</summary>
-        public bool ZF = false;
-        /// <summary>Sign Flag</summary>
-        public bool SF = false;
-        /// <summary>Trap Flag</summary>
-        public bool TF = false;
-        /// <summary>Interrupt Enable Flag</summary>
-        public bool IF = false;
-        /// <summary>Direction Flag</summary>
-        public bool DF = false;
-        /// <summary>Overflow Flag</summary>
-        public bool OF = false;
-        /// <summary>Privilege Level</summary>
-        public bool IOPL = false;
-        /// <summary>Nested Task</summary>
-        public bool NT = false;
-        /// <summary>Resume Flag</summary>
-        public bool RF = false;
-        /// <summary>Virtual-8086 Mode</summary>
-        public bool VM = false;
-        /// <summary>Alignment Check</summary>
-        public bool AC = false;
-        /// <summary>Virtual Interrupt Flag</summary>
-        public bool VIF = false;
-        /// <summary>Virtual Interrupt Pending</summary>
-        public bool VIP = false;
-        /// <summary>CPUID enable Flag</summary>
-        public bool ID = false;
-
-        public RegisterFlag(string name) : base(name)
-        {
-        }
-
-        public override string ToString()
-        {
-            return "";
-        }
-
-        public override void InString(string str)
-        {
-        }
-
-        public override byte[] GetByte()
-        {
-            return new byte[0];
-        }
-
-        public override void SetByte(byte[] buff)
-        {
         }
     }
 }

@@ -170,24 +170,21 @@ namespace MAIDE.VM
         [Descriptor(Type.Condition, "Переход на заданную метку, если операнды равны")]
         public static void jeq(Link index)
         {
-            RegisterFlag reg = reg<RegisterFlag>("flag");
-            if (reg.ZF)
+            if (ActiveCore.FlagReg.ZF)
                 ActiveCore.ActiveIndex = index.Line - 1;
         }
 
         [Descriptor(Type.Condition, "Переход на заданную метку, если первый операнд больше нуля")]
         public static void jgt(Link index)
         {
-            RegisterFlag reg = reg<RegisterFlag>("flag");
-            if (!reg.ZF && reg.SF)
+            if (!ActiveCore.FlagReg.ZF && ActiveCore.FlagReg.SF)
                 ActiveCore.ActiveIndex = index.Line - 1;
         }
 
         [Descriptor(Type.Condition, "Переход на заданную метку, если первый операнд меньше второго")]
         public static void jlt(Link index)
         {
-            RegisterFlag reg = reg<RegisterFlag>("flag");
-            if (reg.SF != reg.OF)
+            if (ActiveCore.FlagReg.SF != ActiveCore.FlagReg.OF)
                 ActiveCore.ActiveIndex = index.Line - 1;
         }
 
@@ -195,16 +192,14 @@ namespace MAIDE.VM
         public static void jge(Link index)
         {
             Register32 a = reg<Register32>("a");
-            RegisterFlag reg = reg<RegisterFlag>("flag");
-            if (reg.SF == reg.OF)
+            if (ActiveCore.FlagReg.SF == ActiveCore.FlagReg.OF)
                 ActiveCore.ActiveIndex = index.Line - 1;
         }
 
         [Descriptor(Type.Condition, "Переход на заданную метку, если первый операнд больше второго")]
         public static void jпе(Link index)
         {
-            RegisterFlag reg = reg<RegisterFlag>("flag");
-            if (!reg.ZF)
+            if (!ActiveCore.FlagReg.ZF)
                 ActiveCore.ActiveIndex = index.Line - 1;
         }
 
@@ -227,12 +222,11 @@ namespace MAIDE.VM
 
         private static void _comp(int value)
         {
-            RegisterFlag reg = reg<RegisterFlag>("flag");
-            reg.ZF = value == 0;
-            reg.SF = value >= 0;
-            reg.CF = false;
-            reg.OF = false;
-            reg.PF = value % 2 == 0;
+            ActiveCore.FlagReg.ZF = value == 0;
+            ActiveCore.FlagReg.SF = value >= 0;
+            ActiveCore.FlagReg.CF = false;
+            ActiveCore.FlagReg.OF = false;
+            ActiveCore.FlagReg.PF = value % 2 == 0;
         }
     }
 }
