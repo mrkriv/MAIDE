@@ -9,6 +9,7 @@ using MAIDE.Utilit;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 
 namespace MAIDE.VM
 {
@@ -16,6 +17,10 @@ namespace MAIDE.VM
     {
         public static readonly ObservableCollection<ErrorMessage> Errors = new ObservableCollection<ErrorMessage>();
         public static readonly string[] Letters = new string[] { "byte", "word", "ds", "dw", "db", "equ" };
+        private static readonly Regex rx_section = new Regex(@"^\s*(?<sect>\w+:)?\s*(?<body>[^;\n\r]+)?\s*(;[^;\n\r]*)?$", RegexOptions.Multiline);
+        private static readonly Regex rx_command = new Regex(@"^(?<opcod>\w+)\s*(?<p1>\w+)?\s*(?<undef1>[\S^,]+)?(?:,\s*(?<p2>[\w#]+)\s*)?(?<undef2>\S+)?\s*$", RegexOptions.Multiline);
+        private static readonly Regex rx_regsize = new Regex(@"\D+(\d+)");
+        private static readonly Regex rx_onlyspace = new Regex(@"\s*");
 
         public enum State
         {
@@ -41,18 +46,16 @@ namespace MAIDE.VM
 
         private List<Operation> source = new List<Operation>();
         private ManualResetEvent waitEvent;
-        private CodeEditBox.RowReadonlyCollection code;
         private EventHandler<StateChangedEventArgs> stateChanged;
         private int total;
         private State status;
-        private int dataZoneOffest;
-        private byte[] data;
         private bool needPause;
+        private readonly Dictionary<Type, Func<CodeEditBox.RowReadonly, Type, string, object>> parseType;
 
-        public readonly Dictionary<string, int> Links = new Dictionary<string, int>();
-        public readonly List<Register> Registers = new List<Register>();
-        public readonly RegisterFlag FlagReg = new RegisterFlag();
-        public readonly Stack<int> Stack = new Stack<int>();
+        public readonly Dictionary<string, int> Sections;
+        public readonly List<Register> Registers;
+        public readonly RegisterFlag FlagReg;
+        public readonly Stack<int> Stack;
         public int ActiveIndex = 0;
 
         public State Status
@@ -117,21 +120,41 @@ namespace MAIDE.VM
 
         public class Operation
         {
-            public CodeEditBox.RowReadonly row;
-            public string operation;
-            public object[] args;
-            public MethodInfo method;
+            public readonly CodeEditBox.RowReadonly Row;
+            public readonly object[] Args;
+            public readonly MethodInfo Method;
+
+            public Operation(CodeEditBox.RowReadonly row, MethodInfo method)
+            {
+                Row = row;
+                Method = method;
+                Args = new object[method.GetParameters().Count()];
+            }
         }
 
         public Core()
         {
-            Operators.ActiveCore = this;
+            Stack = new Stack<int>();
+            FlagReg = new RegisterFlag();
+            Registers = new List<Register>();
+            Sections = new Dictionary<string, int>();
 
             stateChanged = (s, e) => { };
             waitEvent = new ManualResetEvent(true);
             PropertyJoin.Create(this, "RegNames32", Properties.Settings.Default, "Register32");
             PropertyJoin.Create(this, "RegNames16", Properties.Settings.Default, "Register16");
             PropertyJoin.Create(this, "RegNames8", Properties.Settings.Default, "Register8");
+
+            parseType = new Dictionary<Type, Func<CodeEditBox.RowReadonly, Type, string, object>>();
+            parseType.Add(typeof(int), parseNumber);
+            parseType.Add(typeof(short), parseNumber);
+            parseType.Add(typeof(char), parseNumber);
+            parseType.Add(typeof(byte), parseNumber);
+            parseType.Add(typeof(Register8), parseRegister);
+            parseType.Add(typeof(Register16), parseRegister);
+            parseType.Add(typeof(Register32), parseRegister);
+
+            Operators.ActiveCore = this;
         }
 
         public Register GetRegister(string name)
@@ -185,27 +208,27 @@ namespace MAIDE.VM
                         total = -total;
                     }
 
-                    if (op.row.IsFlag(CodeEditBox.RowFlag.Breakpoint))
+                    if (op.Row.IsFlag(CodeEditBox.RowFlag.Breakpoint))
                         Pause();
 
-                    op.row.SetFlag(CodeEditBox.RowFlag.Run);
+                    op.Row.SetFlag(CodeEditBox.RowFlag.Run);
                     waitEvent.WaitOne();
 
                     if (status == State.Launched)
                     {
                         try
                         {
-                            op.method.Invoke(null, op.args);
+                            op.Method.Invoke(null, op.Args);
                         }
                         catch (TargetInvocationException e)
                         {
                             if (e.InnerException is RuntimeException)
                                 throw e.InnerException;
-                            throw new RuntimeException(string.Format(Language.RuntimeException, op.method.Name), getCurrentRow());
+                            throw new RuntimeException(string.Format(Language.RuntimeException, op.Method.Name), getCurrentRow());
                         }
 
                         if (ActiveIndex >= source.Count)
-                            throw new RuntimeException(Language.RuntimeExceptionMemory, op.row.Index + 1);
+                            throw new RuntimeException(Language.RuntimeExceptionMemory, op.Row.Index + 1);
 
                         if (needPause)
                         {
@@ -216,7 +239,7 @@ namespace MAIDE.VM
                         ActiveIndex++;
                         total++;
                     }
-                    op.row.ResetFlag(CodeEditBox.RowFlag.Run);
+                    op.Row.ResetFlag(CodeEditBox.RowFlag.Run);
                 }
                 Status = State.Finish;
             }
@@ -235,234 +258,138 @@ namespace MAIDE.VM
         {
             Stop();
             source.Clear();
-            Links.Clear();
+            Sections.Clear();
             Errors.Clear();
-            code = rows;
 
-            var lines = Preprocessor();
-
-            if (Errors.Count != 0)
-                return false;
-
-            foreach (var line in lines)
+            foreach (var row in rows)
             {
-                Operation op = Link(line.Key, line.Value);
-                if (op != null)
-                    source.Add(op);
+                Match m_sect = rx_section.Match(row);
+                if (m_sect.Success)
+                {
+                    var sect = m_sect.Groups["sect"];
+                    var body = m_sect.Groups["body"];
+
+                    if (sect.Success)
+                        parseSect(row, sect.Value);
+                    if (body.Success)
+                        parseBody(row, body.Value);
+                }
+                else if (!rx_onlyspace.IsMatch(row))
+                    AddError(row, "Набор символов");
             }
 
             Status = Errors.Count == 0 ? State.Ready : State.Error;
             return Errors.Count == 0;
         }
 
-        public Dictionary<CodeEditBox.RowReadonly, string[]> Preprocessor()
+        private void parseSect(CodeEditBox.RowReadonly row, string sect)
         {
-            var result = new Dictionary<CodeEditBox.RowReadonly, string[]>();
-            Dictionary<string, int> dataZone = new Dictionary<string, int>();
-            List<byte> dataList = new List<byte>();
-
-            for (int i = 0; i < code.Count(); i++)
-            {
-                string[] text = code[i].ToString().Replace('\t', ' ').Trim(' ').Split(Properties.Settings.Default.CommentChar)[0].Split(':');
-
-                if (text.Length == 0)
-                    continue;
-
-                string data;
-                if (text.Count() == 2)
-                {
-                    data = text[1];
-
-                    if (!Links.ContainsKey(text[0]))
-                        Links.Add(text[0], result.Count);
-                    else
-                        addError(new ErrorMessage(string.Format(Language.MarkerFound, text[0]), i, code[i].Owner));
-                }
-                else
-                    data = text[0];
-
-                text = data.Split(new char[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries);
-
-                if (text.Length != 0)
-                {
-                    string lw = text[0].ToLower();
-                    if (lw == "byte" || lw == "word" || lw == "dw" || lw == "db" || lw == "ds")
-                    {
-                        dataZone.Add(Links.Last().Key, dataList.Count);
-                        string[] values = text[1].Split(',');
-                        foreach (string val in values)
-                        {
-                            string v = val.Trim(' ');
-                            if (lw == "byte" || lw == "db")
-                            {
-                                if (v[0] == '\'' || v[0] == '"')
-                                    dataList.AddRange(v.Substring(1, v.Length - 2).Select(c => (byte)c));
-                                else
-                                    dataList.Add((byte)int.Parse(v));
-                            }
-                            else
-                            {
-                                int b;
-                                if (int.TryParse(v, out b))
-                                    dataList.AddRange(BitConverter.GetBytes(b));
-                                else
-                                    addError(new ErrorMessage(string.Format(Language.NotNumber, v), code[i].Index, code[i].Owner));
-                            }
-                        }
-                    }
-                    else if (lw == "equ")
-                    {
-                        int index;
-                        if (int.TryParse(text[1], out index))
-                            Links[Links.Keys.Last()] = index;
-                        else
-                            addError(new ErrorMessage(string.Format(Language.NotNumber, text[1]), code[i].Index, code[i].Owner));
-                    }
-                    else
-                        result.Add(code[i], text);
-                }
-            }
-            
-            dataZoneOffest = result.Count;
-            foreach(var k in dataZone)
-                Links[k.Key] = k.Value + dataZoneOffest;
-
-            dataList.AddRange(new byte[] { 0, 0, 0 });
-            data = dataList.ToArray();
-
-            return result;
+            if (Sections.ContainsKey(sect))
+                AddError(row, "Метка {0} уже существует", sect);
+            else
+                Sections.Add(sect, row.Index);
         }
 
-        public Operation Link(CodeEditBox.RowReadonly row, string[] text)
+        private void parseBody(CodeEditBox.RowReadonly row, string body)
         {
-            Operation op = new Operation();
-            op.operation = text[0];
-            op.row = row;
+            Match m_body = rx_command.Match(body);
 
-            foreach (MethodInfo method in Operators.OperationsList)
+            if (!m_body.Success)
+                return;
+
+            var opcod = m_body.Groups["opcod"];
+            var arg1 = m_body.Groups["p1"];
+            var arg2 = m_body.Groups["p2"];
+            var undef1 = m_body.Groups["undef1"];
+            var undef2 = m_body.Groups["undef2"];
+
+            if (undef1.Success)
+                AddError(row, "Неожиданный символ '{0}'", undef1);
+            if (undef2.Success)
+                AddError(row, "Неожиданный символ '{0}'", undef2);
+
+            var op = Operators.OperationsList.FirstOrDefault(m => m.Name.Equals(opcod.Value, StringComparison.OrdinalIgnoreCase));
+            if (op == null)
             {
-                if (method.Name.Equals(op.operation, StringComparison.OrdinalIgnoreCase))
-                {
-                    string[] args;
-                    if (text.Length > 1)
-                    {
-                        args = text[1].Split(',');
-                        for (int i = 0; i < args.Length; i++)
-                            args[i] = args[i].Trim();
-                    }
-                    else
-                        args = new string[0];
-
-                    op.method = method;
-                    return ParseOperation(op, args) ? op : null;
-                }
-            }
-            addError(new ErrorMessage(string.Format(Language.OperationsNotFound, op.operation), row.Index, row.Owner));
-            return null;
-        }
-
-        public bool ParseOperation(Operation operation, string[] input)
-        {
-            ParameterInfo[] paramInfo = operation.method.GetParameters();
-            List<object> output = new List<object>();
-            ErrorMessage error = new ErrorMessage(null, operation.row.Index, operation.row.Owner);
-
-            if (input.Length != paramInfo.Length)
-                error.Message = string.Format(Language.OperationsArgumentError, operation.operation, paramInfo.Length);
-
-            for (int i = 0; i < input.Length && error.Message == null; i++)
-            {
-                System.Type needType = paramInfo[i].ParameterType;
-                int oldCount = output.Count;
-                string value = input[i];
-
-                value = value.TrimStart('#');
-                if (needType.BaseType == typeof(Register))
-                {
-                    Register reg = GetRegister(value.ToLower());
-                    if (reg == null)
-                        error.Message = string.Format(Language.RegisterNotFound, value);
-
-                    if (!needType.IsInstanceOfType(reg))
-                        error.Message = string.Format(Language.RegisterDontUseHere, value);
-
-                    output.Add(reg);
-                }
-                else if (needType == typeof(int) || needType == typeof(short) || needType == typeof(char) || needType == typeof(byte))
-                {
-                    double? result = value.MathToDouble();
-                    if (result != null)
-                        output.Add(Convert.ChangeType(result, needType));
-                    else
-                        error.Message = string.Format(Language.NotNumber, value);
-                }
-                else if (needType == typeof(Link))
-                {
-                    string[] temp = value.Split('[');
-                    Link link = new Link();
-                    double? row = value.MathToDouble();
-                    if (row != null)
-                        link.Line = (int)row;
-                    else
-                    {
-                        if (!Links.ContainsKey(temp[0]))
-                            error.Message = string.Format(Language.MarkerNotFound, temp[0]);
-                        else
-                            link.Line = Links[temp[0]];
-                    }
-                    if (temp.Length == 2)
-                    {
-                        temp[1] = temp[1].Remove(temp[1].Length - 1).ToLower();
-                        Register32 reg = GetRegister(temp[1]) as Register32;
-                        if (reg == null)
-                            error.Message = string.Format(Language.RegisterNotFoundOrDontUse, temp[1]);
-                        else
-                            link.reg32 = reg;
-                    }
-                    output.Add(link);
-                }
-
-                if (oldCount == output.Count && error.Message != "")
-                    error.Message = string.Format(Language.InvalidParameter, value);
+                AddError(row, "Оператор '{0}' не определен", opcod.Value);
+                return;
             }
 
-            operation.args = output.ToArray();
+            int argCount = 0;
+            argCount += arg1.Success ? 1 : 0;
+            argCount += arg2.Success ? 1 : 0;
 
-            if (error.Message == null)
-                return true;
+            var args = op.GetParameters();
+            if (args.Count() != argCount)
+            {
+                AddError(row, "Оператор '{0}' имеет {1} аргумент(ов)", opcod.Value, args.Count());
+                return;
+            }
 
-            addError(error);
-            return false;
+            Operation operation = new Operation(row, op);
+            if (arg1.Success)
+                operation.Args[0] = parseArgument(operation, args[0].ParameterType, arg1.Value);
+            if (arg2.Success)
+                operation.Args[1] = parseArgument(operation, args[1].ParameterType, arg2.Value);
+
+            if (Errors.Count == 0)
+                source.Add(operation);
         }
 
-        public byte GetByte(int adress)
+        private object parseArgument(Operation operation, Type target, string arg)
         {
-            return data[GetDataAdress(adress)];
+            Func<CodeEditBox.RowReadonly, Type, string, object> parser = null;
+
+            if (!parseType.TryGetValue(target, out parser))
+            {
+                AddError(operation.Row, "Кто то забыл добавить парсер для '{0}', пните разраба", target.FullName);
+                return null;
+            }
+
+            return parser(operation.Row, target, arg);
         }
 
-        public int GetWord(int adress)
+        private object parseRegister(CodeEditBox.RowReadonly row, Type type, string value)
         {
-            return BitConverter.ToInt32(data, GetDataAdress(adress));
+            var reg = GetRegister(value);
+
+            if (reg == null)
+            {
+                AddError(row, "Регистр '{0}' не существует", value);
+                return null;
+            }
+            if (reg.GetType() != type)
+            {
+                string size = rx_regsize.Match(type.Name).Groups[1].Value;
+                AddError(row, "Регистр '{0}' не {1}х битный", value, size);
+                return null;
+            }
+
+            return reg;
         }
 
-        public int GetDataAdress(int adress)
+        private object parseNumber(CodeEditBox.RowReadonly row, Type type, string value)
         {
-            adress -= dataZoneOffest;
-            if (adress < 0)
-                throw new RuntimeException(Language.IndexInInstuctionMemory, getCurrentRow());
-            if (adress >= data.Length)
-                throw new RuntimeException(Language.IndexMemoryOf, getCurrentRow());
-            return adress;
+            var result = value.MathToDouble();
+
+            if (!result.HasValue)
+            {
+                AddError(row, "Выражение '{0}' не является числом", value);
+                return null;
+            }
+
+            return Convert.ChangeType(result.Value, type);
         }
 
+        public void AddError(CodeEditBox.RowReadonly row, string message, params object[] args)
+        {
+            string msg = string.Format(message, args);
+            Errors.Add(new ErrorMessage(msg, row.Index, row.Owner));
+        }
+        
         private int getCurrentRow()
         {
-            return source[ActiveIndex].row.Index + 1;
-        }
-
-        private void addError(ErrorMessage msg)
-        {
-            Errors.Add(msg);
+            return source[ActiveIndex].Row.Index + 1;
         }
 
         public void Pause()
@@ -486,7 +413,7 @@ namespace MAIDE.VM
             if (status == State.Launched || status == State.Pause || status == State.Finish)
             {
                 if (ActiveIndex < source.Count)
-                    source[ActiveIndex].row.ResetFlag(CodeEditBox.RowFlag.Run);
+                    source[ActiveIndex].Row.ResetFlag(CodeEditBox.RowFlag.Run);
 
                 Status = State.Ready;
                 waitEvent.Set();

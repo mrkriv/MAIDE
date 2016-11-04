@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace MAIDE.VM
 {
-    public enum Type
+    public enum OperationType
     {
         None,
         Action,
@@ -14,9 +14,9 @@ namespace MAIDE.VM
 
     public class DescriptorAttribute : DescriptionAttribute
     {
-        public readonly Type Type;
+        public readonly OperationType Type;
 
-        public DescriptorAttribute(Type type, string description) : base(description)
+        public DescriptorAttribute(OperationType type, string description) : base(description)
         {
             Type = type;
         }
