@@ -20,7 +20,7 @@ namespace MAIDE.VM
         private static readonly Regex rx_section = new Regex(@"^\s*(?<sect>\w+:)?\s*(?<body>[^;\n\r]+)?\s*(;[^;\n\r]*)?$", RegexOptions.Multiline);
         private static readonly Regex rx_command = new Regex(@"^(?<opcod>\w+)\s*(?<p1>\w+)?\s*(?<undef1>[\S^,]+)?(?:,\s*(?<p2>[\w#]+)\s*)?(?<undef2>\S+)?\s*$", RegexOptions.Multiline);
         private static readonly Regex rx_regsize = new Regex(@"\D+(\d+)");
-        private static readonly Regex rx_onlyspace = new Regex(@"\s*");
+        private static readonly Regex rx_onlyspace = new Regex(@"^\s+", RegexOptions.Multiline);
 
         public enum State
         {
