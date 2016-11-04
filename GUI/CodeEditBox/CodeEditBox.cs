@@ -139,7 +139,7 @@ namespace MAIDE.UI
             {
                 StringBuilder sb = new StringBuilder();
                 foreach (var line in rows)
-                    sb.AppendLine(line.ToString());
+                    sb.AppendLine(line);
 
                 return sb.ToString();
             }
@@ -1103,7 +1103,7 @@ namespace MAIDE.UI
                 sb.AppendLine(rows[SelectStart.Y].GetRange(SelectStart.X, rows[SelectStart.Y].Length - SelectStart.X));
 
                 for (int i = SelectStart.Y + 1; i < SelectEnd.Y; i++)
-                    sb.AppendLine(rows[i].ToString());
+                    sb.AppendLine(rows[i]);
                 sb.AppendLine(rows[SelectEnd.Y].GetRange(0, SelectEnd.X));
             }
             return sb.ToString();

@@ -76,6 +76,11 @@ namespace MAIDE.UI
                 return row.ToString();
             }
 
+            public static implicit operator string(RowReadonly self)
+            {
+                return self.row.ToString();
+            }
+
             public bool IsFlag(RowFlag flag)
             {
                 return (row.Flag & flag) != 0;
