@@ -6,18 +6,11 @@ namespace MAIDE.VM
 {
     public static class Operators
     {
-        public static Core ActiveCore;
-        public static readonly MethodInfo[] OperationsList;
-
-        static Operators()
-        {
-            var mhod = typeof(Operators).GetMethods();
-            OperationsList = mhod.Where(w => w.CustomAttributes.Any(e => e.AttributeType == typeof(DescriptorAttribute))).ToArray();
-        }
+        public static Core Core;
 
         private static T reg<T>(string name) where T : Register
         {
-            return (T)ActiveCore.GetRegister(name);
+            return (T)RegisterManager.GetRegister(name);
         }
 
         [Descriptor(OperationType.Action, "Выводит на консоль '{0}'-й байт из регистра 'a'")]
@@ -35,38 +28,38 @@ namespace MAIDE.VM
         }
 
         [Descriptor(OperationType.Action, "Загружает в регистр '{0}' 4 байта из памяти по адресу '{1}'")]
-        public static void ldb(Register32 reg, Link index)
+        public static void ldb(Register32 reg, Pointer index)
         {
             //reg.Value = ActiveCore.GetWord(index.GetValue());
         }
 
         [Descriptor(OperationType.Jump, "Безусловный переход, в стек помещается текущий адрес")]
-        public static void call(Link index)
+        public static void call(Pointer index)
         {
-            ActiveCore.Stack.Push(ActiveCore.ActiveIndex);
-            ActiveCore.ActiveIndex = index.Line - 1;
+            Core.Stack.Push(Core.Pointer);
+            Core.Pointer = index.Line - 1;
         }
 
         [Descriptor(OperationType.Jump, "Переходит по адресу взятому со стека, если стек пуст то завершает программу")]
         public static void ret()
         {
-            if (ActiveCore.Stack.Count != 0)
-                ActiveCore.ActiveIndex = ActiveCore.Stack.Pop();
+            if (Core.Stack.Count != 0)
+                Core.Pointer = Core.Stack.Pop();
             else
-                ActiveCore.Stop();
+                Core.Stop();
         }
 
         [Descriptor(OperationType.Action, "Кладет на вершину стека все байты регистра '{0}'")]
         public static void push(Register32 reg)
         {
-            ActiveCore.Stack.Push(reg.Value);
+            Core.Stack.Push(reg.Value);
         }
 
         [Descriptor(OperationType.Action, "Снимает с вершины стека 32 байта и помещает их в регистр '{0}'")]
         public static void pop(Register32 reg)
         {
-            if (ActiveCore.Stack.Count != 0)
-                reg.Value = ActiveCore.Stack.Pop();
+            if (Core.Stack.Count != 0)
+                reg.Value = Core.Stack.Pop();
         }
 
         [Descriptor(OperationType.Action, "Копирует данные из регистра '{0}' в регистр '{1}'")]
@@ -162,45 +155,45 @@ namespace MAIDE.VM
         }
 
         [Descriptor(OperationType.Jump, "Безусловный переход")]
-        public static void jmp(Link index)
+        public static void jmp(Pointer index)
         {
-            ActiveCore.ActiveIndex = index.Line - 1;
+            Core.Pointer = index.Line - 1;
         }
 
         [Descriptor(OperationType.Condition, "Переход на заданную метку, если операнды равны")]
-        public static void jeq(Link index)
+        public static void jeq(Pointer index)
         {
-            if (ActiveCore.FlagReg.ZF)
-                ActiveCore.ActiveIndex = index.Line - 1;
+            if (RegisterManager.FlagReg.ZF)
+                Core.Pointer = index.Line - 1;
         }
 
         [Descriptor(OperationType.Condition, "Переход на заданную метку, если первый операнд больше нуля")]
-        public static void jgt(Link index)
+        public static void jgt(Pointer index)
         {
-            if (!ActiveCore.FlagReg.ZF && ActiveCore.FlagReg.SF)
-                ActiveCore.ActiveIndex = index.Line - 1;
+            if (!RegisterManager.FlagReg.ZF && RegisterManager.FlagReg.SF)
+                Core.Pointer = index.Line - 1;
         }
 
         [Descriptor(OperationType.Condition, "Переход на заданную метку, если первый операнд меньше второго")]
-        public static void jlt(Link index)
+        public static void jlt(Pointer index)
         {
-            if (ActiveCore.FlagReg.SF != ActiveCore.FlagReg.OF)
-                ActiveCore.ActiveIndex = index.Line - 1;
+            if (RegisterManager.FlagReg.SF != RegisterManager.FlagReg.OF)
+                Core.Pointer = index.Line - 1;
         }
 
         [Descriptor(OperationType.Condition, "Переход на заданную метку, если первый операнд больше второго")]
-        public static void jge(Link index)
+        public static void jge(Pointer index)
         {
             Register32 a = reg<Register32>("a");
-            if (ActiveCore.FlagReg.SF == ActiveCore.FlagReg.OF)
-                ActiveCore.ActiveIndex = index.Line - 1;
+            if (RegisterManager.FlagReg.SF == RegisterManager.FlagReg.OF)
+                Core.Pointer = index.Line - 1;
         }
 
         [Descriptor(OperationType.Condition, "Переход на заданную метку, если первый операнд больше второго")]
-        public static void jпе(Link index)
+        public static void jпе(Pointer index)
         {
-            if (!ActiveCore.FlagReg.ZF)
-                ActiveCore.ActiveIndex = index.Line - 1;
+            if (!RegisterManager.FlagReg.ZF)
+                Core.Pointer = index.Line - 1;
         }
 
         [Descriptor(OperationType.Condition, "Инкремент регистра {0}")]
@@ -222,11 +215,11 @@ namespace MAIDE.VM
 
         private static void _comp(int value)
         {
-            ActiveCore.FlagReg.ZF = value == 0;
-            ActiveCore.FlagReg.SF = value >= 0;
-            ActiveCore.FlagReg.CF = false;
-            ActiveCore.FlagReg.OF = false;
-            ActiveCore.FlagReg.PF = value % 2 == 0;
+            RegisterManager.FlagReg.ZF = value == 0;
+            RegisterManager.FlagReg.SF = value >= 0;
+            RegisterManager.FlagReg.CF = false;
+            RegisterManager.FlagReg.OF = false;
+            RegisterManager.FlagReg.PF = value % 2 == 0;
         }
     }
 }

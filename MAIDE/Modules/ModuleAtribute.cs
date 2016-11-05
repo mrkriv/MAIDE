@@ -67,8 +67,9 @@ namespace MAIDE.Modules
             {
                 if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
                 {
-                    Thread t = new Thread(() =>
-                     key.form.Show(key.panel, key.dock));
+                    Thread t = new Thread(() => {
+                        try { key.form.Show(key.panel, key.dock); } catch { }
+                    });
 
                     t.SetApartmentState(ApartmentState.STA);
                     t.Start();

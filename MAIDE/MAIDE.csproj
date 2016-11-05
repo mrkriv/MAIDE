@@ -86,6 +86,7 @@
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ErrorMessage.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Modules\ModuleAtribute.cs" />
     <Compile Include="Modules\RegisterControl.cs">
       <SubType>UserControl</SubType>
@@ -155,13 +156,15 @@
     <Compile Include="Modules\RegistersWindow.Designer.cs">
       <DependentUpon>RegistersWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="VM\CodeBuilder.cs" />
+    <Compile Include="VM\Compiler.cs" />
     <Compile Include="VM\Core.cs" />
     <Compile Include="VM\DescriptorAttribute.cs" />
     <Compile Include="VM\Link.cs" />
+    <Compile Include="VM\Operation.cs" />
+    <Compile Include="VM\OperationManager.cs" />
     <Compile Include="VM\Operators.cs" />
-    <Compile Include="VM\Refactor.cs" />
     <Compile Include="VM\Register.cs" />
+    <Compile Include="VM\RegisterManager.cs" />
     <Compile Include="VM\RuntimeException.cs" />
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>

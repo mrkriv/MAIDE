@@ -15,7 +15,7 @@ namespace MAIDE.Modules
         public ErrorWindow()
         {
             InitializeComponent();
-            VM.Core.Errors.CollectionChanged += Errors_Changed;
+            Log.Errors.CollectionChanged += Errors_Changed;
         }
 
         private void Errors_Changed(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

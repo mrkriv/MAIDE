@@ -25,11 +25,8 @@ namespace MAIDE
             CodeEditBox.SetSyntaxColor(2, Color.FromArgb(78, 201, 176), null);
             CodeEditBox.SetSyntaxIcons(imgList);
 
-            foreach (var op in VM.Operators.OperationsList)
+            foreach (var op in VM.OperationManager.Operations)
                 CodeEditBox.AddSyntaxPhrase(op.Name, 0);
-
-            foreach (var lt in VM.Core.Letters)
-                CodeEditBox.AddSyntaxPhrase(lt, 1);
 
             addSyntaxByRegLS(Properties.Settings.Default.Register32);
             addSyntaxByRegLS(Properties.Settings.Default.Register16);

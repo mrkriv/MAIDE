@@ -37,7 +37,7 @@ namespace MAIDE.Modules
             table.Controls.Clear();
             table.RowCount = 0;
 
-            foreach (Register reg in MainForm.Instance.Core.Registers)
+            foreach (Register reg in RegisterManager.Registers)
                 table.Controls.Add(new RegisterControl(reg));
         }
     }

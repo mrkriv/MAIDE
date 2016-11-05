@@ -19,11 +19,14 @@ namespace MAIDE
         private const string newDocumentName = "NewProgram";
         private int newDocumentCount = 0;
         private string[] startArgs;
-        private Thread runThread;
-        public static MainForm Instance { get; private set; }
         public DocumentForm ActiveDocument;
-        public Core Core { get; private set; }
+        private Compiler compiler;
+        private Thread runThread;
         private Setting setting;
+        private MemoryStream ms;
+
+        public static MainForm Instance { get; private set; }
+        public Core Core { get; private set; }
 
         public MainForm(string[] args)
         {
@@ -36,6 +39,8 @@ namespace MAIDE
 
             Core = new Core();
             Core.StateChanged += Core_StateChanged;
+
+            compiler = new Compiler(Core);
         }
 
         protected override void OnLoad(EventArgs e)
@@ -197,12 +202,15 @@ namespace MAIDE
 
         bool build()
         {
-            if (!Core.Build(ActiveDocument.GetCode()))
+            ms = new MemoryStream();
+
+            if (!compiler.Build(ActiveDocument.GetCode(), ms))
             {
                 status.Text = Language.BuildError;
                 ModuleAtribute.Show(typeof(ErrorWindow));
                 return false;
             }
+
             status.Text = Language.BuildDone;
             return true;
         }
@@ -219,16 +227,13 @@ namespace MAIDE
                 Console.Instance.FormClosed += ConsoleClosed;
             }));
 
-            Core.Invoke();
+            Core.Invoke(ms);
             Console.Destroy();
         }
 
         private void BuildMenuBuild_Click(object sender, EventArgs e)
         {
-            if (!build())
-                return;
-
-            CodeBuilder cb = new CodeBuilder(Core, ActiveDocument.Text.Split('.')[0]);
+            build();
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -259,7 +264,7 @@ namespace MAIDE
         {
             Core.Stop();
             runThread.Abort();
-            runThread = new Thread(Core.Invoke);
+            runThread = new Thread(run);
             runThread.Start();
         }
     }

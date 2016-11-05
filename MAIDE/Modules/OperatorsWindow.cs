@@ -17,14 +17,14 @@ namespace MAIDE.Modules
         {
             InitializeComponent();
             
-            foreach (var op in Operators.OperationsList)
+            foreach (var op in OperationManager.Operations)
                 list.Items.Add(op.Name);
         }
 
         private void list_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             activeName.Text = list.SelectedItem as string;
-            MethodInfo method = Operators.OperationsList.First(w => w.Name == activeName.Text);
+            var method = OperationManager.GetMethod(activeName.Text);
 
             activeDec.Clear();
             activeDec.AppendText(method.GetCustomAttribute<DescriptionAttribute>().Description);
@@ -43,7 +43,7 @@ namespace MAIDE.Modules
                     name = "reg";
                     color = Color.BlueViolet;
                 }
-                else if (paramTypes[i].ParameterType == typeof(Link))
+                else if (paramTypes[i].ParameterType == typeof(VM.Pointer))
                 {
                     name = "metka";
                     color = Color.Green;
@@ -71,7 +71,7 @@ namespace MAIDE.Modules
         private void mask_TextChanged(object sender, EventArgs e)
         {
             list.Items.Clear();
-            foreach (var op in Operators.OperationsList.Where(w => w.Name.Contains(mask.Text)))
+            foreach (var op in OperationManager.Operations.Where(w => w.Name.Contains(mask.Text)))
                 list.Items.Add(op.Name);
         }
     }
