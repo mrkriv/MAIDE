@@ -11,11 +11,13 @@ namespace MAIDE.VM
     {
         public readonly object[] Args;
         public readonly MethodInfo Method;
+        public int Length;
 
         public Operation(MethodInfo method)
         {
             Method = method;
             Args = new object[method.GetParameters().Count()];
+            Length = 1 + Args.Length;
         }
     }
 }

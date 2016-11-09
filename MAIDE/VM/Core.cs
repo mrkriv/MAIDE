@@ -4,6 +4,9 @@ using System.Reflection;
 using System.Windows.Forms;
 using System.Threading;
 using System.IO;
+using MAIDE.UI;
+using Row = MAIDE.UI.CodeEditBox.RowReadonly;
+using Rows = MAIDE.UI.CodeEditBox.RowReadonlyCollection;
 
 namespace MAIDE.VM
 {
@@ -11,7 +14,6 @@ namespace MAIDE.VM
     {
         public enum State
         {
-            NoBuild,
             Ready,
             Launched,
             Pause,
@@ -36,6 +38,7 @@ namespace MAIDE.VM
         private int total;
         private State status;
         private bool needPause;
+        private Row currentRow;
 
         public readonly Dictionary<string, int> Sections;
         public readonly Stack<int> Stack;
@@ -76,12 +79,8 @@ namespace MAIDE.VM
             waitEvent = new ManualResetEvent(true);
         }
 
-        public void Invoke(Stream stream)
+        public void Invoke(Stream stream, Rows codeRows = null)
         {
-            if (status != State.Ready && status != State.Finish)
-                return;
-
-            var reader = new BinaryReader(stream);
             Operators.Core = this;
 
             Stack.Clear();
@@ -104,10 +103,16 @@ namespace MAIDE.VM
 
             Console.Clear();
 
+            var reader = new BinaryReader(stream);
+            stream.Seek(0, SeekOrigin.Begin);
+
+            var debugTable = getDebugTable(reader, codeRows);
+
             try
             {
                 while (status == State.Launched || status == State.Pause)
                 {
+                    currentRow = debugTable != null ? debugTable[(short)stream.Position] : null;
                     Operation op = OperationManager.Decode(reader);
 
                     if (total > Properties.Settings.Default.TotalTickLimit)
@@ -120,10 +125,12 @@ namespace MAIDE.VM
                         total = -total;
                     }
 
-                    // if (op.Row.IsFlag(CodeEditBox.RowFlag.Breakpoint))
-                    //     Pause();
+                    if (currentRow != null && currentRow.IsFlag(CodeEditBox.RowFlag.Breakpoint))
+                        Pause();
 
-                    // op.Row.SetFlag(CodeEditBox.RowFlag.Run);
+                    if (currentRow != null)
+                        currentRow.SetFlag(CodeEditBox.RowFlag.Run);
+
                     waitEvent.WaitOne();
 
                     if (status == State.Launched)
@@ -136,11 +143,8 @@ namespace MAIDE.VM
                         {
                             if (e.InnerException is RuntimeException)
                                 throw e.InnerException;
-                            //  throw new RuntimeException(string.Format(Language.RuntimeException, op.Method.Name), getCurrentRow());
+                            throw new RuntimeException(string.Format(Language.RuntimeException, op.Method.Name), getCurrentRowIndex());
                         }
-
-                        // if (sr.EndOfStream)
-                        //    throw new RuntimeException(Language.RuntimeExceptionMemory, op.Row.Index + 1);
 
                         if (needPause)
                         {
@@ -148,11 +152,12 @@ namespace MAIDE.VM
                             Pause();
                         }
 
-                        Pointer++;
+                        Pointer += op.Length;
                         total++;
                     }
 
-                    //  op.Row.ResetFlag(CodeEditBox.RowFlag.Run);
+                    if (currentRow != null)
+                        currentRow.ResetFlag(CodeEditBox.RowFlag.Run);
                 }
                 Status = State.Finish;
             }
@@ -165,6 +170,38 @@ namespace MAIDE.VM
             Console.Write(Language.PressAnyKey);
             Console.MoveCaretToEnd();
             Console.ReadKey();
+        }
+
+        private int getCurrentRowIndex()
+        {
+            return currentRow != null ? currentRow.Index + 1 : -1;
+        }
+
+        private Dictionary<short, Row> getDebugTable(BinaryReader reader, Rows rows)
+        {
+            if (rows == null)
+                return null;
+
+            Dictionary<short, Row> debugTable = null;
+            var stream = reader.BaseStream;
+
+            while (stream.Position < stream.Length)
+            {
+                if (reader.ReadByte() != 0xFF)
+                    continue;
+
+                debugTable = new Dictionary<short, Row>();
+
+                while (stream.Position < stream.Length)
+                {
+                    short pos = reader.ReadInt16();
+                    short row = reader.ReadInt16();
+                    debugTable.Add(pos, rows[row]);
+                }
+            }
+            stream.Seek(0, SeekOrigin.Begin);
+
+            return debugTable;
         }
 
         public void Pause()
@@ -185,14 +222,11 @@ namespace MAIDE.VM
 
         public void Stop()
         {
-            if (status == State.Launched || status == State.Pause || status == State.Finish)
-            {
-                // if (Pointer < source.Count)
-                //     source[Pointer].Row.ResetFlag(CodeEditBox.RowFlag.Run);
+            if (currentRow != null)
+                currentRow.ResetFlag(CodeEditBox.RowFlag.Run);
 
-                Status = State.Ready;
-                waitEvent.Set();
-            }
+            Status = State.Ready;
+            waitEvent.Set();
         }
     }
 }

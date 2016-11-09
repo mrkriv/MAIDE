@@ -99,6 +99,8 @@ namespace MAIDE
             StreamWriter fs = new StreamWriter(FileName, false, new System.Text.UTF8Encoding(false));
             doc.Save(fs);
             fs.Close();
+            
+            Log.AddMessage("{0} saved.", new FileInfo(FileName).Name);
 
             Modified = false;
         }

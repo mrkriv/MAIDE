@@ -114,18 +114,16 @@ namespace MAIDE
             }));
         }
 
-        public static void Write(string text)
+        public static void Write(string text, params object[] args)
         {
             Instance.BeginInvoke((Action)(() => {
-                Instance.viewport.Text += text;
+                Instance.viewport.Text += string.Format(text, args);
             }));
         }
 
-        public static void WriteLine(string text)
+        public static void WriteLine(string text, params object[] args)
         {
-            Instance.BeginInvoke((Action)(() => {
-                Instance.viewport.Text += text + "\r\n";
-            }));
+            Write(text + Environment.NewLine, args);
         }
 
         public static void MoveCaretToEnd()

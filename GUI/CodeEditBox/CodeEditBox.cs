@@ -140,8 +140,8 @@ namespace MAIDE.UI
                 StringBuilder sb = new StringBuilder();
                 foreach (var line in rows)
                     sb.AppendLine(line);
-
-                return sb.ToString();
+                
+                return sb.ToString().TrimEnd('\r', '\n');
             }
             set
             {
@@ -409,7 +409,6 @@ namespace MAIDE.UI
             for (int i = 1024; i < 1279; i++)
                 charSizes[i] = getCharWidth((char)i);
 
-            charSizes['\t'] = charSizes[' '] * 4;
             lineHeight = Font.GetHeight(Graphics.FromHwnd(Handle));
 
             vScrollBar.SmallChange = (int)lineHeight;
@@ -475,45 +474,52 @@ namespace MAIDE.UI
                 {
                     Symbol sb = row[x];
 
-                    e.Graphics.DrawString(sb.Value.ToString(), Font, new SolidBrush(sb.Color), px, py, StringFormat.GenericDefault);
-                    sb.Render_old_X = (int)px;
-                    sb.Render_old_Y = (int)py;
-                    sb.Render_old_Width = (int)charSizes[sb.Value];
+                    int len = 0;
 
-                    if (caretVisible && selectS.Y == y && selectS.X == x)
-                        e.Graphics.DrawLine(new Pen(ForeColor), px + 3, py, px + 3, py + lineHeight);
+                    if (sb.Value == '\t')
+                        len = (int)(charSizes[' '] * ((px / charSizes[' ']) % 4 + 1));
+                    else
+                        len = (int)charSizes[sb.Value];
 
-                    px += charSizes[sb.Value];
+                    if (len > 0)
+                    {
+                        e.Graphics.DrawString(sb.Value.ToString(), Font, new SolidBrush(sb.Color), px, py, StringFormat.GenericDefault);
+                        sb.Render_old_X = (int)px;
+                        sb.Render_old_Y = (int)py;
+                        sb.Render_old_Width = (int)charSizes[sb.Value];
+
+                        if (caretVisible && selectS.Y == y && selectS.X == x)
+                            e.Graphics.DrawLine(new Pen(ForeColor), px + 3, py, px + 3, py + lineHeight);
+
+                        px += len;
+                    }
                 }
 
                 if (caretVisible && selectS.Y == y && selectS.X == row.Length)
                     e.Graphics.DrawLine(new Pen(ForeColor), px + 2, py, px + 2, py + lineHeight);
 
-                if (selectS != selectE)
+                if (selectS != selectE && selectS.Y <= y && selectE.Y >= y)
                 {
-                    if (selectS.Y <= y && selectE.Y >= y)
+                    if (row.Length != 0)
                     {
-                        if (row.Length != 0)
+                        if (selectS.Y == y && row.Length == selectS.X)
                         {
-                            if (selectS.Y == y && row.Length == selectS.X)
-                            {
-                                int x1 = row[selectS.X - 1].Render_old_X + row[selectS.X - 1].Render_old_Width;
-                                e.Graphics.FillRectangle(selectBrush, x1, py, 10, lineHeight);
-                            }
-                            else
-                            {
-                                Symbol sStart = GetSymbolByPoint(selectS.X, selectS.Y);
-                                Symbol sEnd = GetSymbolByPoint(selectE.X, selectE.Y);
-
-                                int x1 = selectS.Y == y && sStart != null ? sStart.Render_old_X : (int)offestX;
-                                int x2 = selectE.Y == y && sEnd != null ? sEnd.Render_old_X + 5 : row[row.Length - 1].Render_old_X + 10;
-
-                                e.Graphics.FillRectangle(selectBrush, x1, py, x2 - x1, lineHeight);
-                            }
+                            int x1 = row[selectS.X - 1].Render_old_X + row[selectS.X - 1].Render_old_Width;
+                            e.Graphics.FillRectangle(selectBrush, x1, py, 10, lineHeight);
                         }
                         else
-                            e.Graphics.FillRectangle(selectBrush, offestX, py, 10, lineHeight);
+                        {
+                            Symbol sStart = GetSymbolByPoint(selectS.X, selectS.Y);
+                            Symbol sEnd = GetSymbolByPoint(selectE.X, selectE.Y);
+
+                            int x1 = selectS.Y == y && sStart != null ? sStart.Render_old_X : (int)offestX;
+                            int x2 = selectE.Y == y && sEnd != null ? sEnd.Render_old_X + 5 : row[row.Length - 1].Render_old_X + 10;
+
+                            e.Graphics.FillRectangle(selectBrush, x1, py, x2 - x1, lineHeight);
+                        }
                     }
+                    else
+                        e.Graphics.FillRectangle(selectBrush, offestX, py, 10, lineHeight);
                 }
 
                 if ((row.Flag & RowFlag.Breakpoint) != 0)
@@ -727,6 +733,7 @@ namespace MAIDE.UI
                 case (Keys)11:  // wtf?
                     break;
                 case Keys.Space:
+                    goto default;
                 case Keys.Tab:
                     if (autoCompiler.Visible)
                         AutoCompiler_MouseDown(autoCompiler, null);
@@ -791,6 +798,7 @@ namespace MAIDE.UI
                                 selectStart.X = len;
 
                             ResetSelect();
+                            GoTo();
                         }
                     }
                     break;
@@ -810,6 +818,7 @@ namespace MAIDE.UI
                                 selectStart.X = len;
 
                             ResetSelect();
+                            GoTo();
                         }
                     }
                     break;
@@ -818,11 +827,13 @@ namespace MAIDE.UI
                     {
                         selectStart.X--;
                         ResetSelect();
+                        GoTo();
                     }
                     else if (SelectStart.Y > 0)
                     {
                         selectStart.X = rows[--selectStart.Y].Length;
                         ResetSelect();
+                        GoTo();
                     }
                     else
                         needUpdate = false;
@@ -832,19 +843,21 @@ namespace MAIDE.UI
                     {
                         selectStart.X++;
                         ResetSelect();
+                        GoTo();
                     }
                     else if (SelectStart.Y + 1 < rows.Count)
                     {
                         selectStart.X = 0;
                         selectStart.Y++;
                         ResetSelect();
+                        GoTo();
                     }
                     break;
-                case Keys.Tab:
-                    RemoveSelected();
-                    rows[SelectStart.Y].Write('\t', SelectStart.X);
-                    selectStart.X++;
-                    break;
+               // case Keys.Tab:
+                //    RemoveSelected();
+                //    rows[SelectStart.Y].Write('\t', SelectStart.X);
+                //    selectStart.X++;
+                //    break;
                 case Keys.Delete:
                     if (GetSelectLen() != 0)
                         RemoveSelected();
@@ -1049,7 +1062,7 @@ namespace MAIDE.UI
 
             while (y < SelectEnd.Y)
             {
-                len += rows[y].Length;
+                len += rows[y].Length + 1;
                 y++;
             }
 

@@ -1,8 +1,4 @@
-﻿using System.Linq;
-using System.Reflection;
-using MAIDE;
-
-namespace MAIDE.VM
+﻿namespace MAIDE.VM
 {
     public static class Operators
     {
@@ -37,7 +33,7 @@ namespace MAIDE.VM
         public static void call(Pointer index)
         {
             Core.Stack.Push(Core.Pointer);
-            Core.Pointer = index.Line - 1;
+            Core.Pointer = index.Row - 1;
         }
 
         [Descriptor(OperationType.Jump, "Переходит по адресу взятому со стека, если стек пуст то завершает программу")]
@@ -157,28 +153,28 @@ namespace MAIDE.VM
         [Descriptor(OperationType.Jump, "Безусловный переход")]
         public static void jmp(Pointer index)
         {
-            Core.Pointer = index.Line - 1;
+            Core.Pointer = index.Row - 1;
         }
 
         [Descriptor(OperationType.Condition, "Переход на заданную метку, если операнды равны")]
         public static void jeq(Pointer index)
         {
             if (RegisterManager.FlagReg.ZF)
-                Core.Pointer = index.Line - 1;
+                Core.Pointer = index.Row - 1;
         }
 
         [Descriptor(OperationType.Condition, "Переход на заданную метку, если первый операнд больше нуля")]
         public static void jgt(Pointer index)
         {
             if (!RegisterManager.FlagReg.ZF && RegisterManager.FlagReg.SF)
-                Core.Pointer = index.Line - 1;
+                Core.Pointer = index.Row - 1;
         }
 
         [Descriptor(OperationType.Condition, "Переход на заданную метку, если первый операнд меньше второго")]
         public static void jlt(Pointer index)
         {
             if (RegisterManager.FlagReg.SF != RegisterManager.FlagReg.OF)
-                Core.Pointer = index.Line - 1;
+                Core.Pointer = index.Row - 1;
         }
 
         [Descriptor(OperationType.Condition, "Переход на заданную метку, если первый операнд больше второго")]
@@ -186,14 +182,14 @@ namespace MAIDE.VM
         {
             Register32 a = reg<Register32>("a");
             if (RegisterManager.FlagReg.SF == RegisterManager.FlagReg.OF)
-                Core.Pointer = index.Line - 1;
+                Core.Pointer = index.Row - 1;
         }
 
         [Descriptor(OperationType.Condition, "Переход на заданную метку, если первый операнд больше второго")]
         public static void jпе(Pointer index)
         {
             if (!RegisterManager.FlagReg.ZF)
-                Core.Pointer = index.Line - 1;
+                Core.Pointer = index.Row - 1;
         }
 
         [Descriptor(OperationType.Condition, "Инкремент регистра {0}")]

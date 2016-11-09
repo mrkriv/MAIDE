@@ -4,6 +4,7 @@ using WeifenLuo.WinFormsUI.Docking;
 using MAIDE.VM;
 using MAIDE.Utilit;
 using System.Collections.Specialized;
+using System;
 
 namespace MAIDE.Modules
 {
@@ -28,7 +29,7 @@ namespace MAIDE.Modules
             if (Visible && e.New == Core.State.Finish || e.New == Core.State.Pause)
             {
                 foreach (RegisterControl c in table.Controls)
-                    c.UpdateRegData();
+                    c.BeginInvoke((Action)c.UpdateRegData);
             }
         }
 

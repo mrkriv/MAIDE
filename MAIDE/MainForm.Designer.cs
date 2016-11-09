@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.MainMenu = new System.Windows.Forms.ToolStrip();
             this.toolStripSplitFile = new System.Windows.Forms.ToolStripDropDownButton();
@@ -39,6 +40,9 @@
             this.MianMenuAll = new System.Windows.Forms.ToolStripMenuItem();
             this.MianMenuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.ViewDropDown = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.buildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
@@ -87,6 +91,7 @@
             this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSplitFile,
             this.ViewDropDown,
+            this.toolStripDropDownButton2,
             this.toolStripDropDownButton1});
             this.MainMenu.Location = new System.Drawing.Point(1, 32);
             this.MainMenu.Name = "MainMenu";
@@ -190,6 +195,34 @@
             this.ViewDropDown.Size = new System.Drawing.Size(60, 22);
             this.ViewDropDown.Text = "Windows";
             // 
+            // toolStripDropDownButton2
+            // 
+            this.toolStripDropDownButton2.AutoToolTip = false;
+            this.toolStripDropDownButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.buildToolStripMenuItem,
+            this.runToolStripMenuItem});
+            this.toolStripDropDownButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton2.Image")));
+            this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
+            this.toolStripDropDownButton2.ShowDropDownArrow = false;
+            this.toolStripDropDownButton2.Size = new System.Drawing.Size(55, 22);
+            this.toolStripDropDownButton2.Text = "building";
+            // 
+            // buildToolStripMenuItem
+            // 
+            this.buildToolStripMenuItem.Name = "buildToolStripMenuItem";
+            this.buildToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.buildToolStripMenuItem.Text = "Build";
+            this.buildToolStripMenuItem.Click += new System.EventHandler(this.BuildMenuBuild_Click);
+            // 
+            // runToolStripMenuItem
+            // 
+            this.runToolStripMenuItem.Name = "runToolStripMenuItem";
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.runToolStripMenuItem.Text = "Run";
+            this.runToolStripMenuItem.Click += new System.EventHandler(this.runToolStripMenuItem_Click);
+            // 
             // toolStripDropDownButton1
             // 
             this.toolStripDropDownButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
@@ -236,8 +269,8 @@
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.BuildMenuRun,
             this.BuildMenuBuild,
+            this.BuildMenuRun,
             this.toolStripSeparator2,
             this.BuildMenuStop,
             this.BuildMenuPause,
@@ -265,13 +298,12 @@
             // 
             this.BuildMenuBuild.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.BuildMenuBuild.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.BuildMenuBuild.Enabled = false;
             this.BuildMenuBuild.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(241)))), ((int)(((byte)(241)))));
             this.BuildMenuBuild.Image = global::MAIDE.Properties.Resources.build;
             this.BuildMenuBuild.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BuildMenuBuild.Name = "BuildMenuBuild";
             this.BuildMenuBuild.Size = new System.Drawing.Size(36, 36);
-            this.BuildMenuBuild.Click += new System.EventHandler(this.BuildMenuBuild_Click);
+            this.BuildMenuBuild.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BuildMenuBuild_Click);
             // 
             // toolStripSeparator2
             // 
@@ -434,5 +466,8 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton BuildMenuResumeOne;
         private UI.Button BtnSetting;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton2;
+        private System.Windows.Forms.ToolStripMenuItem buildToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem runToolStripMenuItem;
     }
 }

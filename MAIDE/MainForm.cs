@@ -9,7 +9,6 @@ using System.Drawing;
 using System.Text;
 using MAIDE.VM;
 using MAIDE.UI;
-using MAIDE.Utilit;
 using MAIDE.Modules;
 
 namespace MAIDE
@@ -35,12 +34,19 @@ namespace MAIDE
 
             InitializeComponent();
 
+            Log.OnMessage += Log_OnMessage;
+
             Icon = Properties.Resources.IconApplication;
 
             Core = new Core();
             Core.StateChanged += Core_StateChanged;
 
             compiler = new Compiler(Core);
+        }
+
+        private void Log_OnMessage(string message)
+        {
+            status.Text = message;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -58,7 +64,7 @@ namespace MAIDE
             else
                 NewDocument();
 
-            status.Text = Language.Done;
+            Log.AddMessage(Language.Done);
             base.OnLoad(e);
         }
 
@@ -164,6 +170,7 @@ namespace MAIDE
         {
             Core.Stop();
             runThread.Abort();
+            ActiveDocument.CodeEditBox.ReadOnly = false;
         }
 
         private void Core_StateChanged(object sender, Core.StateChangedEventArgs e)
@@ -182,42 +189,46 @@ namespace MAIDE
 
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Log.AddMessage("Core paused");
             Core.Pause();
         }
 
         private void resumeToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Log.AddMessage("Core resume");
             Core.Resume();
         }
 
         private void BuildMenuResumeOne_MouseDown(object sender, MouseEventArgs e)
         {
+            Log.AddMessage("Core resume");
             Core.Resume(true);
         }
 
         private void stopToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Log.AddMessage("Core destroy");
             Console.Destroy();
         }
 
-        bool build()
+        private bool build()
         {
             ms = new MemoryStream();
 
-            if (!compiler.Build(ActiveDocument.GetCode(), ms))
+            if (!compiler.Build(ActiveDocument.GetCode(), ms, true))
             {
-                status.Text = Language.BuildError;
+                Log.AddMessage(Language.BuildError);
                 ModuleAtribute.Show(typeof(ErrorWindow));
                 return false;
             }
 
-            status.Text = Language.BuildDone;
+            Log.AddMessage(Language.BuildDone);
             return true;
         }
 
         private void run()
         {
-            //ActiveDocument.Code.ReadOnly = true;
+            ActiveDocument.CodeEditBox.ReadOnly = true;
             if (!build())
                 return;
             
@@ -227,7 +238,7 @@ namespace MAIDE
                 Console.Instance.FormClosed += ConsoleClosed;
             }));
 
-            Core.Invoke(ms);
+            Core.Invoke(ms, ActiveDocument.CodeEditBox.Rows);
             Console.Destroy();
         }
 

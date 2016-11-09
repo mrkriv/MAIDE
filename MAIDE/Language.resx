@@ -330,4 +330,13 @@
   <data name="MainGroup" xml:space="preserve">
     <value>Основное</value>
   </data>
+  <data name="build" xml:space="preserve">
+    <value>Собрать</value>
+  </data>
+  <data name="Building" xml:space="preserve">
+    <value>Сборка</value>
+  </data>
+  <data name="run" xml:space="preserve">
+    <value>Запустить</value>
+  </data>
 </root>

@@ -159,7 +159,7 @@
     <Compile Include="VM\Compiler.cs" />
     <Compile Include="VM\Core.cs" />
     <Compile Include="VM\DescriptorAttribute.cs" />
-    <Compile Include="VM\Link.cs" />
+    <Compile Include="VM\Pointer.cs" />
     <Compile Include="VM\Operation.cs" />
     <Compile Include="VM\OperationManager.cs" />
     <Compile Include="VM\Operators.cs" />

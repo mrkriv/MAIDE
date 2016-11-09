@@ -18,8 +18,8 @@ namespace MAIDE.VM
             var ms = typeof(Operators).GetMethods();
             Operations = ms.Where(w => w.CustomAttributes.Any(e => e.AttributeType == typeof(DescriptorAttribute))).ToArray();
 
-            if (Operations.Count() > 256)
-                throw new Exception("Dont support more 256 operations");
+            if (Operations.Count() > 255)
+                throw new Exception("Dont support more 255 operations");
 
             cdType = new Dictionary<Type, Action<object, BinaryWriter>>();
             cdType.Add(typeof(int), cdNumber);
@@ -29,6 +29,7 @@ namespace MAIDE.VM
             cdType.Add(typeof(Register8), cdRegister);
             cdType.Add(typeof(Register16), cdRegister);
             cdType.Add(typeof(Register32), cdRegister);
+            cdType.Add(typeof(Pointer), cdPointer);
 
             dcType = new Dictionary<Type, Func<Type, BinaryReader, object>>();
             dcType.Add(typeof(int), dcNumber);
@@ -38,6 +39,7 @@ namespace MAIDE.VM
             dcType.Add(typeof(Register8), dcRegister);
             dcType.Add(typeof(Register16), dcRegister);
             dcType.Add(typeof(Register32), dcRegister);
+            dcType.Add(typeof(Pointer), dcPointer);
         }
 
         public static MethodInfo GetMethod(string name)
@@ -54,10 +56,10 @@ namespace MAIDE.VM
             while (Operations[index] != op.Method)
                 index++;
 
+            writer.Write(index);
+
             foreach (var arg in op.Args)
                 cdType[arg.GetType()](arg, writer);
-
-            writer.Write(index);
         }
 
         private static void cdRegister(object obj, BinaryWriter writer)
@@ -74,6 +76,10 @@ namespace MAIDE.VM
         {
             writer.Write((int)Convert.ChangeType(obj, TypeCode.Int32));
         }
+
+        private static void cdPointer(object obj, BinaryWriter writer)
+        {
+        }
         #endregion
 
         #region DC
@@ -81,7 +87,7 @@ namespace MAIDE.VM
         {
             byte index = reader.ReadByte();
 
-            if (Operations.Count() >= index)
+            if (Operations.Count() <= index)
                 throw new Exception(string.Format("Opcode {0} dont support", index.ToString("X")));
 
             Operation op = new Operation(Operations[index]);
@@ -111,6 +117,11 @@ namespace MAIDE.VM
         private static object dcNumber(Type type, BinaryReader reader)
         {
             return Convert.ChangeType(reader.ReadInt32(), type);
+        }
+
+        private static object dcPointer(Type type, BinaryReader reader)
+        {
+            return new Pointer();
         }
         #endregion
     }
